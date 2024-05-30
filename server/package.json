@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend for clinica olimpo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrobemfica/clinica-olimpo.git#35e3bf18318bd6ed3ac8b42c793968f8663b8cb1"
+  },
+  "author": "Pedro Bemfica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrobemfica/clinica-olimpo/issues"
+  },
+  "homepage": "https://github.com/pedrobemfica/clinica-olimpo/tree/35e3bf18318bd6ed3ac8b42c793968f8663b8cb1#readme"
+}
