@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/pedrobemfica/clinica-olimpo/tree/35e3bf18318bd6ed3ac8b42c793968f8663b8cb1#readme",
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
