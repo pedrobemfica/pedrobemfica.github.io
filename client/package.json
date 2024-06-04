@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pedrobemfica/clinica-olimpo/tree/35e3bf18318bd6ed3ac8b42c793968f8663b8cb1#readme",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "ionic": "^5.4.16"
   }
 }
