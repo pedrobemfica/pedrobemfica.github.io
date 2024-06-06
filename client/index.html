@@ -34,26 +34,87 @@
   <body>
     <header>
       <nav>
-        <div>Logo</div>
-        <button>A Clínica Olimpo</button>
-        <button>Especialidades</button>
-        <button>Agendamentos</button>
-        <button>Área do Paciente</button>
-        <button>Contato</button>
+        <div>
+          <a href="#" onclick="loadContent('./pages/home.html')">Logo</a>
+        </div>
+        <ul>
+          <li>
+            <a href="#" onclick="loadContent('./pages/home.html')">Sobre</a>
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/specialties.html')"
+              >Especialidades</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/schedule.html')"
+              >Agendamentos</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/files.html')"
+              >Documentos</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/contact.html')"
+              >Contatos</a
+            >
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="#" onclick="loadContent('./pages/registration.html')"
+              >Cadastrar</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/authentication.html')"
+              >Entrar</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/cart.html')">Carrinho</a>
+          </li>
+        </ul>
       </nav>
     </header>
-    <main>
-      <div id="app"></div>
+    <main id="content">
+      <!-- Automatic load content here -->
     </main>
     <footer>
-      <div>Logo</div>
-      <div>Contato: +55 (31) 9 9603-0423</div>
+      <div>
+        <a href="#" onclick="loadContent('./pages/home.html')">Logo</a>
+      </div>
+      <div>Telefone: +55 (31) 9 9603-0423</div>
+      <div>E-mail: contato@clinicaolimpo.com</div>
       <div>
         <ul>
-          <li>Termos e Condições</li>
-          <li>Política de Cookies</li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/terms.html')"
+              >Termos e Condições</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
+              >Política de Cookies</a
+            >
+          </li>
         </ul>
       </div>
+
+      <div id="cookieConsent" class="cookie-consent">
+        <p>
+          Esse website utiliza cookies para garantir uma melhor experiência do
+          usuário.
+          <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
+            >Saiba mais</a
+          >
+        </p>
+        <button id="acceptCookies">Accept</button>
+      </div>
+
+      <script src="./modules/cookie-consent.js"></script>
     </footer>
   </body>
 </html>
