@@ -30,18 +30,22 @@
 
   <body>
     <header>
-      <div>
-        <a href="#" onclick="loadContent('./pages/home.html')">Logo</a>
+      <div class="header--logo">
+        <a href="#" onclick="loadContent('./pages/home.html')"
+          ><img
+            src="./assets/images/logo-white.png"
+            alt="Logo"
+            style="width: 130px; height: 50px"
+        /></a>
       </div>
-      <div>
-        <div>
+      <div class="header--nav">
+        <div class="header--nav-user">
           <ul>
             <li>
               <a href="#" onclick="loadContent('./pages/registration.html')"
                 >Cadastrar</a
               >
             </li>
-
             <li>
               <a href="#" onclick="loadContent('./pages/authentication.html')"
                 >Entrar</a
@@ -59,7 +63,7 @@
             </li>
           </ul>
         </div>
-        <nav>
+        <nav class="header--nav-menu">
           <ul>
             <li>
               <a href="#" onclick="loadContent('./pages/home.html')">Sobre</a>
@@ -91,9 +95,14 @@
     <main id="content">
       <!-- Automatic load content here -->
     </main>
-    <footer>
+    <footer class="footer">
       <div>
-        <a href="#" onclick="loadContent('./pages/home.html')">Logo</a>
+        <a href="#" onclick="loadContent('./pages/home.html')"
+          ><img
+            src="./assets/images/logo-dark.png"
+            alt="Logo"
+            style="width: 130px; height: 50px"
+        /></a>
       </div>
       <div>
         <ul>
