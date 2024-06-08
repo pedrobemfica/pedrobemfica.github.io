@@ -1,23 +1,73 @@
 header {
+    align-items: center;
     background-color: #024950;
+    display: flex;
+    justify-content: space-between;
+    min-height: 15vh;
+    padding: 0 2rem;
 }
 
 .header--logo {
+    align-items: center;
     background-color: #024950;
+    justify-content: center;
 }
 
 .header--nav {
     background-color: #024950;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .header--nav-user {
     background-color: #024950;
+    padding: 0.5rem;
 }
 
 .header--nav-menu {
     background-color: #024950;
+    padding: 0.5rem;
+}
+
+.header--nav-user ul {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+}
+
+.header--nav-user ul li {
+    margin: 0.5rem 1rem;
+}
+
+.header--nav-user ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.header--nav-menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header--nav-menu ul li {
+    font-size: x-large;
+    margin: 0.5rem 1rem;
+}
+
+.header--nav-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#content {
+    min-height: 70vh;
 }
 
 .footer {
     background-color: #0FA4AF;
+    min-height: 15vh;
 }
