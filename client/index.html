@@ -95,8 +95,8 @@
     <main id="content">
       <!-- Automatic load content here -->
     </main>
-    <footer class="footer">
-      <div>
+    <footer>
+      <div class="footer--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
           ><img
             src="./assets/images/logo-dark.png"
@@ -104,14 +104,14 @@
             style="width: 130px; height: 50px"
         /></a>
       </div>
-      <div>
+      <div class="footer--contact">
         <ul>
           <li>Contatos:</li>
           <li>Telefone: +55 (31) 9 9603-0423</li>
           <li>E-mail: contato@clinicaolimpo.com</li>
         </ul>
       </div>
-      <div>
+      <div class="footer--nav">
         <ul>
           <li>
             <a href="#" onclick="loadContent('./pages/terms.html')"
@@ -125,18 +125,17 @@
           </li>
         </ul>
       </div>
-
-      <div id="cookieConsent" class="cookie-consent">
-        <p>
-          Esse website utiliza cookies para garantir uma melhor experiência do
-          usuário.
-          <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
-            >Saiba mais</a
-          >
-        </p>
-        <button id="acceptCookies">Accept</button>
-      </div>
     </footer>
+    <div id="cookieConsent" class="cookie-consent">
+      <p>
+        Esse website utiliza cookies para garantir uma melhor experiência do
+        usuário.
+        <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
+          >Saiba mais</a
+        >
+      </p>
+      <button id="acceptCookies">Accept</button>
+    </div>
     <!--internal javascript-->
     <script src="./main.js"></script>
     <script src="./modules/cookie-consent.js"></script>
