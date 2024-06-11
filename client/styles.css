@@ -1,9 +1,15 @@
 @import "./styles/navigation.css";
+@import "./styles/cookie-consent.css";
 /* @import "./styles/home.css";
 @import "./styles/schedule.css";
 @import "./styles/files.css";
 @import "./styles/users.css";
 @import "./styles/cart.css";
 @import "./styles/payment.css";
-@import "./styles/policies.css";
-@import "./styles/cookie-consent.css"; */
+@import "./styles/policies.css"; */
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
