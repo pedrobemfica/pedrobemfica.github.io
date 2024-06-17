@@ -7,3 +7,9 @@
 @import "./styles/cart.css";
 @import "./styles/payment.css";
 @import "./styles/policies.css"; */
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
