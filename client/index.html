@@ -30,6 +30,7 @@
 
   <body>
     <header>
+
       <div class="header--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
           ><img
@@ -38,63 +39,57 @@
             style="width: 130px; height: 50px"
         /></a>
       </div>
-      <div class="header--nav">
-        <div class="header--nav-user">
-          <ul>
-            <li>
-              <a href="#" onclick="loadContent('./pages/registration.html')"
-                >Cadastrar</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/authentication.html')"
-                >Entrar</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/profile.html')"
-                >Usuário</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/cart.html')"
-                >Carrinho</a
-              >
-            </li>
-          </ul>
-        </div>
-        <nav class="header--nav-menu">
-          <ul>
-            <li>
-              <a href="#" onclick="loadContent('./pages/home.html')">Sobre</a>
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/specialties.html')"
-                >Especialidades</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/schedule.html')"
-                >Agendamentos</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/files.html')"
-                >Documentos</a
-              >
-            </li>
-            <li>
-              <a href="#" onclick="loadContent('./pages/contact.html')"
-                >Contatos</a
-              >
-            </li>
-          </ul>
-        </nav>
+
+      <div class="header--nav-user">
+        <ul>
+          <li>
+            <a href="#" onclick="loadContent('./pages/registration.html')">Registrar</a>
+          </li>
+          <li>
+            <a href="#" onclick="loadContent('./pages/authentication.html')">Entrar</a>
+          </li>
+          <li>
+            <img src="../client/assets/icons/user.svg" class="nav--menu-icon" alt="Usuário"></i>
+            <a href="#" onclick="loadContent('./pages/profile.html')">Usuário</a>
+          </li>
+          <li>
+            <img src="../client/assets/icons/cart.svg" class="nav--menu-icon" alt="Carrinho de compras"></i>
+            <a href="#" onclick="loadContent('./pages/cart.html')">Carrinho</a>
+          </li>
+        </ul>
       </div>
+
     </header>
+
+    <nav class="nav--menu">
+      <ul>
+        <li>
+          <img src="../client/assets/icons/home.svg" class="nav--menu-icon" alt="Página inicial"></i>
+          <a href="#" onclick="loadContent('./pages/home.html')">Home</a>
+        </li>
+        <li>
+          <img src="../client/assets/icons/doctor.svg" class="nav--menu-icon" alt="Agendamentos"></i>
+          <a href="#" onclick="loadContent('./pages/specialties.html')">Especialidades</a>
+        </li>
+        <li>
+          <img src="../client/assets/icons/calendar.svg" class="nav--menu-icon" alt="Agendamentos"></i>
+          <a href="#" onclick="loadContent('./pages/schedule.html')">Agendamentos</a>
+        </li>
+        <li>
+          <img src="../client/assets/icons/file.svg" class="nav--menu-icon" alt="Seus documentos"></i>
+          <a href="#" onclick="loadContent('./pages/files.html')">Documentos</a>
+        </li>
+        <li>
+          <img src="../client/assets/icons/contact.svg" class="nav--menu-icon" alt="Entre em contato"></i>
+          <a href="#" onclick="loadContent('./pages/contact.html')">Contato</a>
+        </li>
+      </ul>
+    </nav>
+
     <main id="content">
       <!-- Automatic load content here -->
     </main>
+
     <footer>
       <div class="footer--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
@@ -128,13 +123,11 @@
     </footer>
     <div id="cookieConsent" class="cookie-consent">
       <p>
-        Esse website utiliza cookies para garantir uma melhor experiência do
-        usuário.
-        <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
-          >Saiba mais</a
-        >
+        Esta website utiliza cookies e tecnologias semelhantes para melhorar sua
+        navegação. Ao continuar navegando você concorda com a nossa Política de
+        Privacidade.
       </p>
-      <button id="acceptCookies">Accept</button>
+      <button id="acceptCookies">OK</button>
     </div>
     <!--internal javascript-->
     <script src="./main.js"></script>
