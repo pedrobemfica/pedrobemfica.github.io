@@ -1,4 +1,7 @@
-To achieve a responsive menu that stays on top for larger screens and moves to the bottom for mobile screens, you can use CSS media queries. To load content dynamically without reloading the navigation menu, you can use JavaScript to handle the content loading via AJAX or fetch API.
+To achieve a responsive menu that stays on top for larger screens and moves to the bottom 
+for mobile screens, you can use CSS media queries. To load content dynamically without 
+reloading the navigation menu, you can use JavaScript to handle the content loading via 
+AJAX or fetch API.
 
 Here's a simple example:
 

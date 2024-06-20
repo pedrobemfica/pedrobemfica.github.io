@@ -23,11 +23,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/d62d22b3b2.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
-    <header>
-
+    <header class="header-container">
       <div class="header--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
           ><img
@@ -37,48 +37,56 @@
         /></a>
       </div>
 
-      <div class="header--nav-user">
+      <nav class="header--nav-user">
         <ul>
           <li>
-            <a href="#" onclick="loadContent('./pages/registration.html')">Registrar</a>
+            <button class="nav--user-register" onclick="loadContent('./pages/registration.html')">Registrar</button>
           </li>
           <li>
-            <a href="#" onclick="loadContent('./pages/authentication.html')">Entrar</a>
+            <button class="nav--user-enter" onclick="loadContent('./pages/authentication.html')">Entrar</button>
           </li>
           <li>
-            <img src="../client/assets/icons/user.svg" class="nav--menu-icon" alt="Usuário"></i>
-            <a href="#" onclick="loadContent('./pages/profile.html')">Usuário</a>
+            <a class="nav--user-logged" href="#" onclick="loadContent('./pages/profile.html')"><i class="fa-solid fa-user"></i></a>
           </li>
           <li>
-            <img src="../client/assets/icons/cart.svg" class="nav--menu-icon" alt="Carrinho de compras"></i>
-            <a href="#" onclick="loadContent('./pages/cart.html')">Carrinho</a>
+            <a class="nav--user-cart" href="#" onclick="loadContent('./pages/cart.html')"><i class="fa-solid fa-cart-shopping"></i></a>
           </li>
         </ul>
-      </div>
+      </nav>
 
     </header>
 
     <nav class="nav--menu">
       <ul>
         <li>
-          <img src="../client/assets/icons/home.svg" class="nav--menu-icon" alt="Página inicial"></i>
-          <a href="#" onclick="loadContent('./pages/home.html')">Home</a>
+          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/home.html')">
+            <span><i class="fa-solid fa-house"></i></span>
+            <span>Home</span>
+          </a>
         </li>
         <li>
-          <img src="../client/assets/icons/doctor.svg" class="nav--menu-icon" alt="Agendamentos"></i>
-          <a href="#" onclick="loadContent('./pages/specialties.html')">Especialidades</a>
+          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/specialties.html')">
+            <span><i class="fa-solid fa-stethoscope"></i></span>
+            <span>Especialidades</span>
+        </a>
         </li>
         <li>
-          <img src="../client/assets/icons/calendar.svg" class="nav--menu-icon" alt="Agendamentos"></i>
-          <a href="#" onclick="loadContent('./pages/schedule.html')">Agendamentos</a>
+          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/schedule.html')">
+            <span><i class="fa-solid fa-calendar-days"></i></span>
+            <span>Agendamentos</span>
+          </a>
         </li>
         <li>
-          <img src="../client/assets/icons/file.svg" class="nav--menu-icon" alt="Seus documentos"></i>
-          <a href="#" onclick="loadContent('./pages/files.html')">Documentos</a>
+          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/files.html')">
+            <span><i class="fa-solid fa-file"></i></span>
+            <span>Documentos</span>
+            </a>
         </li>
         <li>
-          <img src="../client/assets/icons/contact.svg" class="nav--menu-icon" alt="Entre em contato"></i>
-          <a href="#" onclick="loadContent('./pages/contact.html')">Contato</a>
+          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/contact.html')">
+          <span><i class="fa-solid fa-message"></i></span>
+          <span>Contato</span>  
+          </a>
         </li>
       </ul>
     </nav>
