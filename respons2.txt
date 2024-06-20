@@ -1,0 +1,115 @@
+Certainly! Here's an example of HTML and CSS code that creates a responsive menu. The menu appears fixed at the top of the screen with just words on larger screens (desktops or laptops), and fixed at the bottom of the screen with both icons and words on smaller screens (mobile devices).
+
+### HTML:
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="menu">
+        <a href="#" class="menu-item">
+            <span class="icon">🏠</span>
+            <span class="text">Home</span>
+        </a>
+        <a href="#" class="menu-item">
+            <span class="icon">🔍</span>
+            <span class="text">Search</span>
+        </a>
+        <a href="#" class="menu-item">
+            <span class="icon">📁</span>
+            <span class="text">Files</span>
+        </a>
+        <a href="#" class="menu-item">
+            <span class="icon">⚙</span>
+            <span class="text">Settings</span>
+        </a>
+    </nav>
+</body>
+</html>
+
+
+### CSS (styles.css):
+css
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    color: white;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+
+.menu-item {
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-item .icon {
+    display: none;
+}
+
+.menu-item .text {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .menu {
+        bottom: 0;
+        top: auto;
+    }
+
+    .menu-item {
+        flex-direction: column;
+    }
+
+    .menu-item .icon {
+        display: block;
+        font-size: 20px;
+    }
+
+    .menu-item .text {
+        display: block;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 769px) {
+    .menu {
+        top: 0;
+        bottom: auto;
+    }
+
+    .menu-item .icon {
+        display: none;
+    }
+
+    .menu-item .text {
+        display: block;
+        font-size: 16px;
+    }
+}
+
+
+### Explanation:
+- The menu class is used to create the navigation menu that is fixed at the top or bottom of the screen depending on the screen size.
+- The .menu-item class styles the individual menu items.
+- On larger screens (min-width: 769px), the menu is positioned at the top (top: 0) and the icons are hidden.
+- On smaller screens (max-width: 768px), the menu is positioned at the bottom (bottom: 0), and the icons are displayed alongside the text.
+
+This responsive design ensures that the menu adapts to different screen sizes, providing an optimal user experience on both desktop and mobile devices.

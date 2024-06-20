@@ -1,0 +1,283 @@
+Sure, I'll provide you with a basic example of a Node.js backend using Express, MongoDB, and Mongoose that includes user authentication (with Google, Facebook, and email/password), scheduling, and file upload functionality.
+
+### Prerequisites:
+1. *Node.js and npm* installed on your machine.
+2. *MongoDB* installed and running (or you can use a MongoDB cloud service like MongoDB Atlas).
+3. *Postman* or similar tool for testing API endpoints.
+
+### Step-by-Step Setup:
+
+#### 1. Initialize the Project:
+bash
+mkdir backend-project
+cd backend-project
+npm init -y
+
+
+#### 2. Install Dependencies:
+bash
+npm install express mongoose bcryptjs jsonwebtoken passport passport-google-oauth20 passport-facebook passport-local multer dotenv
+
+
+#### 3. Create the Project Structure:
+bash
+mkdir config controllers models routes middleware
+touch index.js
+
+
+#### 4. Create a .env File:
+Create a .env file in the root directory with the following content (fill in with your actual credentials):
+
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+FACEBOOK_APP_ID=your_facebook_app_id
+FACEBOOK_APP_SECRET=your_facebook_app_secret
+
+
+#### 5. Setup the Express Server (index.js):
+javascript
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Session setup
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log(err));
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/schedule', require('./routes/schedule'));
+app.use('/api/files', require('./routes/files'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+#### 6. Create the User Model (models/User.js):
+javascript
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String },
+    googleId: { type: String },
+    facebookId: { type: String }
+});
+
+module.exports = mongoose.model('User', UserSchema);
+
+
+#### 7. Setup Passport Strategies (config/passport.js):
+javascript
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+
+module.exports = (passport) => {
+    passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: '/api/auth/google/callback'
+    }, async (accessToken, refreshToken, profile, done) => {
+        const { id, displayName, emails } = profile;
+        try {
+            let user = await User.findOne({ googleId: id });
+            if (user) {
+                return done(null, user);
+            }
+            user = new User({
+                googleId: id,
+                name: displayName,
+                email: emails[0].value
+            });
+            await user.save();
+            done(null, user);
+        } catch (err) {
+            done(err, false);
+        }
+    }));
+
+    passport.use(new FacebookStrategy({
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: '/api/auth/facebook/callback',
+        profileFields: ['id', 'displayName', 'emails']
+    }, async (accessToken, refreshToken, profile, done) => {
+        const { id, displayName, emails } = profile;
+        try {
+            let user = await User.findOne({ facebookId: id });
+            if (user) {
+                return done(null, user);
+            }
+            user = new User({
+                facebookId: id,
+                name: displayName,
+                email: emails[0].value
+            });
+            await user.save();
+            done(null, user);
+        } catch (err) {
+            done(err, false);
+        }
+    }));
+
+    passport.use(new LocalStrategy({
+        usernameField: 'email'
+    }, async (email, password, done) => {
+        try {
+            const user = await User.findOne({ email });
+            if (!user) {
+                return done(null, false, { message: 'Invalid credentials' });
+            }
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return done(null, false, { message: 'Invalid credentials' });
+            }
+            done(null, user);
+        } catch (err) {
+            done(err, false);
+        }
+    }));
+
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => done(err, user));
+    });
+};
+
+
+#### 8. Setup Auth Routes (routes/auth.js):
+javascript
+const express = require('express');
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const router = express.Router();
+require('../config/passport')(passport);
+
+// Local signup
+router.post('/signup', async (req, res) => {
+    const { name, email, password } = req.body;
+    try {
+        let user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+        user = new User({ name, email, password: await bcrypt.hash(password, 10) });
+        await user.save();
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Local login
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Google auth
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
+    const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.redirect(`/?token=${token}`);
+});
+
+// Facebook auth
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/facebook/callback', passport.authenticate('facebook', { session: false }), (req, res) => {
+    const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.redirect(`/?token=${token}`);
+});
+
+module.exports = router;
+
+
+#### 9. Setup Schedule Routes (routes/schedule.js):
+```javascript
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = require('../models/User');
+
+const router = express.Router();
+
+// Schedule model
+const ScheduleSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    date: { type: Date, required: true },
+    time: { type: String, required: true }
+});
+
+const Schedule = mongoose.model('Schedule', ScheduleSchema);
+
+// Middleware for JWT authentication
+const authMiddleware = (req, res, next) => {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded.id;
+        next();
+    } catch (err) {
+        res.status(401).json({ message: 'Unauthorized' });
+    }
+};
+
+// Create a schedule
+router.post('/', authMiddleware, async (req, res) => {
+    const { date, time } = req.body;
+    try {
+        const schedule = new Schedule({ user: req.user, date, time });
+        await schedule.save();
+        res.json(schedule);
