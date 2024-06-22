@@ -1,8 +1,48 @@
-<form id="uploadForm" enctype="multipart/form-data">
-  <h2>Carregar Arquivo</h2>
-  <input type="file" id="fileInput" name="file" />
-  <button type="submit">Carregar</button>
-</form>
+<div class="files-page">
+  <div class="files--upload-container">
+    <h2>Carregar Arquivo</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <button
+        type="file"
+        id="fileInput"
+        name="file"
+        class="btn btn-outline-primary"
+      >
+        Escolher arquivo
+      </button>
+      <input
+        type="text"
+        class="form-control files--upload-label"
+        placeholder="Rótulo do arquivo"
+        aria-label="fileLabel"
+        aria-describedby="basic-addon1"
+      />
+      <button type="submit" class="btn btn-outline-primary">
+        <i class="fa-solid fa-upload"></i>
+      </button>
+    </form>
+  </div>
+  <div class="files--list-container">
+    <h2>Lista de Arquivos</h2>
+    <ul>
+      <li>
+        <span>Arquivo 1</span>
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fa-solid fa-download"></i>
+        </button>
+      </li>
+      <li>
+        <span>Arquivo 2</span>
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fa-solid fa-download"></i>
+        </button>
+      </li>
+    </ul>
+    <div class="alert alert-light file--list-alert" role="alert">
+      Nenhum arquivo carregado para exibiir.
+    </div>
+  </div>
+</div>
 
 <!--internal javascript-->
-<script src="../modules/uploads.js"></script>
+<script src="../modules/files.js"></script>

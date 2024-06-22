@@ -1,0 +1,40 @@
+.files-page {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.files--upload-container {
+    background-color: whitesmoke;
+    border: 0;
+    border-radius: 1%;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.files--upload-container form {
+    display: flex;
+    justify-content: start;
+}
+
+.files--upload-label {
+    display: inline;
+    margin: 0 2rem;
+    width: 15rem;
+}
+
+.files--list-container {
+    background-color: whitesmoke;
+    border: 0;
+    border-radius: 1%;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.files--list-container ul li {
+    margin: 1rem;
+}
+
+.file--list-alert {
+    display: none;
+}
