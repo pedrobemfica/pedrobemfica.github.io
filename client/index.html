@@ -20,13 +20,21 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./styles.css" />
 
     <!--external fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script defer src="https://kit.fontawesome.com/d62d22b3b2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://kit.fontawesome.com/d62d22b3b2.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="./assets/frame/bootstrap.min.js"></script>
   </head>
 
-  <body>
+  <body onload="loadContent('./pages/home.html')">
     <header class="header-container">
       <div class="header--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
@@ -40,52 +48,81 @@
       <nav class="header--nav-user">
         <ul>
           <li>
-            <button class="nav--user-register" onclick="loadContent('./pages/registration.html')">Registrar</button>
+            <button
+              type="button"
+              class="btn btn-primary nav--user-register"
+              onclick="loadContent('./pages/registration.html')"
+            >
+              Registrar
+            </button>
           </li>
           <li>
-            <button class="nav--user-enter" onclick="loadContent('./pages/authentication.html')">Entrar</button>
+            <button
+              type="button"
+              class="btn btn-outline-primary nav--user-enter"
+              onclick="loadContent('./pages/authentication.html')"
+            >
+              Entrar
+            </button>
           </li>
           <li>
-            <a class="nav--user-logged" href="#" onclick="loadContent('./pages/profile.html')"><i class="fa-solid fa-user"></i></a>
+            <a
+              class="nav--user-logged"
+              href="#"
+              onclick="loadContent('./pages/profile.html')"
+              ><i class="fa-solid fa-user"></i> <span>Nome usuário</span></a
+            >
           </li>
           <li>
-            <a class="nav--user-cart" href="#" onclick="loadContent('./pages/cart.html')"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a
+              class="nav--user-cart"
+              href="#"
+              onclick="loadContent('./pages/cart.html')"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></a>
           </li>
         </ul>
       </nav>
-
     </header>
 
     <nav class="nav--menu">
       <ul>
         <li>
-          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/home.html')">
-            <span><i class="fa-solid fa-house"></i></span>
-            <span>Home</span>
+          <a href="#" onclick="loadContent('./pages/home.html')">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-house"></i
+            ></span>
+            <span class="nav--menu-text">Home</span>
           </a>
         </li>
         <li>
-          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/specialties.html')">
-            <span><i class="fa-solid fa-stethoscope"></i></span>
-            <span>Especialidades</span>
-        </a>
-        </li>
-        <li>
-          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/schedule.html')">
-            <span><i class="fa-solid fa-calendar-days"></i></span>
-            <span>Agendamentos</span>
+          <a href="#" onclick="loadContent('./pages/specialties.html')">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-stethoscope"></i
+            ></span>
+            <span class="nav--menu-text">Especialidades</span>
           </a>
         </li>
         <li>
-          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/files.html')">
-            <span><i class="fa-solid fa-file"></i></span>
-            <span>Documentos</span>
-            </a>
+          <a href="#" onclick="loadContent('./pages/schedule.html')">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-calendar-days"></i
+            ></span>
+            <span class="nav--menu-text">Agendamentos</span>
+          </a>
         </li>
         <li>
-          <a class="nav--menu-item" href="#" onclick="loadContent('./pages/contact.html')">
-          <span><i class="fa-solid fa-message"></i></span>
-          <span>Contato</span>  
+          <a href="#" onclick="loadContent('./pages/files.html')">
+            <span class="nav--menu-icon"><i class="fa-solid fa-file"></i></span>
+            <span class="nav--menu-text">Documentos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('./pages/contact.html')">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-message"></i
+            ></span>
+            <span class="nav--menu-text">Contato</span>
           </a>
         </li>
       </ul>
@@ -95,7 +132,7 @@
       <!-- Automatic load content here -->
     </main>
 
-    <footer>
+    <footer class="footer-container">
       <div class="footer--logo">
         <a href="#" onclick="loadContent('./pages/home.html')"
           ><img
@@ -107,24 +144,19 @@
       <div class="footer--contact">
         <ul>
           <li>Contatos:</li>
-          <li>Telefone: +55 (31) 9 9603-0423</li>
+          <li>Telefone/Whatsapp: +55 (31) 9 9603-0423</li>
           <li>E-mail: contato@clinicaolimpo.com</li>
         </ul>
       </div>
-      <div class="footer--nav">
+      <nav class="footer--nav">
         <ul>
           <li>
             <a href="#" onclick="loadContent('./pages/terms.html')"
-              >Termos e Condições</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="loadContent('./pages/cookie-policy.html')"
-              >Política de Cookies</a
-            >
+              >Termos e Condições
+            </a>
           </li>
         </ul>
-      </div>
+      </nav>
     </footer>
     <div id="cookieConsent" class="cookie-consent">
       <p>
