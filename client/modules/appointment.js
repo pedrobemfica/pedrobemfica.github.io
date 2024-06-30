@@ -1,4 +1,4 @@
-export class Schedule {
+export class Appointment {
     constructor(user_id, date_time) {
         this.user_id = user_id;
         
