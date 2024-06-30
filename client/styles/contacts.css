@@ -1,0 +1,13 @@
+.contact-container {
+    padding: 2rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+#message {
+    height: 6rem;
+}

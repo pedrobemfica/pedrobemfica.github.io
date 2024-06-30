@@ -1,0 +1,24 @@
+@import './calendar.css';
+
+.appointments-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 2rem;
+}
+
+
+.availability-container {
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+.time-selection, .service-selection {
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .appointments-container {
+        flex-direction: column;
+    }
+}

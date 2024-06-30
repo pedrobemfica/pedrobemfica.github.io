@@ -2,8 +2,9 @@
 @import "./styles/navigation.css";
 @import "./styles/cookie-consent.css"; 
 @import "./styles/terms.css"; 
-@import "./styles/schedule.css";
+@import "./styles/appointments.css";
 @import "./styles/files.css";
+@import "./styles/contacts.css";
 /* @import "./styles/home.css";
 @import "./styles/users.css";
 @import "./styles/cart.css";

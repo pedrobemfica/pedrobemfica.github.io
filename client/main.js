@@ -1,13 +1,6 @@
-function loadContent(page) {
-     fetch(page)
-         .then(response => response.text())
-         .then(data => {
-             document.getElementById('content').innerHTML = data;
-         })
-         .catch(error => console.error('Error loading content:', error));
-}
+import { initialize as initializeRender } from './views/render.js';
+import { initialize as initializeCookie } from './controllers/cookie-consent.js';
+import { initializeCalendar } from './views/calendar.js';
 
-export const months = [
-    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-];
+initializeRender();
+initializeCookie();

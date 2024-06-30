@@ -1,18 +1,9 @@
-/* body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-} */
-
 .calendar-container {
     display: flex;
     flex-direction: column;
+    font-size: x-small;
     align-items: center;
-    margin: 20px 0;
+    margin: .5rem 0;
 }
 
 .calendar-header {
@@ -21,6 +12,11 @@
     align-items: center;
     width: 100%;
     max-width: 300px;
+}
+
+.calendar-header h3 {
+    font-size: small;
+    font-weight: bold;
 }
 
 #calendar {
@@ -32,12 +28,12 @@
 #calendar th, #calendar td {
     border: 1px solid #ddd;
     text-align: center;
-    padding: 8px;
+    padding: .5rem;
     cursor: pointer;
 }
 
 #calendar th {
-    background-color: #4CAF50;
+    background-color: #555;
     color: white;
 }
 
@@ -46,10 +42,6 @@
 }
 
 #calendar td.selected {
-    background-color: #4CAF50;
+    background-color: #333;
     color: white;
-}
-
-.time-selection {
-    margin-top: 20px;
 }

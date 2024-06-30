@@ -32,13 +32,16 @@
       crossorigin="anonymous"
     ></script>
     <script defer src="./assets/frame/bootstrap.min.js"></script>
+
+    <!--internal javascript-->
+    <script type="module" src="main.js" defer></script>
   </head>
 
-  <body onload="loadContent('./pages/home.html')">
+  <body>
     <header class="header-container">
       <div class="header--logo">
-        <a href="#" onclick="loadContent('./pages/home.html')"
-          ><img
+        <a href="#" data-nav-target="./pages/home.html" class="nav-page">
+          <img
             src="./assets/images/logo-white.png"
             alt="Logo"
             style="width: 130px; height: 50px"
@@ -49,35 +52,35 @@
         <ul>
           <li>
             <button
+              data-nav-target="./pages/registration.html"
               type="button"
-              class="btn btn-primary nav--user-register"
-              onclick="loadContent('./pages/registration.html')"
+              class="btn btn-primary nav--user-register nav-page"
             >
               Registrar
             </button>
           </li>
           <li>
             <button
+              data-nav-target="./pages/authentication.html"
               type="button"
-              class="btn btn-outline-primary nav--user-enter"
-              onclick="loadContent('./pages/authentication.html')"
+              class="btn btn-outline-primary nav--user-enter nav-page"
             >
               Entrar
             </button>
           </li>
           <li>
             <a
-              class="nav--user-logged"
+              data-nav-target="./pages/profile.html"
+              class="nav--user-logged nav-page"
               href="#"
-              onclick="loadContent('./pages/profile.html')"
               ><i class="fa-solid fa-user"></i> <span>Nome usuário</span></a
             >
           </li>
           <li>
             <a
-              class="nav--user-cart"
+              data-nav-target="./pages/cart.html"
+              class="nav--user-cart nav-page"
               href="#"
-              onclick="loadContent('./pages/cart.html')"
               ><i class="fa-solid fa-cart-shopping"></i
             ></a>
           </li>
@@ -88,7 +91,7 @@
     <nav class="nav--menu">
       <ul>
         <li>
-          <a href="#" onclick="loadContent('./pages/home.html')">
+          <a href="#" data-nav-target="./pages/home.html" class="nav-page">
             <span class="nav--menu-icon"
               ><i class="fa-solid fa-house"></i
             ></span>
@@ -96,15 +99,19 @@
           </a>
         </li>
         <li>
-          <a href="#" onclick="loadContent('./pages/specialties.html')">
+          <a href="#" data-nav-target="./pages/services.html" class="nav-page">
             <span class="nav--menu-icon"
               ><i class="fa-solid fa-stethoscope"></i
             ></span>
-            <span class="nav--menu-text">Especialidades</span>
+            <span class="nav--menu-text">Serviços</span>
           </a>
         </li>
         <li>
-          <a href="#" onclick="loadContent('./pages/schedule.html')">
+          <a
+            href="#"
+            data-nav-target="./pages/appointments.html"
+            class="nav-page"
+          >
             <span class="nav--menu-icon"
               ><i class="fa-solid fa-calendar-days"></i
             ></span>
@@ -112,13 +119,13 @@
           </a>
         </li>
         <li>
-          <a href="#" onclick="loadContent('./pages/files.html')">
+          <a href="#" data-nav-target="./pages/files.html" class="nav-page">
             <span class="nav--menu-icon"><i class="fa-solid fa-file"></i></span>
             <span class="nav--menu-text">Documentos</span>
           </a>
         </li>
         <li>
-          <a href="#" onclick="loadContent('./pages/contact.html')">
+          <a href="#" data-nav-target="./pages/contact.html" class="nav-page">
             <span class="nav--menu-icon"
               ><i class="fa-solid fa-message"></i
             ></span>
@@ -134,8 +141,8 @@
 
     <footer class="footer-container">
       <div class="footer--logo">
-        <a href="#" onclick="loadContent('./pages/home.html')"
-          ><img
+        <a href="#" data-nav-target="./pages/home.html" class="nav-page">
+          <img
             src="./assets/images/logo-dark.png"
             alt="Logo"
             style="width: 130px; height: 50px"
@@ -144,16 +151,18 @@
       <div class="footer--contact">
         <ul>
           <li>Contatos:</li>
-          <li>Telefone/Whatsapp: +55 (31) 9 9603-0423</li>
+          <li>
+            Telefone: (31) 9 9603-0423 <i class="fa-brands fa-whatsapp"></i>
+          </li>
           <li>E-mail: contato@clinicaolimpo.com</li>
         </ul>
       </div>
       <nav class="footer--nav">
         <ul>
           <li>
-            <a href="#" onclick="loadContent('./pages/terms.html')"
-              >Termos e Condições
-            </a>
+            <a href="#" data-nav-target="./pages/terms.html" class="nav-page"
+              >Termos e Condições</a
+            >
           </li>
         </ul>
       </nav>
@@ -166,8 +175,5 @@
       </p>
       <button id="acceptCookies">OK</button>
     </div>
-    <!--internal javascript-->
-    <script src="./main.js"></script>
-    <script src="./modules/cookie-consent.js"></script>
   </body>
 </html>
