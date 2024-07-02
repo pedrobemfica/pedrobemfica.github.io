@@ -1,25 +1,66 @@
-@import './calendar.css';
-
 .appointments-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 2rem;
+}
+
+.appointments-credits {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+}
+
+.appointments-credits--display {
+    display: flex;
+    margin-left: 1rem;
+}
+
+.appointments-credits--display button {
+    margin-left: 1rem;
+}
+
+.appointments-new {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin: 2rem;
+    margin-bottom: 2rem;
 }
 
-
-.availability-container {
-    align-self: center;
+.appointments-new--params {
+    background-color: rgb(241, 241, 241);
+    border-radius: 3%;
     display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    width: 100%;
+}
+
+.appointments-new--params-time {
+    align-items: center;
+    display: flex;
+    margin: auto;
+    max-width: 80%;
+    text-align: center;
+}
+
+.appointments-new--display {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    flex: 1;
+    justify-content: space-around;
 }
-.time-selection, .service-selection {
+
+.appointments-new--display div {
     padding: 2rem;
-    display: flex;
 }
 
 @media (max-width: 768px) {
-    .appointments-container {
+    .appointments-new {
         flex-direction: column;
     }
 }
