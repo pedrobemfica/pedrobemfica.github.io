@@ -39,7 +39,7 @@ export class Appointment {
         }
     }
 
-    get getDay() {
+    get getDate() {
         let schedule_date = new Date(this.year, this.month, this.day);
         return schedule_date.toDateString;
     }
@@ -47,5 +47,9 @@ export class Appointment {
     get getTime() {
         let schedule_date = new Date(this.year, this.month, this.day, this.hour, this.minute);
         return schedule_date.toTimeString;
+    }
+
+    get getService() {
+        return this.service;
     }
 }
