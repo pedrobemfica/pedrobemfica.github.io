@@ -46,6 +46,10 @@
     text-align: center;
 }
 
+.buthidden {
+    visibility: hidden;
+}
+
 .appointments-new--display {
     align-items: center;
     display: flex;
@@ -57,6 +61,21 @@
 
 .appointments-new--display div {
     padding: 2rem;
+}
+
+.appointments-list--display {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointments-list--display thead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.appointments-list--display tbody tr {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (max-width: 768px) {
