@@ -1,8 +1,9 @@
 import { SERVICES, MONTHS, WORKING_HOURS, MINUTES } from "../models/entities.js";
-import { mockAppointments, mockAvailability, mockCredits, mockFiles, mockUser } from "../mockServer.js";
+import { retrieveAvailableDateTime, userAppointments, userCredits } from '../controllers/appointment-controller.js';
 
 export class AppointmentView {
     constructor(user_id) {
+        this.user_id = user_id;
         this.initializeElements();
         this.updateCredits(user_id);
         this.updateList(user_id);
@@ -33,11 +34,10 @@ export class AppointmentView {
         });
     }
 
-    updateCredits(user_id) {
+    updateCredits() {
         const creditsDisplay = document.getElementById('creditsDisplay');
         
-        // #### Update to get from server
-        let getCreditList = mockCredits;
+        let getCreditList = userCredits;
         
         creditsDisplay.innerHTML = '';
         for (let credit in getCreditList) {
@@ -53,8 +53,7 @@ export class AppointmentView {
         const appointmentNewButton = document.getElementById('appointmentNewButton');
         const noAvailabilityMessage = document.getElementById('noAvailabilityMessage');
         
-        // #### Update to get from server
-        let getAvailabilityList = mockAvailability.filter(e => (e.year == date_year && e.month == date_month && e.day == date_day && e.service == service));
+        let getAvailabilityList = retrieveAvailableDateTime(date_year, date_month, date_day, service);
         
         appointmentNewForm.innerHTML = '';
         for (let availability in getAvailabilityList) {
@@ -77,11 +76,10 @@ export class AppointmentView {
         }
     }
 
-    updateList(user_id) {
+    updateList() {
         const appointmentList = document.getElementById('appointmentList');
         
-        // #### Update to get from server
-        let getAppointmentList = mockAppointments;
+        let getAppointmentList = userAppointments;
         
         appointmentList.innerHTML = '';
         for (let appointment in getAppointmentList) {

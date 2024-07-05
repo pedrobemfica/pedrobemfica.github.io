@@ -1,20 +1,23 @@
 import { WORKING_DAYS, WORKING_HOURS, MINUTES, SERVICES } from "./entities.js";
 
 export class Appointment {
-    constructor(user_id, date_time, service) {
+    constructor(user_id, date_time, service_id) {
         this.user_id = user_id;
-        if (service in SERVICES)
-            this.service = service;
+        if (service_id in SERVICES)
+            this.service_id = service_id;
         else
             throw Error('Service not provided');
 
         let date = new Date(date_time);
         
-        let year = date.getFullYear();
-        let month = date.getMonth();  
-        let day = date.getDay();      
-        let hour = date.getHours();
-        let minute = date.getMinutes();
+        if (!isNaN(date)) {
+            let year = date.getFullYear();
+            let month = date.getMonth();  
+            let day = date.getDay();      
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+        } else
+            throw Error('Date not valid');
 
         let current_date = new Date(date_time);
         let current_year = current_date.getFullYear();
@@ -39,17 +42,24 @@ export class Appointment {
         }
     }
 
-    get getDate() {
-        let schedule_date = new Date(this.year, this.month, this.day);
-        return schedule_date.toDateString;
+    get getDateString() {
+        let dateString = ("0" + this.day).slice(-2) + "/" + ("0" + this.month).slice(-2) + "/" + this.year;
+        return dateString;
     }
 
-    get getTime() {
-        let schedule_date = new Date(this.year, this.month, this.day, this.hour, this.minute);
-        return schedule_date.toTimeString;
+    get getTimeString() {
+        let timeString = ("0" + this.hour).slice(-2) + ":" + ("0" + this.minute).slice(-2);
+        return timeString;
     }
 
-    get getService() {
-        return this.service;
+    get getServiceString() {
+        serviceString = SERVICES.find(e => e.id == this.service_id).name;
+        return serviceString;
+
+    }
+    
+    deleteAppointment() {
+        // Delete in service
+        // If success delete local
     }
 }
