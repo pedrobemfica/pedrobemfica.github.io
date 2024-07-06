@@ -1,12 +1,14 @@
 import { SERVICES, MONTHS, WORKING_HOURS, MINUTES } from "../models/entities.js";
-import { retrieveAvailableDateTime, userAppointments, userCredits } from '../controllers/appointment-controller.js';
+import { retrieveAvailableDateTime } from '../controllers/appointment-controller.js';
 
 export class AppointmentView {
-    constructor(user_id) {
+    constructor(user_id, userCredits, userAppointments) {
         this.user_id = user_id;
         this.initializeElements();
         this.updateCredits(user_id);
         this.updateList(user_id);
+        this.userCredits = userCredits
+        this.userAppointments = userAppointments;
     }
 
     initializeElements() {
@@ -17,10 +19,10 @@ export class AppointmentView {
 
         inputService.innerHTML = '';
         for (let service in SERVICES) {
-            let seleted = '';
+            let selected = '';
             if (!service)
-                seleted = 'selected';
-            inputService.innerHTML += `<option ${seleted} value="${SERVICES[service].id}">${SERVICES[service].name}</option>`;
+                selected = 'selected';
+            inputService.innerHTML += `<option ${selected} value="${SERVICES[service].id}">${SERVICES[service].name}</option>`;
         }
 
         appointmentParamsForm.addEventListener('submit', (event) => {
@@ -37,7 +39,7 @@ export class AppointmentView {
     updateCredits() {
         const creditsDisplay = document.getElementById('creditsDisplay');
         
-        let getCreditList = userCredits;
+        let getCreditList = this.userCredits;
         
         creditsDisplay.innerHTML = '';
         for (let credit in getCreditList) {
@@ -79,7 +81,7 @@ export class AppointmentView {
     updateList() {
         const appointmentList = document.getElementById('appointmentList');
         
-        let getAppointmentList = userAppointments;
+        let getAppointmentList = this.userAppointments;
         
         appointmentList.innerHTML = '';
         for (let appointment in getAppointmentList) {

@@ -1,26 +1,68 @@
-import { AppointmentView } from './appointment-view.js';
+import { openAppointmentView } from '../controllers/appointment-controller.js'
+import { openHomeView } from '../controllers/home-controller.js';
 
 export function initialize() {
-    document.addEventListener('DOMContentLoaded', () =>{
-    loadContent('./pages/home.html');
-    const elementList = document.getElementsByClassName("nav-page");
-    let element;
-    for (element of elementList) {
-        let target = element.getAttribute('data-nav-target');
-        element.addEventListener('click', function() {loadContent(target)});
-    };
-})};
+    window.addEventListener('DOMContentLoaded', () =>{
+        loadContent(window.location.pathname);
+    });
 
 
-export function loadContent(page) {
-     fetch(page)
-         .then(response => response.text())
-         .then(data => document.getElementById('content').innerHTML = data)
-         .then(() => {
-            let view;
-            if (page === './pages/appointments.html')
-                view = new AppointmentView();
+    window.addEventListener('popstate', () => {
+        let normalizedPage = window.location.pathname.replace('/client/', '');
+        loadContent(normalizedPage);
+    });
+
+    let navPageList = document.getElementsByClassName("nav-page");
+    [...navPageList].forEach(page => {
+        let path = page.getAttribute('data-nav-target');
+        page.addEventListener('click', event => {
+            event.preventDefault();
+            navigateTo(path);
+        });
+    });
+}
+
+function navigateTo(path) {
+    history.pushState({}, '', path);
+    loadContent(path);
+}
+
+function loadContent(path) {
+    const contentArea = document.getElementById('content');
+        if(path == '/client/' || path == '')
+            path = 'home';
+        fetch(`./pages/${path}.html`)
+            .then(response => response.text())
+            .then(html => contentArea.innerHTML = html)
+            .then(() => {
+                switch(path) {
+                    case 'home':
+                        openHomeView();
+                        break;
+                    case 'registration':
+                        break;
+                    case 'login':
+                        break;
+                    case 'profile':
+                        break;
+                    case 'cart':
+                        break;
+                    case 'payment':
+                        break;
+                    case 'services':
+                        break;
+                    case 'appointments':
+                        openAppointmentView()
+                        break; 
+                    case 'files':
+                        break; 
+                    case 'contact':
+                        break; 
+                    case 'terms':
+                        break; 
+                    default:
+                        throw Error('No page found');
+                }
             })
-         .catch(error => console.error('Error loading content:', error));
-
+            .catch(error => console.error(`Error loading ${path}:`, error));
     }
