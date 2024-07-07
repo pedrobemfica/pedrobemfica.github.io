@@ -45,7 +45,7 @@
     padding: 1rem;
 }
 
-#appointmentNewForm {
+#appointmentNewList {
     justify-content: space-around;
     align-items: center;
     display: flex;
@@ -53,7 +53,7 @@
     flex-wrap: wrap;
 }
 
-#appointmentNewForm div {
+#appointmentNewList div {
     margin: 1rem;
 }
 

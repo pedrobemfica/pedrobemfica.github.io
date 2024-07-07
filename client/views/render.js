@@ -12,6 +12,9 @@ export function initialize() {
         loadContent(normalizedPage);
     });
 
+    window.addEventListener('hashchange', loadContent(window.location.pathname));
+
+
     let navPageList = document.getElementsByClassName("nav-page");
     [...navPageList].forEach(page => {
         let path = page.getAttribute('data-nav-target');

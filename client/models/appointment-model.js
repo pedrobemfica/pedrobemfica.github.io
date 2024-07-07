@@ -1,4 +1,4 @@
-import { WORKING_DAYS, WORKING_HOURS, MINUTES, SERVICES } from "./entities.js";
+import { SERVICES } from "./entities.js";
 
 export class Appointment {
     constructor(user_id, date_time, service_id) {
@@ -8,14 +8,13 @@ export class Appointment {
         else
             throw Error('Service not provided');
 
-        let date = new Date(date_time);
-
-
-        this.year = date.getFullYear();
-        this.month = date.getMonth();  
-        this.day = date.getDay();      
-        this.hour = date.getHours();
-        this.minute = date.getMinutes();
+        this.year = date_time.getFullYear();
+        this.month = date_time.getMonth();  
+        this.day = date_time.getDay();      
+        this.hour = date_time.getHours();
+        this.minute = date_time.getMinutes();
+        console.log(date_time);
+        console.log(this.day + '-' + this.month + '-' + this.year + ' ' + this.hour + ':' + this.minute);
     }
 
     get getDateString() {

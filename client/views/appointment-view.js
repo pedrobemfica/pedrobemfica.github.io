@@ -1,20 +1,19 @@
-import { SERVICES, MONTHS, WORKING_HOURS, MINUTES } from "../models/entities.js";
-import { retrieveAvailableDateTime } from '../controllers/appointment-controller.js';
+import { SERVICES } from "../models/entities.js";
+import { retrieveAvailableDateTime, newAppointment } from '../controllers/appointment-controller.js';
+import { getCookie } from "../controllers/cookie-handler.js";
 
 export class AppointmentView {
-    constructor(user_id, userCredits, userAppointments) {
-        this.user_id = user_id;
+    constructor() {
         this.initializeElements();
-        this.updateCredits(user_id);
-        this.updateList(user_id);
-        this.userCredits = userCredits
-        this.userAppointments = userAppointments;
+        this.updateCredits();
+        this.updateList();
     }
 
     initializeElements() {
 
         const inputService = document.getElementById('inputService');
         const appointmentParamsForm = document.getElementById('appointmentParamsForm');
+        const appointmentNewForm = document.getElementById('appointmentNewForm');
         const appointmentNewButton = document.getElementById('appointmentNewButton');
 
         inputService.innerHTML = '';
@@ -27,41 +26,77 @@ export class AppointmentView {
 
         appointmentParamsForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            this.listAvailability(inputDate.value.substring(0, 4), inputDate.value.substring(5, 7), inputDate.value.substring(8, 10), inputService.value);
+            this.listAvailability(inputDate.value, inputService.value);
+        });
+
+        appointmentNewForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            let radioValue;
+            let radioElements = document.getElementsByTagName('input');
+            for (let i = 0, length = radioElements.length; i < length; i++)
+                if (radioElements[i].type = "radio")
+                    if (radioElements[i].checked)
+                        radioValue = radioElements[i].value;
+            this.newAppointment(inputDate.value, radioValue, inputService.value);
         });
 
         appointmentNewButton.classList.add("buthidden");
-        appointmentNewButton.addEventListener('submit', (event) => {
-            event.preventDefault();
-        });
     }
 
     updateCredits() {
         const creditsDisplay = document.getElementById('creditsDisplay');
         
-        let getCreditList = this.userCredits;
-        
+        let userCredits = []
+        userCredits.push(...JSON.parse(getCookie('userCredits')));
+
         creditsDisplay.innerHTML = '';
-        for (let credit in getCreditList) {
-            let service = SERVICES.find(e => e.id == getCreditList[credit].service);
+        for (let credit in userCredits) {
+            let service = SERVICES.find(e => e.id == userCredits[credit].service);
             creditsDisplay.innerHTML += `<button type="button" class="btn btn-primary">
-                                            ${service.name} <span class="badge text-bg-secondary">${getCreditList[credit].quantity}</span>
+                                            ${service.name} <span class="badge text-bg-secondary">${userCredits[credit].quantity}</span>
                                         </button>`
         }
     }
+    
+    updateList() {
+        const appointmentList = document.getElementById('appointmentList');
+        
+        let userAppointments = [];
+        userAppointments.push(...JSON.parse(getCookie('userAppointments')));
 
-    listAvailability(date_year, date_month, date_day, service) {
-        const appointmentNewForm = document.getElementById('appointmentNewForm');
+        appointmentList.innerHTML = '';
+        for (let appointment in userAppointments) {
+            let showService = SERVICES.find(e => e.id == userAppointments[appointment].service_id).name;
+            let showDate = ("0" + userAppointments[appointment].day).slice(-2) + "/" + ("0" + userAppointments[appointment].month + 1).slice(-2) + "/" + ("000" + userAppointments[appointment].year).slice(-4);
+            let showTime = ("0" + userAppointments[appointment].hour).slice(-2) + ":" + ("0" + userAppointments[appointment].minute).slice(-2);
+            appointmentList.innerHTML += `<td>${showDate}</td>
+                                        <td>${showTime}</td>
+                                        <td>${showService}</td>
+                                        <td><button type="button" class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-trash-can"></i></button>
+                                            <button type="button" class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-download"></i></button>
+                                        </td>`
+        }
+    }
+
+    listAvailability(input_date, service) {
+        const appointmentNewList = document.getElementById('appointmentNewList');
         const appointmentNewButton = document.getElementById('appointmentNewButton');
         const noAvailabilityMessage = document.getElementById('noAvailabilityMessage');
-        
+
+        let date_year = input_date.substring(0, 4);
+        let date_month = input_date.substring(5, 7);
+        let date_day = input_date.substring(8, 10);
+
         let getAvailabilityList = retrieveAvailableDateTime(date_year, date_month, date_day, service);
-        
-        appointmentNewForm.innerHTML = '';
+
+        appointmentNewList.innerHTML = '';
         for (let availability in getAvailabilityList) {
             let timeString = ("0" + getAvailabilityList[availability].hour).slice(-2) + ":" + ("0" + getAvailabilityList[availability].minute).slice(-2);
-            appointmentNewForm.innerHTML += `<div class="form-check">
-                                                <input class="form-check-input" type="radio" name="inputTimeRadio" value="${timeString}">
+            appointmentNewList.innerHTML += `<div class="form-check">
+                                                <input class="form-check-input" type="radio" name="inputTimeRadio" id="inputTimeRadio" value="${timeString}">
                                                 <label class="form-check-label" for="inputTimeRadio">
                                                     ${timeString}
                                                 </label>
@@ -78,24 +113,18 @@ export class AppointmentView {
         }
     }
 
-    updateList() {
-        const appointmentList = document.getElementById('appointmentList');
-        
-        let getAppointmentList = this.userAppointments;
-        
-        appointmentList.innerHTML = '';
-        for (let appointment in getAppointmentList) {
-            let showService = SERVICES.find(e => e.id == getAppointmentList[appointment].service).name;
-            let showDate = ("0" + getAppointmentList[appointment].day).slice(-2) + "/" + ("0" + getAppointmentList[appointment].month).slice(-2) + "/" + ("000" + getAppointmentList[appointment].year).slice(-4);
-            let showTime = ("0" + getAppointmentList[appointment].hour).slice(-2) + ":" + ("0" + getAppointmentList[appointment].minute).slice(-2);
-            appointmentList.innerHTML += `<td>${showDate}</td>
-                                        <td>${showTime}</td>
-                                        <td>${showService}</td>
-                                        <td><button type="button" class="btn btn-outline-primary">
-                                            <i class="fa-solid fa-trash-can"></i></button>
-                                            <button type="button" class="btn btn-outline-primary">
-                                            <i class="fa-solid fa-download"></i></button>
-                                        </td>`
-        }
+    newAppointment(input_date, input_time, service) {
+        let date_year = input_date.substring(0, 4);
+        let date_month = input_date.substring(5, 7);
+        let date_day = input_date.substring(8, 10);
+
+        let date_hour = input_time.substring(0, 2);
+        let date_minute = input_time.substring(3, 4);
+
+        let date_time = new Date(date_year, date_month, date_day, date_hour, date_minute);
+        let service_id = service; 
+
+        newAppointment(date_time, service_id);
+        this.updateList();
     }
 }
