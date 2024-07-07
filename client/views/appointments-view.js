@@ -1,8 +1,8 @@
 import { SERVICES } from "../models/entities.js";
 import { retrieveAvailableDateTime, newAppointment } from '../controllers/appointment-controller.js';
-import { getCookie } from "../controllers/cookie-handler.js";
+import { getCookie } from "../controllers/cookie-controller.js";
 
-export class AppointmentView {
+export class AppointmentsView {
     constructor() {
         this.initializeElements();
         this.updateCredits();
@@ -62,7 +62,7 @@ export class AppointmentView {
         creditsDisplay.innerHTML = '';
         for (let credit in userCredits) {
             let service = SERVICES.find(e => e.id == userCredits[credit].service);
-            creditsDisplay.innerHTML += `<button type="button" class="btn btn-primary">
+            creditsDisplay.innerHTML += `<button type="button" class="btn btn-primary appointments-credits--badge">
                                             ${service.name} <span class="badge text-bg-secondary">${userCredits[credit].quantity}</span>
                                         </button>`
         }
@@ -82,9 +82,9 @@ export class AppointmentView {
             appointmentList.innerHTML += `<td>${showDate}</td>
                                         <td>${showTime}</td>
                                         <td>${showService}</td>
-                                        <td><button type="button" class="btn btn-outline-primary">
+                                        <td><button type="button" class="btn btn-outline-primary appointments-list--buttons">
                                             <i class="fa-solid fa-trash-can"></i></button>
-                                            <button type="button" class="btn btn-outline-primary">
+                                            <button type="button" class="btn btn-outline-primary appointments-list--buttons">
                                             <i class="fa-solid fa-download"></i></button>
                                         </td>`
         }
@@ -134,6 +134,7 @@ export class AppointmentView {
         let service_id = service; 
 
         newAppointment(date_time, service_id);
+        this.updateCredits();
         this.updateList();
         this.clearAvailability();
     }

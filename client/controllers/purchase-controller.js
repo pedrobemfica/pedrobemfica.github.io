@@ -1,3 +1,7 @@
+export function openCartView() {}
+
+export function openPaymentView() {}
+
 let cart = [];
 
 function addToCart(productName, productPrice) {

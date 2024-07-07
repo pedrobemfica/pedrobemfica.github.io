@@ -11,6 +11,17 @@
     margin-bottom: 2rem;
 }
 
+.appointments-credits--badge {
+    background-color: #964734;
+    border-color: #964734;
+}
+
+.appointments-credits--badge:hover {
+    background-color: #4a1f14;
+    border-color: #4a1f14;
+    cursor: default;
+}
+
 .appointments-credits--display {
     display: flex;
     margin-left: 1rem;
@@ -91,6 +102,27 @@
 
 .appointments-list--display thead th:nth-child(3), .appointments-list--display tbody tr td:nth-child(3) {
     width: 30%;
+}
+
+.appointments-new--buttons {
+    background-color: #964734;
+    border-color: #964734;
+}
+
+.appointments-new--buttons:hover {
+    background-color: #4a1f14;
+    border-color: #4a1f14;
+}
+
+.appointments-list--buttons {
+    color: #964734;
+    border-color: #964734;
+}
+
+.appointments-list--buttons:hover {
+    color: #4a1f14;
+    border-color: #4a1f14;
+    background-color: #ffc3b4;
 }
 
 @media (max-width: 768px) {

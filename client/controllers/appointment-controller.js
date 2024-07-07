@@ -1,9 +1,9 @@
 import { Appointment } from "../models/appointment-model.js";
-import { AppointmentView } from "../views/appointment-view.js";
-import { createCookie, getCookie } from "../controllers/cookie-handler.js";
+import { AppointmentsView } from "../views/appointments-view.js";
+import { createCookie, getCookie } from "./cookie-controller.js";
 import { mockAvailability, mockAppointments, mockCredits } from "../mockServer.js"; // ### TEMPORARY
 
-export function openAppointmentView() {
+export function openAppointmentsView() {
     
     let userId = ''; // #### PENDING -- Retrieve logged user
 
@@ -13,7 +13,7 @@ export function openAppointmentView() {
         userCredits.push(...serverCreditList);
         createCookie('userCredits', JSON.stringify(userCredits));
     } else
-        userCredits.push(...JSON.parse(getCookie('userCredits')));
+        userCredits.push(JSON.parse(getCookie('userCredits')));
 
     let userAppointments = [];
     let serverAppointmentList;
@@ -33,14 +33,14 @@ export function openAppointmentView() {
         }
         createCookie('userAppointments', JSON.stringify(userAppointments));
     } else 
-        userAppointments.push(...JSON.parse(getCookie('userAppointments')));
+        userAppointments.push(JSON.parse(getCookie('userAppointments')));
     
-    let page = new AppointmentView(userId);
+    let page = new AppointmentsView(userId);
     createCookie('appointmentPage', page);
 }
 
 export function newAppointment(date_time, service_id) {
-    
+    // #### PENDING -- Discount credit
     let user_id = '';  // #### PENDING -- Retrieve logged user
     let appointment = new Appointment(user_id, date_time, service_id);
     // #### PENDING -- Add to server

@@ -14,25 +14,4 @@ export class Appointment {
         this.hour = date_time.getHours();
         this.minute = date_time.getMinutes();
     }
-
-    get getDateString() {
-        let dateString = ("0" + this.day).slice(-2) + "/" + ("0" + this.month).slice(-2) + "/" + this.year;
-        return dateString;
-    }
-
-    get getTimeString() {
-        let timeString = ("0" + this.hour).slice(-2) + ":" + ("0" + this.minute).slice(-2);
-        return timeString;
-    }
-
-    get getServiceString() {
-        serviceString = SERVICES.find(e => e.id == this.service_id).name;
-        return serviceString;
-
-    }
-    
-    deleteAppointment() {
-        // Delete in service
-        // If success delete local
-    }
 }

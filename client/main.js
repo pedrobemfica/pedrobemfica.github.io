@@ -1,5 +1,5 @@
-import { initialize as initializeRender } from './views/render.js';
-import { initialize as initializeCookie } from './controllers/cookie-consent.js';
+import { initializeRender } from './views/render.js';
+import { initializeCookies } from './controllers/terms-controller.js';
 
 initializeRender();
-initializeCookie();
+initializeCookies();
