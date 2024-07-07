@@ -12,9 +12,9 @@ export class AppointmentView {
     initializeElements() {
 
         const inputService = document.getElementById('inputService');
+        const inputDate = document.getElementById('inputDate');
         const appointmentParamsForm = document.getElementById('appointmentParamsForm');
         const appointmentNewForm = document.getElementById('appointmentNewForm');
-        const appointmentNewButton = document.getElementById('appointmentNewButton');
 
         inputService.innerHTML = '';
         for (let service in SERVICES) {
@@ -23,6 +23,13 @@ export class AppointmentView {
                 selected = 'selected';
             inputService.innerHTML += `<option ${selected} value="${SERVICES[service].id}">${SERVICES[service].name}</option>`;
         }
+
+        let current_date = new Date();
+        let current_year = current_date.getFullYear();
+        let current_month = current_date.getMonth() + 1;
+        let current_day = current_date.getDate();
+        let show_date = `${current_year}-${("0" + current_month).slice(-2)}-${("0" + current_day).slice(-2)}`;
+        inputDate.value = show_date;
 
         appointmentParamsForm.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -34,14 +41,16 @@ export class AppointmentView {
 
             let radioValue;
             let radioElements = document.getElementsByTagName('input');
+            radioElements = [...radioElements].filter(e => e.type == 'radio');
             for (let i = 0, length = radioElements.length; i < length; i++)
-                if (radioElements[i].type = "radio")
-                    if (radioElements[i].checked)
-                        radioValue = radioElements[i].value;
+                if (radioElements[i].checked)
+                    radioValue = radioElements[i].value;
             this.newAppointment(inputDate.value, radioValue, inputService.value);
-        });
-
-        appointmentNewButton.classList.add("buthidden");
+                });
+        
+        inputDate.addEventListener('input', () => this.clearAvailability());
+        inputService.addEventListener('input', () => this.clearAvailability());
+        this.clearAvailability();
     }
 
     updateCredits() {
@@ -68,7 +77,7 @@ export class AppointmentView {
         appointmentList.innerHTML = '';
         for (let appointment in userAppointments) {
             let showService = SERVICES.find(e => e.id == userAppointments[appointment].service_id).name;
-            let showDate = ("0" + userAppointments[appointment].day).slice(-2) + "/" + ("0" + userAppointments[appointment].month + 1).slice(-2) + "/" + ("000" + userAppointments[appointment].year).slice(-4);
+            let showDate = ("0" + userAppointments[appointment].day).slice(-2) + "/" + ("0" + userAppointments[appointment].month).slice(-2) + "/" + ("000" + userAppointments[appointment].year).slice(-4);
             let showTime = ("0" + userAppointments[appointment].hour).slice(-2) + ":" + ("0" + userAppointments[appointment].minute).slice(-2);
             appointmentList.innerHTML += `<td>${showDate}</td>
                                         <td>${showTime}</td>
@@ -84,7 +93,7 @@ export class AppointmentView {
     listAvailability(input_date, service) {
         const appointmentNewList = document.getElementById('appointmentNewList');
         const appointmentNewButton = document.getElementById('appointmentNewButton');
-        const noAvailabilityMessage = document.getElementById('noAvailabilityMessage');
+        const availabilityMessage = document.getElementById('availabilityMessage');
 
         let date_year = input_date.substring(0, 4);
         let date_month = input_date.substring(5, 7);
@@ -96,8 +105,8 @@ export class AppointmentView {
         for (let availability in getAvailabilityList) {
             let timeString = ("0" + getAvailabilityList[availability].hour).slice(-2) + ":" + ("0" + getAvailabilityList[availability].minute).slice(-2);
             appointmentNewList.innerHTML += `<div class="form-check">
-                                                <input class="form-check-input" type="radio" name="inputTimeRadio" id="inputTimeRadio" value="${timeString}">
-                                                <label class="form-check-label" for="inputTimeRadio">
+                                                <input class="form-check-input" type="radio" name="inputTimeRadio" id="inputTimeRadio${availability}" value="${timeString}">
+                                                <label class="form-check-label" for="inputTimeRadio${availability}">
                                                     ${timeString}
                                                 </label>
                                             </div>`
@@ -105,26 +114,37 @@ export class AppointmentView {
         
         if (getAvailabilityList.length != 0) {
             appointmentNewButton.classList.remove('buthidden');
-            noAvailabilityMessage.classList.add('buthidden');
+            availabilityMessage.classList.add('buthidden');
         }
         else {
             appointmentNewButton.classList.add("buthidden");
-            noAvailabilityMessage.classList.remove('buthidden');
+            availabilityMessage.classList.remove('buthidden');
         }
     }
 
     newAppointment(input_date, input_time, service) {
         let date_year = input_date.substring(0, 4);
-        let date_month = input_date.substring(5, 7);
+        let date_month = input_date.substring(5, 7) - 1;
         let date_day = input_date.substring(8, 10);
 
         let date_hour = input_time.substring(0, 2);
-        let date_minute = input_time.substring(3, 4);
+        let date_minute = input_time.substring(3, 5);
 
         let date_time = new Date(date_year, date_month, date_day, date_hour, date_minute);
         let service_id = service; 
 
         newAppointment(date_time, service_id);
         this.updateList();
+        this.clearAvailability();
+    }
+
+    clearAvailability() {
+        const appointmentNewList = document.getElementById('appointmentNewList');
+        const appointmentNewButton = document.getElementById('appointmentNewButton');
+        const availabilityMessage = document.getElementById('availabilityMessage');
+
+        appointmentNewList.innerHTML = '';
+        appointmentNewButton.classList.add('buthidden');
+        availabilityMessage.classList.add('buthidden');
     }
 }

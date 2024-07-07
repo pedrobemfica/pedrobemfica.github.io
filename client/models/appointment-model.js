@@ -9,12 +9,10 @@ export class Appointment {
             throw Error('Service not provided');
 
         this.year = date_time.getFullYear();
-        this.month = date_time.getMonth();  
-        this.day = date_time.getDay();      
+        this.month = date_time.getMonth() + 1;  
+        this.day = date_time.getDate();      
         this.hour = date_time.getHours();
         this.minute = date_time.getMinutes();
-        console.log(date_time);
-        console.log(this.day + '-' + this.month + '-' + this.year + ' ' + this.hour + ':' + this.minute);
     }
 
     get getDateString() {
