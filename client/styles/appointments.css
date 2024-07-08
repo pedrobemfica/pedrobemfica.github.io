@@ -125,6 +125,10 @@
     background-color: #ffc3b4;
 }
 
+#creditsMessage {
+    margin-left: 2rem;
+}
+
 @media (max-width: 768px) {
     .appointments-new {
         flex-direction: column;

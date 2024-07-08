@@ -55,11 +55,17 @@ export class AppointmentsView {
 
     updateCredits() {
         const creditsDisplay = document.getElementById('creditsDisplay');
+        const creditsMessage = document.getElementById('creditsMessage');
         
         let userCredits = []
         userCredits.push(...JSON.parse(getCookie('userCredits')));
 
         creditsDisplay.innerHTML = '';
+        if (userCredits.length != 0) 
+            creditsMessage.classList.add('buthidden');
+        
+        else 
+            creditsMessage.classList.remove('buthidden');
         for (let credit in userCredits) {
             let service = SERVICES.find(e => e.id == userCredits[credit].service);
             creditsDisplay.innerHTML += `<button type="button" class="btn btn-primary appointments-credits--badge">
@@ -70,11 +76,23 @@ export class AppointmentsView {
     
     updateList() {
         const appointmentList = document.getElementById('appointmentList');
+        const appointmentsMessage = document.getElementById('appointmentsMessage');
+        const appointmentsTable = document.getElementById('appointmentsTable');
         
         let userAppointments = [];
         userAppointments.push(...JSON.parse(getCookie('userAppointments')));
 
         appointmentList.innerHTML = '';
+        if (userAppointments.length != 0) {
+            appointmentsMessage.classList.add('buthidden');
+            appointmentsTable.classList.remove('buthidden');
+        } 
+        
+        else {
+            appointmentsMessage.classList.remove('buthidden');
+            appointmentsTable.classList.add('buthidden');
+        }
+        
         for (let appointment in userAppointments) {
             let showService = SERVICES.find(e => e.id == userAppointments[appointment].service_id).name;
             let showDate = ("0" + userAppointments[appointment].day).slice(-2) + "/" + ("0" + userAppointments[appointment].month).slice(-2) + "/" + ("000" + userAppointments[appointment].year).slice(-4);
