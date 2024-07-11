@@ -1,49 +1,55 @@
 import { SERVICES } from "./entities.js";
 
 export class Cart {
-    constructor(user_id) {
-        this.user_id = user_id;
-        this.service_list = [];
+    constructor(userId, serviceList = []) {
+        this.userId = userId;
+        this.serviceList = serviceList;
+    }
+
+    get getUserId() {
+        return this.userId;
     }
 
     get getList() {
-        return this.service_list;
+        return this.serviceList;
     }
 
     addToCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.service_list.find(obj => obj.service === service);
+            let targetObj = this.serviceList.find(obj => obj.service === service);
             if (!targetObj) {
                 newObj = {service: service, quantity: 1};
-                this.service_list.push(newObj);
+                this.serviceList.push(newObj);
             } else
                 targetObj += 1;
             return true;
-        } else
-            throw Error('Not a valid service');
+        } 
+        return false;
     }
 
     reduceFromCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.service_list.find(obj => obj.service === service);
+            let targetObj = this.serviceList.find(obj => obj.service === service);
             if (targetObj)
                 targetObj.quantity -= 1;
             if (targetObj.quantity === 0) {
-                let index = this.service_list.findIndex(obj => obj.service === service);
-                this.service_list.splice(index, 1);
+                let index = this.serviceList.findIndex(obj => obj.service === service);
+                this.serviceList.splice(index, 1);
             }
-        } else
-            throw Error('Not a valid service');
+            return true;
+        } 
+        return false;
     }
 
     removeFromCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.service_list.find(obj => obj.service === service);
+            let targetObj = this.serviceList.find(obj => obj.service === service);
             if (targetObj) {
-                let index = this.service_list.findIndex(obj => obj.service === service);
-                this.service_list.splice(index, 1);
+                let index = this.serviceList.findIndex(obj => obj.service === service);
+                this.serviceList.splice(index, 1);
             }
-        } else
-            throw Error('Not a valid service');
+            return true;
+        } 
+        return false;
     }
 }

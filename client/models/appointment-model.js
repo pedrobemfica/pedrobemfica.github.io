@@ -1,17 +1,43 @@
 import { SERVICES } from "./entities.js";
 
 export class Appointment {
-    constructor(user_id, date_time, service_id) {
-        this.user_id = user_id;
-        if (SERVICES.find(e => e.id == service_id))
-            this.service_id = service_id;
+    constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
+        this.appointmentId = appointmentId;
+        this.userId = userId;
+        
+        this.year = year;
+        this.month = month;  
+        this.day = day;      
+        this.hour = hour;
+        this.minute = minute;
+        
+        if (SERVICES.find(e => e.id == serviceId))
+            this.serviceId = serviceId;
         else
             throw Error('Service not provided');
+    }
 
-        this.year = date_time.getFullYear();
-        this.month = date_time.getMonth() + 1;  
-        this.day = date_time.getDate();      
-        this.hour = date_time.getHours();
-        this.minute = date_time.getMinutes();
+    get getAppointmentId() {
+        return this.appointmentId;
+    }
+
+    get getUserId() {
+        return this.userId;
+    }
+
+    get getDateString() {
+        let dateString = `${("0" + this.day).slice(-2)}/${("0" + this.month).slice(-2)}/${("000" + this.year).slice(-4)}`;
+        return dateString;
+    }
+
+    get getTimeString() {
+        let timeString = `${("0" + this.hour).slice(-2)}:${("0" + this.minute).slice(-2)}`;
+        return timeString;
+    }
+
+    get getServiceString() {
+        let serviceId = SERVICES.find(e => e.id == this.serviceId)
+        let serviceString = SERVICES[serviceId].name;
+        return serviceString;
     }
 }

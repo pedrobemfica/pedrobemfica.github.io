@@ -1,29 +1,27 @@
 export class User {
-    constructor(username, password) {
+    constructor(userId, userName, password) {
         
-        let id = this.generateId();
-        this.id = id
-        this.username = username;
+        let userId = userId;
+        this.userName = userName;
         this.password = password;
 
-        this.name;
-        this.email;
-        this.cell_phone;
+        this.name = '';
+        this.email = '';
+        this.cellPhone = '';
 
-        this.gender;
-        this.birth_year;
-        this.birth_month;
-        this.birth_day;
+        this.gender = '';
+        this.birthYear = null;
+        this.birthMonth = null;
+        this.birthDay = null;
     }
 
-    generateId() {}
-
     set setName(name) {
-        const regex_validation = /^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/;
-        if (regex_validation.test(name))
+        const regexValidation = /^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        if (regexValidation.test(name)) {
             this.name = name;
-        else
-            throw Error('Invalid name');
+            return true;
+        }
+        return false
     }
 
     get getName() {
@@ -31,71 +29,79 @@ export class User {
     }
 
     set setEmail(email) {
-        const regex_validation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        if (regex_validation.test(email))
+        const regexValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if (regexValidation.test(email)) {
             this.email = email;
-        else
-            throw Error('Invalid e-mail');
+            return true;
+        }
+        return false;
     }
 
     get getEmail() {
         return this.email;
     }
 
-    set setCellPhone(cell_phone) {
-        const regex_validation = /(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/;
-        if (regex_validation.test(cell_phone))
-            this.cell_phone = cell_phone;
-        else
-            throw Error('Invalid cell phone');
+    set setCellPhone(cellPhone) {
+        const regexValidation = /(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/;
+        if (regexValidation.test(cellPhone)) {
+            this.cellPhone = cellPhone;
+            return true;
+        }
+        return false;
     }
 
     get getCellPhone() {
-        return this.cell_phone;
+        return this.cellPhone;
     }
 
     set setGender(gender) {
-        const regex_validation = /masculino|feminino/;
-        if (regex_validation.test(gender))
+        const regexValidation = /masculino|feminino/;
+        if (regexValidation.test(gender)) {
             this.gender = gender;
-        else
-            throw Error('Invalid gender');
+            return true;
+        }
+        return false;
     }
 
     get getGender() {
         return this.gender;
     }
 
-    set setBirth(date) {
-        try {
-            let birth_date = new Date(date);
-            this.birth_year = birth_date.getFullYear;
-            this.birth_month = birth_date.getMonth;
-            this.birth_day = birth_date.getDay;
-        } catch {
-            throw Error('Invalid birth date')
-        }
-    }
-
-    get getBirth() {
-        let birth_date = new Date(this.birth_year, this.birth_month, this.birth_day);
-        return birth_date.toDateString;
-    }
-
-    checkCredentials(username, password) {
-        if (username == this.username && password == this.password)
-            return true;
-        else
-            return false;
-    }
-
-    changePassword(username, password, new_password) {
-        if (username == this.username && password == this.password) {
-            this.password = new_password;
+    set setBirth({year, month, day}) {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        if (
+            year > 1900 &&
+            year < currentYear &&
+            month >= 1 &&
+            month <= 12 &&
+            day >= 1 &&
+            day <= 31
+        ) {
+            this.birthYear = year;
+            this.birthMonth = month;
+            this.birthDay = day;
             return true;
         }
-        else
-            throw Error('Invalid username or password');
-        
+        return false;
+    }
+
+    get getBirthString() {
+        let dateString = `${("0" + this.birthDay).slice(-2)}/${("0" + this.birthMonth).slice(-2)}/${("000" + this.birthYear).slice(-4)}`;
+        return dateString;
+    }
+
+    checkCredentials(userName, password) {
+        if (userName == this.userName && password == this.password)
+            return true;
+        return false;
+    }
+
+    changePassword(userName, password, newPassword) {
+        if (userName == this.userName && password == this.password) {
+            this.password = newPassword;
+            return true;
+        }
+        return false;
     }
 }

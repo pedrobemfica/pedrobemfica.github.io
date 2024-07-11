@@ -1,21 +1,20 @@
 import { SERVICES } from "../models/entities.js";
-import { retrieveAvailableDateTime, newAppointment } from '../controllers/appointment-controller.js';
-import { getCookie } from "../controllers/cookie-controller.js";
+import { AppointmentsController } from '../controllers/appointments-controller.js';
 
 export class AppointmentsView {
-    constructor() {
+    constructor(credits, appointments) {
         this.initializeElements();
-        this.updateCredits();
-        this.updateList();
+        this.updateCredits(credits);
+        this.updateList(appointments);
     }
 
     initializeElements() {
 
-        const inputService = document.getElementById('inputService');
-        const inputDate = document.getElementById('inputDate');
         const appointmentParamsForm = document.getElementById('appointmentParamsForm');
         const appointmentNewForm = document.getElementById('appointmentNewForm');
-
+        
+        // Set list of available services
+        const inputService = document.getElementById('inputService');
         inputService.innerHTML = '';
         for (let service in SERVICES) {
             let selected = '';
@@ -23,7 +22,9 @@ export class AppointmentsView {
                 selected = 'selected';
             inputService.innerHTML += `<option ${selected} value="${SERVICES[service].id}">${SERVICES[service].name}</option>`;
         }
-
+       
+        // Set initial date to the input
+        const inputDate = document.getElementById('inputDate');
         let current_date = new Date();
         let current_year = current_date.getFullYear();
         let current_month = current_date.getMonth() + 1;
@@ -31,9 +32,12 @@ export class AppointmentsView {
         let show_date = `${current_year}-${("0" + current_month).slice(-2)}-${("0" + current_day).slice(-2)}`;
         inputDate.value = show_date;
 
+        // Listener for forms
         appointmentParamsForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            this.listAvailability(inputDate.value, inputService.value);
+            AppointmentsController.retrieveAvailableDateTime(inputDate.value, inputService.value).
+            then(availableList => this.listAvailability(availableList)).
+            catch(err => {throw Error('Error retrieving availability', err)});
         });
 
         appointmentNewForm.addEventListener('submit', (event) => {
@@ -48,6 +52,7 @@ export class AppointmentsView {
             this.newAppointment(inputDate.value, radioValue, inputService.value);
                 });
         
+        // Clear availability list on change
         inputDate.addEventListener('input', () => this.clearAvailability());
         inputService.addEventListener('input', () => this.clearAvailability());
         this.clearAvailability();
@@ -80,7 +85,7 @@ export class AppointmentsView {
         const appointmentsTable = document.getElementById('appointmentsTable');
         
         let userAppointments = [];
-        userAppointments.push(...JSON.parse(getCookie('userAppointments')));
+        
 
         appointmentList.innerHTML = '';
         if (userAppointments.length != 0) {
@@ -108,7 +113,7 @@ export class AppointmentsView {
         }
     }
 
-    listAvailability(input_date, service) {
+    listAvailability(availableList) {
         const appointmentNewList = document.getElementById('appointmentNewList');
         const appointmentNewButton = document.getElementById('appointmentNewButton');
         const availabilityMessage = document.getElementById('availabilityMessage');
@@ -138,23 +143,6 @@ export class AppointmentsView {
             appointmentNewButton.classList.add("buthidden");
             availabilityMessage.classList.remove('buthidden');
         }
-    }
-
-    newAppointment(input_date, input_time, service) {
-        let date_year = input_date.substring(0, 4);
-        let date_month = input_date.substring(5, 7) - 1;
-        let date_day = input_date.substring(8, 10);
-
-        let date_hour = input_time.substring(0, 2);
-        let date_minute = input_time.substring(3, 5);
-
-        let date_time = new Date(date_year, date_month, date_day, date_hour, date_minute);
-        let service_id = service; 
-
-        newAppointment(date_time, service_id);
-        this.updateCredits();
-        this.updateList();
-        this.clearAvailability();
     }
 
     clearAvailability() {

@@ -1,4 +1,4 @@
-import { COOKIE_EXPIRES } from "../models/entities.js";
+const COOKIE_EXPIRES = 1;
 
 export function createCookie(name, value) {
     var expires;
