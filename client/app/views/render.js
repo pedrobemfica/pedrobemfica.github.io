@@ -30,7 +30,24 @@ export function initializeRender() {
         });
     });
 
-    // Set menu for logged or not logged user
+    // Setup authentication menu
+    let userRegistration = document.getElementById("userRegistration");
+    let userLogin = document.getElementById("userLogin");
+    let userProfile = document.getElementById("userProfile");
+    let userCart = document.getElementById("userCart");
+    const isAuthenticated = false; // #### PENDING -- Update based on authentication status
+    const username = "User"; // #### PENDING -- Update with actual username
+    if (isAuthenticated) {
+        userRegistration.classList.add('element-hidden');
+        userLogin.classList.add('element-hidden');
+        userProfile.classList.remove('element-hidden');
+        userCart.classList.remove('element-hidden');
+    } else {
+        userRegistration.classList.remove('element-hidden');
+        userLogin.classList.remove('element-hidden');
+        userProfile.classList.add('element-hidden');
+        userCart.classList.add('element-hidden');
+    }
 }
 
 function navigateTo(path) {

@@ -2,23 +2,25 @@ import { Appointment } from "../models/appointment-model.js";
 import { Appointments } from "../models/appointments-model.js";
 import { Credit } from "../models/credit-model.js";
 import { Credits } from "../models/credits-model.js";
+import { routes } from "../api/routes.js";
 import { AppointmentsView } from "../views/appointments-view.js";
 
 import { createCookie, getCookie } from "./cookie-controller.js";
 
 export const AppointmentsController = {
-    openAppointmentsView: function() {   
+    openAppointmentsView: async function() {   
         let userId = ''; // #### PENDING -- Get logged
-        let credits = this.retrieveCredits(userId);
-        let appointments = this.retrieveAppointments(userId);
+        let credits = await this.retrieveCredits(userId);
+        let appointments = await this.retrieveAppointments(userId);
         new AppointmentsView(credits, appointments);
     },   
 
-    retrieveCredits: function(userId) {
+    retrieveCredits: async function(userId) {
+        let userId = ''; // #### PENDING -- Get logged
         let userCredits = [];
         let getUserCredits = [];
         if (!getCookie('userCredits')) {
-            let serverCreditList = mockCredits; // #### TEMPORARY -- Get list of credits from server
+            let serverCreditList = await routes.getCreditsServer(userId);
             getUserCredits.push(...serverCreditList);
             createCookie('userCredits', JSON.stringify(getUserCredits));
         } else
@@ -27,11 +29,12 @@ export const AppointmentsController = {
         return userCredits;
     },
 
-    retrieveAppointments: function(userId) {    
+    retrieveAppointments: async function(userId) {    
+        let userId = ''; // #### PENDING -- Get logged
         let userAppointments = [];
         let getUserAppointments = [];
         if (!getCookie('userAppointments')) {
-            let serverUserAppointments = mockAppointments // #### TEMPORARY -- Get list of appointments from server
+            let serverUserAppointments = routes.getAppointmentsServer(userId);
             createCookie('userAppointments', JSON.stringify(serverUserAppointments));
         }
         getUserAppointments.push(...JSON.parse(getCookie('userAppointments')));
@@ -63,12 +66,13 @@ export const AppointmentsController = {
     }, 
 
     retrieveAvailableDateTime: async function(inputDate, inputService) {
+        year = inputDate.slice(0, 4);
+        month = inputDate.slice(5, 7);
+        day = inputDate.slice(8, 10);
+        serviceId = SERVICES.indexOf(e => e.name == inputService);
         let availableList = [];
-        
-        // ### TEMPORARY -- Get dates from server
-        let avaliabilityList = mockAvailability.filter(e => (e.year == dateYear && e.month == dateMonth && e.day == dateDay && e.serviceId == serviceId));
-    
-        availableList.push(...avaliabilityList);
+        let avaliabilityList = routes.getAvailabilityServer({year, month, day}, serviceId);
+        availableList.push(avaliabilityList);
         return availableList;
     }
 

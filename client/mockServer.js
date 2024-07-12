@@ -1,33 +1,35 @@
 export const mockAppointments = [
-    {id: 1, minute: 45, hour: 8, day: 13, month: 1, year: 2024, service:2, status:'Concluído'}, 
-    {id: 2, minute: 0, hour: 8, day: 5, month: 10, year: 2024, service: 1, status:'Agendado'}, 
-    {id: 3, minute: 15, hour: 8, day: 15, month: 5, year: 2024, service: 1, status:'Concluído'}, 
-    {id: 4, minute: 0, hour: 8, day: 25, month: 7, year: 2024, service: 4, status:'Agendado'}, 
-    {id: 5, minute: 30, hour: 15, day: 7, month: 11, year: 2024, service: 3, status:'Agendado'}
+    { appointmentId: 1, userId: 1, date: {year: 2024, month: 7, day: 10}, time: {hour: 8, minute: 0}, serviceId: 1 },
+    { appointmentId: 2, userId: 1, date: {year: 2024, month: 8, day: 11}, time: {hour: 9, minute: 15}, serviceId: 2 },
+    { appointmentId: 3, userId: 1, date: {year: 2024, month: 9, day: 12}, time: {hour: 10, minute: 30}, serviceId: 3 },
+    { appointmentId: 4, userId: 1, date: {year: 2024, month: 10, day: 13}, time: {hour: 13, minute: 45}, serviceId: 4 },
+    { appointmentId: 5, userId: 1, date: {year: 2024, month: 11, day: 14}, time: {hour: 14, minute: 0}, serviceId: 1 },
 ];
 
+
 export const mockAvailability = [
-    {minute: 0, hour: 8, day: 10, month: 7, year: 2024, service:1},
-    {minute: 30, hour: 8, day: 10, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 9, day: 10, month: 7, year: 2024, service:1},
-    {minute: 30, hour: 9, day: 10, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 10, day: 10, month: 7, year: 2024, service:1},
-    {minute: 30, hour: 10, day: 10, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 11, day: 10, month: 7, year: 2024, service:1},
-    {minute: 30, hour: 11, day: 10, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 8, day: 11, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 9, day: 11, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 10, day: 11, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 11, day: 11, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 13, day: 11, month: 7, year: 2024, service:1},
-    {minute: 0, hour: 14, day: 11, month: 7, year: 2024, service:1},
-
-
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 8, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 8, minute: 30 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 9, minute: 0, }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 9, minute: 30 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 10, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 10, minute: 30 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 11, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 10 }, time: { hour: 11, minute: 30 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 8, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 9, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 10, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 11, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 13, minute: 0 }, serviceId: 1 },
+    { date: { year: 2024, month: 7, day: 11 }, time: { hour: 14, minute: 0 }, serviceId: 1 },
 ];
 
 export const mockCredits = [
-    {id: 2, service: 1, quantity: 2}, 
-    {id: 6, service: 4, quantity: 1}
+
+    { creditId: 1, userId: 1, serviceId: 1, status: 'active' },
+    { creditId: 2, userId: 1, serviceId: 1, status: 'active' },
+    { creditId: 3, userId: 1, serviceId: 2, status: 'active' },
+    { creditId: 4, userId: 1, serviceId: 3, status: 'inactive' }
 ];
 
 export const mockFiles = [];

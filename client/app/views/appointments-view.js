@@ -67,10 +67,10 @@ export class AppointmentsView {
 
         creditsDisplay.innerHTML = '';
         if (userCredits.length != 0) 
-            creditsMessage.classList.add('buthidden');
+            creditsMessage.classList.add('element-hidden');
         
         else 
-            creditsMessage.classList.remove('buthidden');
+            creditsMessage.classList.remove('element-hidden');
         for (let credit in userCredits) {
             let service = SERVICES.find(e => e.id == userCredits[credit].service);
             creditsDisplay.innerHTML += `<button type="button" class="btn btn-primary appointments-credits--badge">
@@ -89,13 +89,13 @@ export class AppointmentsView {
 
         appointmentList.innerHTML = '';
         if (userAppointments.length != 0) {
-            appointmentsMessage.classList.add('buthidden');
-            appointmentsTable.classList.remove('buthidden');
+            appointmentsMessage.classList.add('element-hidden');
+            appointmentsTable.classList.remove('element-hidden');
         } 
         
         else {
-            appointmentsMessage.classList.remove('buthidden');
-            appointmentsTable.classList.add('buthidden');
+            appointmentsMessage.classList.remove('element-hidden');
+            appointmentsTable.classList.add('element-hidden');
         }
         
         for (let appointment in userAppointments) {
@@ -118,15 +118,9 @@ export class AppointmentsView {
         const appointmentNewButton = document.getElementById('appointmentNewButton');
         const availabilityMessage = document.getElementById('availabilityMessage');
 
-        let date_year = input_date.substring(0, 4);
-        let date_month = input_date.substring(5, 7);
-        let date_day = input_date.substring(8, 10);
-
-        let getAvailabilityList = retrieveAvailableDateTime(date_year, date_month, date_day, service);
-
         appointmentNewList.innerHTML = '';
-        for (let availability in getAvailabilityList) {
-            let timeString = ("0" + getAvailabilityList[availability].hour).slice(-2) + ":" + ("0" + getAvailabilityList[availability].minute).slice(-2);
+        for (let availability in availableList) {
+            let timeString = ("0" + availableList[availability].hour).slice(-2) + ":" + ("0" + availableList[availability].minute).slice(-2);
             appointmentNewList.innerHTML += `<div class="form-check">
                                                 <input class="form-check-input" type="radio" name="inputTimeRadio" id="inputTimeRadio${availability}" value="${timeString}">
                                                 <label class="form-check-label" for="inputTimeRadio${availability}">
@@ -135,13 +129,13 @@ export class AppointmentsView {
                                             </div>`
         }
         
-        if (getAvailabilityList.length != 0) {
-            appointmentNewButton.classList.remove('buthidden');
-            availabilityMessage.classList.add('buthidden');
+        if (availableList.length != 0) {
+            appointmentNewButton.classList.remove('element-hidden');
+            availabilityMessage.classList.add('element-hidden');
         }
         else {
-            appointmentNewButton.classList.add("buthidden");
-            availabilityMessage.classList.remove('buthidden');
+            appointmentNewButton.classList.add("element-hidden");
+            availabilityMessage.classList.remove('element-hidden');
         }
     }
 
@@ -151,7 +145,7 @@ export class AppointmentsView {
         const availabilityMessage = document.getElementById('availabilityMessage');
 
         appointmentNewList.innerHTML = '';
-        appointmentNewButton.classList.add('buthidden');
-        availabilityMessage.classList.add('buthidden');
+        appointmentNewButton.classList.add('element-hidden');
+        availabilityMessage.classList.add('element-hidden');
     }
 }

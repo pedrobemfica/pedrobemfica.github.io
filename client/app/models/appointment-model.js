@@ -1,9 +1,9 @@
-import { SERVICES } from "./entities.js";
+import { SERVICES } from "../helpers/entities-helper.js";
 
 export class Appointment {
     constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
         this.appointmentId = appointmentId;
-        this.userId = userId;
+        this.userId = userId; 
         
         this.year = year;
         this.month = month;  

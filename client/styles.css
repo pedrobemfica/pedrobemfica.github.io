@@ -19,3 +19,8 @@ body {
     flex-direction: column;
     height: 100vh;
 }
+
+
+.element-hidden {
+    display: none;
+}

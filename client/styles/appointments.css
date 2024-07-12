@@ -68,10 +68,6 @@
     margin: 1rem;
 }
 
-.buthidden {
-    display: none;
-}
-
 .appointments-list--display {
     display: flex;
     flex-direction: column;
