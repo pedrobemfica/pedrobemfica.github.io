@@ -1,55 +1,57 @@
-import { SERVICES } from "./entities.js";
+import { SERVICES } from "./entities.js"
 
 export class Cart {
-    constructor(userId, serviceList = []) {
-        this.userId = userId;
-        this.serviceList = serviceList;
+    constructor(userId, cartList = []) {
+        this.userId = userId
+        this.cartList = cartList
     }
 
     get getUserId() {
-        return this.userId;
+        return this.userId
     }
 
-    get getList() {
-        return this.serviceList;
+    get getCartList() {
+        return [].concat(this.cartList)
     }
 
     addToCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.serviceList.find(obj => obj.service === service);
+            let targetObj = this.cartList.find(obj => obj.service == service)
             if (!targetObj) {
-                newObj = {service: service, quantity: 1};
-                this.serviceList.push(newObj);
+                newObj = {service: service, quantity: 1}
+                this.cartList.push(newObj)
             } else
-                targetObj += 1;
-            return true;
+                targetObj.quantity += 1
+            return true
         } 
-        return false;
+        return false
     }
 
     reduceFromCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.serviceList.find(obj => obj.service === service);
+            let targetObj = this.cartList.find(obj => obj.service === service)
             if (targetObj)
-                targetObj.quantity -= 1;
-            if (targetObj.quantity === 0) {
-                let index = this.serviceList.findIndex(obj => obj.service === service);
-                this.serviceList.splice(index, 1);
+                targetObj.quantity -= 1
+            else
+                return false
+            if (targetObj.quantity <= 0) {
+                let index = this.cartList.findIndex(obj => obj.service === service)
+                this.cartList.splice(index, 1)
             }
-            return true;
+            return true
         } 
-        return false;
+        return false
     }
 
     removeFromCart(service) {
         if (service in SERVICES) {
-            let targetObj = this.serviceList.find(obj => obj.service === service);
+            let targetObj = this.cartList.find(obj => obj.service === service)
             if (targetObj) {
-                let index = this.serviceList.findIndex(obj => obj.service === service);
-                this.serviceList.splice(index, 1);
+                let index = this.cartList.findIndex(obj => obj.service === service)
+                this.cartList.splice(index, 1)
+                return true
             }
-            return true;
         } 
-        return false;
+        return false
     }
 }

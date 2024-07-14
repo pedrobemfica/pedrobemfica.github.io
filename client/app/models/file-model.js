@@ -1,29 +1,29 @@
 export class File {
     constructor(fileId, userId, label, path) {
-        this.fileId = fileId;
-        this.userId = userId;
-        this.label = label;
-        this.path = path;
+        this.fileId = fileId
+        this.userId = userId
+        this.label = label
+        this.path = path
     }
 
     get getFileId() {
-        return this.fileId;
+        return this.fileId
     }
 
     get getUserId() {
-        return this.userId;
+        return this.userId
     }
 
     set setLabel(label) {
-        this.label = label;
-        return true;
+        this.label = label
+        return true
     }
 
     get getLabel() {
-        return this.label;
+        return this.label
     }
 
     get getPath() {
-        return this.path;
+        return this.path
     }
 }

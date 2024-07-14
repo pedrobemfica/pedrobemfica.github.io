@@ -1,66 +1,66 @@
 export class User {
     constructor(userId, userName, password) {
         
-        let userId = userId;
-        this.userName = userName;
-        this.password = password;
+        let userId = userId
+        this.userName = userName
+        this.password = password
 
-        this.name = '';
-        this.email = '';
-        this.cellPhone = '';
+        this.name = ''
+        this.email = ''
+        this.cellPhone = ''
 
-        this.gender = '';
-        this.birthYear = null;
-        this.birthMonth = null;
-        this.birthDay = null;
+        this.gender = ''
+        this.birthYear = null
+        this.birthMonth = null
+        this.birthDay = null
     }
 
     set setName(name) {
-        const regexValidation = /^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        const regexValidation = /^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/
         if (regexValidation.test(name)) {
-            this.name = name;
-            return true;
+            this.name = name
+            return true
         }
         return false
     }
 
     get getName() {
-        return this.name;
+        return this.name
     }
 
     set setEmail(email) {
-        const regexValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        const regexValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         if (regexValidation.test(email)) {
-            this.email = email;
-            return true;
+            this.email = email
+            return true
         }
-        return false;
+        return false
     }
 
     get getEmail() {
-        return this.email;
+        return this.email
     }
 
     set setCellPhone(cellPhone) {
-        const regexValidation = /(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/;
+        const regexValidation = /(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/
         if (regexValidation.test(cellPhone)) {
-            this.cellPhone = cellPhone;
-            return true;
+            this.cellPhone = cellPhone
+            return true
         }
-        return false;
+        return false
     }
 
     get getCellPhone() {
-        return this.cellPhone;
+        return this.cellPhone
     }
 
     set setGender(gender) {
-        const regexValidation = /masculino|feminino/;
+        const regexValidation = /masculino|feminino/
         if (regexValidation.test(gender)) {
-            this.gender = gender;
-            return true;
+            this.gender = gender
+            return true
         }
-        return false;
+        return false
     }
 
     get getGender() {

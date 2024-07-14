@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Clínica Olimpo</title>
+    <meta
+      name="description"
+      content="Clínica de Nutrologia - Bem-estar, Performance e Emagrecimento."
+    />
+
+    <!-- Stylesheets CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./styles/reset.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="./styles.css" />
+
+    <!-- Javascript-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/d62d22b3b2.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+    <script type="module" src="main.js" defer></script>
+  </head>
+
+  <body>
+    <header class="header-container">
+      <div class="header--logo">
+        <a href="#" data-nav-target="home" class="nav-page">
+          <img
+            src="./assets/images/logo-white.png"
+            alt="Logo"
+            style="width: 130px; height: 50px"
+        /></a>
+      </div>
+
+      <nav class="header--nav-user">
+        <ul>
+          <li id="userRegistration">
+            <button
+              data-nav-target="registration"
+              type="button"
+              class="btn btn-primary nav--user-register nav-page"
+            >
+              Registrar
+            </button>
+          </li>
+          <li id="userLogin">
+            <button
+              data-nav-target="login"
+              type="button"
+              class="btn btn-outline-primary nav--user-login nav-page"
+            >
+              Entrar
+            </button>
+          </li>
+          <li id="userProfile">
+            <a
+              data-nav-target="profile"
+              class="nav--user-logged nav-page element-hidden"
+              href="#"
+              ><i class="fa-solid fa-user"></i> <span>Nome usuário</span></a
+            >
+          </li>
+          <li id="userCart">
+            <a
+              data-nav-target="cart"
+              class="nav--user-cart nav-page element-hidden"
+              href="#"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <nav class="nav--menu">
+      <ul>
+        <li>
+          <a href="#" data-nav-target="home" class="nav-page">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-house"></i
+            ></span>
+            <span class="nav--menu-text">Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav-target="services" class="nav-page">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-stethoscope"></i
+            ></span>
+            <span class="nav--menu-text">Serviços</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            data-nav-target="appointments"
+            class="nav-page"
+          >
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-calendar-days"></i
+            ></span>
+            <span class="nav--menu-text">Agendamentos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav-target="files" class="nav-page">
+            <span class="nav--menu-icon"><i class="fa-solid fa-file"></i></span>
+            <span class="nav--menu-text">Documentos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav-target="contact" class="nav-page">
+            <span class="nav--menu-icon"
+              ><i class="fa-solid fa-message"></i
+            ></span>
+            <span class="nav--menu-text">Contato</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="content">
+      <!-- Automatic load content here -->
+    </main>
+
+    <footer class="footer-container">
+      <div class="footer--logo">
+        <a href="#" data-nav-target="home" class="nav-page">
+          <img
+            src="./assets/images/logo-dark.png"
+            alt="Logo"
+            style="width: 130px; height: 50px"
+        /></a>
+      </div>
+      <div class="footer--contact">
+        <ul>
+          <li>Contatos:</li>
+          <li>
+            Telefone: (31) 9 9603-0423 <i class="fa-brands fa-whatsapp"></i>
+          </li>
+          <li>E-mail: contato@clinicaolimpo.com</li>
+        </ul>
+      </div>
+      <nav class="footer--nav">
+        <ul>
+          <li>
+            <a href="#" data-nav-target="terms" class="nav-page"
+              >Termos e Condições</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+
+    <!--Cookie consent--> 
+    <div id="cookieConsent" class="cookie-consent">
+      <p>
+        Esta website utiliza cookies e tecnologias semelhantes para melhorar sua
+        navegação. Ao continuar navegando você concorda com a nossa Política de
+        Privacidade.
+      </p>
+      <button id="acceptCookies">OK</button>
+    </div>
+
+    <!--Toast for alert--> 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="toastAlert" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto" id="alertTitle"></strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="alertMessage">
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

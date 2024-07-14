@@ -1,34 +1,34 @@
-import { SERVICES } from "./entities.js";
+import { SERVICES } from "./entities.js"
 
 export class Credit {
     constructor(creditId, userId, serviceId, status = 'active') {
-        this.creditId = creditId;
-        this.userId = userId;
+        this.creditId = creditId
+        this.userId = userId
         
         if (SERVICES.find(e => e.id == serviceId))
-            this.serviceId = serviceId;
+            this.serviceId = serviceId
         else
-            throw Error('Service not provided');
+            throw Error('Service not provided')
 
-        this.status = status;
+        this.status = status
     }
 
     get getCreditId() {
-        return this.creditId;
+        return this.creditId
     }
 
     get getUserId() {
-        return this.userId;
+        return this.userId
     }
 
     get getStatus() {
-        return this.status;
+        return this.status
     }
 
     set setStatus(status) {
         if (status == 'active' ||
             status == 'inactive') {
-                this.status = status;
+                this.status = status
                 return true
             }
         return false;
@@ -36,7 +36,7 @@ export class Credit {
 
     get getServiceString() {
         let serviceId = SERVICES.find(e => e.id == this.serviceId)
-        let serviceString = SERVICES[serviceId].name;
-        return serviceString;
+        let serviceString = SERVICES[serviceId].name
+        return serviceString
     }
 }

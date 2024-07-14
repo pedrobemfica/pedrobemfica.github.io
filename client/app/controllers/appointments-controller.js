@@ -1,21 +1,19 @@
-import { Appointment } from "../models/appointment-model.js";
-import { Appointments } from "../models/appointments-model.js";
-import { Credit } from "../models/credit-model.js";
-import { Credits } from "../models/credits-model.js";
-import { routes } from "../api/routes.js";
-import { AppointmentsView } from "../views/appointments-view.js";
+import { Appointment } from "../models/appointment-model.js"
+import { Appointments } from "../models/appointments-model.js"
+import { Credit } from "../models/credit-model.js"
+import { Credits } from "../models/credits-model.js"
 
-import { createCookie, getCookie } from "./cookie-controller.js";
+import { routes } from "../api/routes.js"
 
-export const AppointmentsController = {
-    openAppointmentsView: async function() {   
-        let userId = ''; // #### PENDING -- Get logged
-        let credits = await this.retrieveCredits(userId);
-        let appointments = await this.retrieveAppointments(userId);
-        new AppointmentsView(credits, appointments);
-    },   
+import { createCookie, getCookie } from "./cookie-controller.js"
 
-    retrieveCredits: async function(userId) {
+export class AppointmentsController  {
+    constructor() {
+        this.appointments = new Appointments()
+        this.credits = new Credits()
+    }
+
+    async retrieveCredits() {
         let userId = ''; // #### PENDING -- Get logged
         let userCredits = [];
         let getUserCredits = [];
@@ -27,9 +25,13 @@ export const AppointmentsController = {
             getUserCredits.push(JSON.parse(getCookie('userCredits')));
         userCredits = getUserCredits.map(e => new Credit(e.user_id, e.date_time, e.service_id));
         return userCredits;
-    },
+    }
 
-    retrieveAppointments: async function(userId) {    
+    retrieveShortCredits() {
+        return this.credits.getShortCredits()
+    }
+
+    async retrieveAppointments() {    
         let userId = ''; // #### PENDING -- Get logged
         let userAppointments = [];
         let getUserAppointments = [];
@@ -40,20 +42,20 @@ export const AppointmentsController = {
         getUserAppointments.push(...JSON.parse(getCookie('userAppointments')));
         userAppointments = getUserAppointments.map(e => new Appointment(e.user_id, e.date_time, e.service_id));
         return userAppointments;
-    },
+    }
 
-    newAppointment: function() {
+    newAppointment() {
         // #### PENDING -- Discount credit
         let user_id = '';  // #### PENDING -- Retrieve logged user
-        let appointment = new Appointment(user_id, date_time, service_id);
+        let appointment = new Appointment(userId, date_time, service_id);
         // #### PENDING -- Add to server
         let userAppointments = JSON.parse(getCookie('userAppointments'));
         userAppointments.push(appointment);
         createCookie('userAppointments', JSON.stringify(userAppointments));
         return true;
-    },
+    }
 
-    deleteAppointment: function(appointmentId) {
+    deleteAppointment(appointmentId) {
         let userAppointments = getCookie('userAppointments');
         const index = userAppointments.indexOf(object);
         if (index > -1) {
@@ -63,9 +65,9 @@ export const AppointmentsController = {
             return true;
         }
         return false;
-    }, 
+    }
 
-    retrieveAvailableDateTime: async function(inputDate, inputService) {
+    retrieveAvailableDateTime(inputDate, inputService) {
         year = inputDate.slice(0, 4);
         month = inputDate.slice(5, 7);
         day = inputDate.slice(8, 10);

@@ -1,32 +1,32 @@
-import { File } from './file-model.js';
+import { File } from './file-model.js'
 
 export class Files {
     constructor() {
-        this.list = [];
+        this.list = []
     }
 
     get getFiles() {
-        return this.list;
+        return this.list
     }
 
     insertFile(fileObject) {
         if (fileObject instanceof File) {
-            this.list.push(fileObject);
-            return true;
+            this.list.push(fileObject)
+            return true
         }
-        return false;
+        return false
     }
 
     removeFile(fileId) {
-        let fileIndex = this.list.findIndex(e => e.fileId == fileId);
+        let fileIndex = this.list.findIndex(e => e.fileId == fileId)
         if (fileIndex != -1) {
-            this.list.splice(fileIndex, 1);
-            return true;
+            this.list.splice(fileIndex, 1)
+            return true
         }
-        return false;
+        return false
     }
 
     findFileById(fileId) {
-        return this.list.find(e => e.fileId == fileId);
+        return this.list.find(e => e.fileId == fileId)
     }
 }
