@@ -1,4 +1,5 @@
 import { Credit } from './credit-model.js'
+import { SERVICES } from '../helpers/entities-helper.js'
 
 export class Credits {
     constructor() {
@@ -42,5 +43,9 @@ export class Credits {
 
     findCreditById(creditId) {
         return this.list.find(e => e.creditId == creditId)
+    }
+
+    findAvailableCredit(serviceId) {
+        return this.list.findIndex(e => e.serviceId == serviceId && e.status == 'active')
     }
 }

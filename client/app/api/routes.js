@@ -1,32 +1,39 @@
-import { mockAvailability, mockAppointments, mockCredits } from "../../mockServer.js"; // ### TEMPORARY
+import { mockAvailability, mockAppointments, mockCredits } from "../../mockServer.js"
 
 export const routes = {
-    async getAppointmentsServer(userId) {
-        let serverList = mockAppointments; // ### TEMPORARY
-        return serverList.filter(e => e.userId == userId);
+    getAppointmentsServer(userId) {
+        let serverList = mockAppointments
+        return serverList.filter(e => e.userId == userId)
     },
 
-    async newAppointment(appointment) {
-        mockAppointments.push(appointment); // ### TEMPORARY
-        return true;
+    nextAppointmentId() {
+        return Math.max(...mockAppointments.map(e => e.appointmentId)) + 1
     },
 
-    async deleteAppointment(appointmentId) {
-        let index = mockAppointments.find(e => e.appointmentId == appointmentId);
-        mockAppointments = mockAppointments.splice(index, 1);
-        return true;
+    newAppointment(appointment) {
+        mockAppointments.push(appointment)
+        return true
     },
 
-    async getAvailabilityServer({year, month, day}, serviceId) {
-        let serverList = mockAvailability; // ### TEMPORARY
-        let lisTime = serverList
-            .filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
-            .map(e =>  e.time);
-        return lisTime;
+    deleteAppointment(appointmentId) {
+        let index = mockAppointments.find(e => e.appointmentId == appointmentId)
+        mockAppointments = mockAppointments.splice(index, 1)
+        return true
     },
 
-    async getCreditsServer(userId) {
-        let serverList = mockCredits; // ### TEMPORARY
-        return serverList.filter(e => e.userId == userId && e.status == 'active');
+    getAvailabilityServer({year, month, day}, serviceId) {
+        let serverList = mockAvailability
+        return serverList.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
+    },
+
+    getCreditsServer() {
+        let serverList = mockCredits
+        return serverList.filter(e => e.status == 'active')
+    },
+
+    changeCreditStatus(creditId, newStatus) {
+        let index = mockCredits.findIndex(e => e.creditId == creditId)
+        mockCredits[index].status = newStatus
+        return true
     }
 }

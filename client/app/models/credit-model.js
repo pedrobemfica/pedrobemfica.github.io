@@ -1,4 +1,4 @@
-import { SERVICES } from "./entities.js"
+import { SERVICES } from "../helpers/entities-helper.js"
 
 export class Credit {
     constructor(creditId, userId, serviceId, status = 'active') {

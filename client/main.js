@@ -1,5 +1,3 @@
-import { initializeRender } from './views/render.js'
-import { initializeCookies } from './controllers/terms-controller.js'
+import { ApplicationView } from "./app/views/application-view.js"
 
-initializeRender()
-initializeCookies()
+const applicationView = new ApplicationView();

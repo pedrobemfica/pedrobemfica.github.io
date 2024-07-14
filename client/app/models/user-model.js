@@ -1,7 +1,7 @@
 export class User {
     constructor(userId, userName, password) {
         
-        let userId = userId
+        this.userId = userId
         this.userName = userName
         this.password = password
 
