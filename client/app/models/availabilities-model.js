@@ -6,7 +6,7 @@ export class Availabilities {
     }
 
     get getAvailabilities() {
-        return this.list
+        return [].concat(this.list)
     }
 
     insertAvailability(availabilityObject) {

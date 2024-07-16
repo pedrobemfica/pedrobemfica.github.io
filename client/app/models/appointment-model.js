@@ -36,8 +36,8 @@ export class Appointment {
     }
 
     get getServiceString() {
-        let serviceId = SERVICES.find(e => e.id == this.serviceId)
-        let serviceString = SERVICES[serviceId].name
+        let serviceIndex = SERVICES.findIndex(e => e.id == this.serviceId)
+        let serviceString = SERVICES[serviceIndex].name
         return serviceString
     }
 }

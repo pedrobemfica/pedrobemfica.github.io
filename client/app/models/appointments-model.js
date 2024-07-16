@@ -6,7 +6,11 @@ export class Appointments {
     }
 
     get getAppointments() {
-        return this.list
+        return [].concat(this.list)
+    }
+
+    getAppointmentById(appointmentId) {
+        return this.list.find(e => e.appointmentId == appointmentId)
     }
 
     insertAppointment(appointmentObject) {
@@ -24,5 +28,9 @@ export class Appointments {
             return true
         }
         return false
+    }
+
+    clearAppointments() {
+        this.list = []
     }
 }

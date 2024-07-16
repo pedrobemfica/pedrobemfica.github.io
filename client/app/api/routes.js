@@ -1,9 +1,8 @@
 import { mockAvailability, mockAppointments, mockCredits } from "../../mockServer.js"
 
 export const routes = {
-    getAppointmentsServer(userId) {
-        let serverList = mockAppointments
-        return serverList.filter(e => e.userId == userId)
+    getAppointmentsServer() {
+        return [].concat(mockAppointments)
     },
 
     nextAppointmentId() {
@@ -11,29 +10,51 @@ export const routes = {
     },
 
     newAppointment(appointment) {
-        mockAppointments.push(appointment)
+        let dateObj = {year: appointment.year, month: appointment.month, day: appointment.day}
+        let timeObj = {hour: appointment.hour, minute: appointment.minute}
+        let newObj = {
+            appointmentId: appointment.appointmentId,
+            userId: appointment.userId,
+            date: dateObj,
+            time: timeObj,
+            serviceId: appointment.serviceId
+        };
+        mockAppointments.push(newObj)
         return true
     },
 
     deleteAppointment(appointmentId) {
-        let index = mockAppointments.find(e => e.appointmentId == appointmentId)
-        mockAppointments = mockAppointments.splice(index, 1)
+        let index = mockAppointments.findIndex(e => e.appointmentId == appointmentId)
+        mockAppointments.splice(index, 1)
         return true
     },
 
-    getAvailabilityServer({year, month, day}, serviceId) {
-        let serverList = mockAvailability
-        return serverList.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
+    getCreditsServer() {
+        return mockCredits.filter(e => e.status == 'active')
     },
 
-    getCreditsServer() {
-        let serverList = mockCredits
-        return serverList.filter(e => e.status == 'active')
+    nextCreditId() {
+        return Math.max(...mockCredits.map(e => e.creditId)) + 1
+    },
+
+    newCredit(credit) {
+        let newObj = {
+            creditId: credit.creditId, 
+            userId: credit.userId,
+            serviceId: credit.serviceId,
+            status: credit.status
+        };
+        mockCredits.push(newObj)
+        return true
     },
 
     changeCreditStatus(creditId, newStatus) {
         let index = mockCredits.findIndex(e => e.creditId == creditId)
         mockCredits[index].status = newStatus
         return true
+    },
+
+    getAvailabilityServer({year, month, day}, serviceId) {
+        return mockAvailability.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
     }
 }

@@ -1,5 +1,4 @@
-export const Alert = {
-    function(title, message) {
+export const alertMessage = (title, message) => {
         const alertTitle = document.getElementById('alertTitle');
         const alertMessage = document.getElementById('alertMessage');
         const toastAlert = document.getElementById('toastAlert')
@@ -9,4 +8,3 @@ export const Alert = {
         alertMessage.innerHTML = message;
         toastBootstrap.show()
     }
-}

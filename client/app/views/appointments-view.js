@@ -1,103 +1,157 @@
 import { AppointmentsController } from "../controllers/appointments-controller.js"
+import { alertMessage } from "../helpers/alert-helper.js"
 import { SERVICES } from "../helpers/entities-helper.js"
 
 export class AppointmentsView {
     constructor() {
-        this.creditsShortList = []
+        this.creditsList = []
         this.appointmentsList = []
+        this.loggedUser = ''
 
         this.appointmentsController = new AppointmentsController()
 
+        this.allSections = document.getElementsByTagName('section')
         this.creditsShortList = document.getElementById('creditsShortList')
+        this.availabilitiesListTitle = document.getElementById('availabilitiesListTitle')
+        this.availabilitiesListButton = document.getElementById('availabilitiesListButton')
         this.availabilitiesList = document.getElementById('availabilitiesList')
-        this.appointmentsList = document.getElementById('appointmentsList')
+        this.appointmentsTable = document.getElementById('appointmentsTable')
+        this.appointmentsCompleteList = document.getElementById('appointmentsCompleteList')
         
         this.inputServicesAppointmentFilter = document.getElementById('inputServicesAppointmentFilter')
         this.inputDateAppointmentFilter = document.getElementById('inputDateAppointmentFilter')
-        this.inputTimeAppointmentFilter = document.getElementById('this.inputTimeAppointmentFilter')
         
-        this.newAppointmentFilterForm = document.getElementById('newAppointmentFilterForm')
-        this.newAppointmentFilterForm.addEventListener('submit', event => {
-            event.preventDefault()
-            this.showAvailabilitiesList(this.appointmentsController.retrieveAvailabilities(
-                this.inputDateAppointmentFilter.value, 
-                this.inputServicesAppointmentFilter.value
-            ))
-        })
-
-        this.newAppointmentListForm = document.getElementById('newAppointmentListForm')
-        this.newAppointmentListForm.addEventListener('submit', event => {
-            event.preventDefault()
-            this.appointmentsController.newAppointment(
-                this.inputDateAppointmentFilter.value, 
-                this.inputTimeAppointmentFilter.value, 
-                this.inputServicesAppointmentFilter.value
-            )
-            this.updateView()
-        })
-
+        this.userLoggedMessage = document.getElementById('userLoggedMessage')
         this.creditsShortListMessage = document.getElementById('creditsShortListMessage')
         this.availabilitiesListMessage = document.getElementById('availabilitiesListMessage')
         this.appointmentsListMessage = document.getElementById('appointmentsListMessage')
 
+        this.newAppointmentFilterForm = document.getElementById('newAppointmentFilterForm')
+        this.newAppointmentListForm = document.getElementById('newAppointmentListForm')
+        
+        this.newAppointmentFilterForm.addEventListener('submit', event => {
+            event.preventDefault()
+            let getList = this.appointmentsController.retrieveAvailabilities(
+                this.inputDateAppointmentFilter.value, 
+                this.inputServicesAppointmentFilter.value
+            )
+            this.showAvailabilitiesList(getList)
+        })
+
+        this.newAppointmentListForm.addEventListener('submit', event => {
+            event.preventDefault()           
+            let inputTimeAppointment = this.getRadioTime()
+            this.appointmentsController.newAppointment(
+                this.inputDateAppointmentFilter.value, 
+                inputTimeAppointment, 
+                this.inputServicesAppointmentFilter.value
+            )
+            this.updateView()
+        })
         this.updateView()
     }
 
+    getRadioTime() {
+        let inputTimeAppointmentFilter = document.getElementsByName('inputTimeAppointmentFilter')
+        let inputTimeAppointment = ''
+        inputTimeAppointmentFilter.forEach(e => {
+            if (e.checked)
+                inputTimeAppointment = e.value
+        })
+        return inputTimeAppointment
+    }
+    
     updateView() {
-        this.creditsShortList = this.appointmentsController.retrieveShortCredits()
+        this.checkLoggedUser()
         this.showCreditsShortList()
-        this.appointmentsList = this.appointmentsController.retrieveAppointments()
         this.showAppointmentsList()
-
+        
         this.startServicesSelector()
         this.startInitialDateInput()
         this.clearAvailabilitiesList()
     }
-
-    showCreditsShortList() { 
-        this.creditsShortList.innerHTML = ''
-        for (let credit in this.creditsShortList)
-            this.creditsShortList.innerHTML += `<button type="button" class="btn btn-primary">
-                                    ${this.creditsShortList[credit].creditName}<span class="badge text-bg-secondary">
-                                    ${this.creditsShortList[credit].quantity}</span></button>`
+    
+    checkLoggedUser() {
+        this.loggedUser = this.appointmentsController.checkLoggedser()
+        if (!this.loggedUser) {
+            Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
+            this.userLoggedMessage.classList.remove('element-hidden')
+        } else {
+            Array.from(this.allSections).forEach(e => e.classList.remove('element-hidden'))
+            this.userLoggedMessage.classList.add('element-hidden')
         }
+    }
+    
+    showCreditsShortList() { 
+        this.creditsList = this.appointmentsController.retrieveShortCredits()
+        if (this.creditsList.length <= 0) {
+            this.creditsShortListMessage.classList.remove('element-hidden')
+            this.creditsShortList.classList.add('element-hidden')
+        } else {
+            this.creditsShortListMessage.classList.add('element-hidden')
+            this.creditsShortList.classList.remove('element-hidden')
+            this.creditsShortList.innerHTML = ''
+            for (let credit in this.creditsList)
+                this.creditsShortList.innerHTML += `<button type="button" class="btn btn-primary credit-appointment--badge">
+                                        ${this.creditsList[credit].name}<span class="badge text-bg-secondary">
+                                        ${this.creditsList[credit].quantity}</span></button>`
+        }
+    }
 
-    showAppointmentsList() {        
-        this.appointmentsList.innerHTML = ''
-        for (let appointment in this.appointmentsList) {
-            this.appointmentsList.innerHTML += `<td>${this.appointmentsList[appointment].getDateString}</td>
-                                                <td>${this.appointmentsList[appointment].getTimeString}</td>
-                                                <td>${this.appointmentsList[appointment].getServiceString}</td>
-                                                <td><form id="appointmentItemForm${this.appointmentsList[appointment].getAppointmentId}">
-                                                <input type="hidden" name="appointmentItem" 
-                                                id="appointmentItem${this.appointmentsList[appointment].getAppointmentId}" 
-                                                value="${this.appointmentsList[appointment].getAppointmentId}">
-                                                <button type="button" class="btn btn-outline-primary">
-                                                <i class="fa-solid fa-trash-can"></i></button>
-                                                <button type="button" class="btn btn-outline-primary">
-                                                <i class="fa-solid fa-download"></i></button>
-                                                </form></td>`
+    showAppointmentsList() {  
+        this.appointmentsList = this.appointmentsController.retrieveAppointments()
+        if (this.appointmentsList.length <= 0) {
+            this.appointmentsListMessage.classList.remove('element-hidden')
+            this.appointmentsTable.classList.add('element-hidden')
+        } else {
+            this.appointmentsListMessage.classList.add('element-hidden')
+            this.appointmentsTable.classList.remove('element-hidden')
+            this.appointmentsCompleteList.innerHTML = ''
+            for (let appointment in this.appointmentsList) {
+                this.appointmentsCompleteList.innerHTML += `<td>${this.appointmentsList[appointment].getDateString}</td>
+                                                    <td>${this.appointmentsList[appointment].getTimeString}</td>
+                                                    <td>${this.appointmentsList[appointment].getServiceString}</td>
+                                                    <td><form id="appointmentItemForm${this.appointmentsList[appointment].getAppointmentId}">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                    name="appointmentItemRemoveAction"
+                                                    value="${this.appointmentsList[appointment].getAppointmentId}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Remove o agendamento">
+                                                    <i class="fa-solid fa-trash-can"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                    name="apointmentDownloadCalendarAction"
+                                                    value="${this.appointmentsList[appointment].getAppointmentId}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Exportar agenda para calendário (ICS)">
+                                                    <i class="fa-solid fa-download"></i></button>
+                                                    </form></td>`
+            }
+            this.setAppointmentsActions()
         }
     }
                                 
     showAvailabilitiesList(availabilitiesList) {
-        this.availabilitiesList.innerHTML = ''
-        for (let availability in availabilitiesList) {
-            let timeString = ("0" + availabilitiesList[availability].hour).slice(-2) + ":" + ("0" + availabilitiesList[availability].minute).slice(-2)
-            this.availabilitiesList.innerHTML += `<div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="inputTimeAppointmentFilter" 
-                                                    name="inputTimeRadio${availability}" value="${timeString}">
-                                                    <label class="form-check-label" for="inputTimeRadio${availability}">
-                                                    ${timeString}</label></div>`
-                                                }
-        
-        if (availabilitiesList.length != 0) {
-            this.newAppointmentListForm.classList.remove('element-hidden')
-            this.availabilitiesListMessage.classList.add('element-hidden')
-        }
-        else {
-            this.newAppointmentListForm.classList.add("element-hidden")
+        if (availabilitiesList.length <= 0) {
             this.availabilitiesListMessage.classList.remove('element-hidden')
+            this.newAppointmentListForm.classList.add('element-hidden')
+            this.availabilitiesListTitle.classList.add('element-hidden')
+            this.availabilitiesListButton.classList.add('element-hidden')
+        } else {
+            this.availabilitiesListMessage.classList.add('element-hidden')
+            this.newAppointmentListForm.classList.remove('element-hidden')
+            this.availabilitiesListTitle.classList.remove('element-hidden')
+            this.availabilitiesListButton.classList.remove('element-hidden')
+            this.availabilitiesList.innerHTML = ''
+            for (let availability in availabilitiesList) {
+                let timeString = ("0" + availabilitiesList[availability].hour).slice(-2) + ":" + ("0" + availabilitiesList[availability].minute).slice(-2)
+                this.availabilitiesList.innerHTML += `<div class="form-check appointments-new--item">
+                                                        <input class="form-check-input" type="radio" name="inputTimeAppointmentFilter" 
+                                                        id="inputTimeRadio${availability}" value="${timeString}">
+                                                        <label class="form-check-label" for="inputTimeRadio${availability}">
+                                                        ${timeString}</label></div>`
+            }
         }
     }
 
@@ -105,6 +159,8 @@ export class AppointmentsView {
         this.availabilitiesList.innerHTML = ''
         this.newAppointmentListForm.classList.add('element-hidden')
         this.availabilitiesListMessage.classList.add('element-hidden')
+        this.availabilitiesListTitle.classList.add('element-hidden')
+        this.availabilitiesListButton.classList.add('element-hidden')
     }
 
     startServicesSelector() {
@@ -127,5 +183,24 @@ export class AppointmentsView {
         let show_date = `${current_year}-${("0" + current_month).slice(-2)}-${("0" + current_day).slice(-2)}`
         this.inputDateAppointmentFilter.value = show_date
         this.inputDateAppointmentFilter.addEventListener('input', () => this.clearAvailabilitiesList())
-    }      
+    }   
+    
+    setAppointmentsActions() {
+        let appointmentItemRemoveAction = document.getElementsByName('appointmentItemRemoveAction')
+        let apointmentDownloadCalendarAction = document.getElementsByName('apointmentDownloadCalendarAction')
+        
+        appointmentItemRemoveAction.forEach(element => element.addEventListener('click', event => {
+            event.preventDefault()           
+            this.appointmentsController.deleteAppointment(element.value)
+            this.updateView()
+        }))
+        apointmentDownloadCalendarAction.forEach(element => element.addEventListener('click', event => {
+            event.preventDefault()           
+            this.appointmentsController.generateCalendar(element.value)
+            this.updateView()
+        }))
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    }
 }

@@ -7,21 +7,21 @@ export class Credits {
     }
 
     get getCredits() {
-        return this.list
+        return [].concat(this.list)
     }
 
     get getShortCredits() {
         let shortList =[]
         this.list.map(e => {
-            let creditIndex = shortList.findIndex(eshort => eshort.id == e.creditId)
+            let creditName = SERVICES.find(eservice => eservice.id == e.serviceId).name
+            let creditIndex = shortList.findIndex(o => o.name == creditName)
             if (creditIndex != -1) 
                 shortList[creditIndex].quantity += 1
             else {
-                let creditName = SERVICES.find(eservice => eservice.id == e.creditId).name
-                shortList.push({id: e.creditId, name: creditName, quantity: 1})
+                shortList.push({name: creditName, quantity: 1})
             }
         })
-        return shortList
+        return [].concat(shortList)
     }
 
     insertCredit(creditObject) {
@@ -41,11 +41,15 @@ export class Credits {
         return false
     }
 
-    findCreditById(creditId) {
-        return this.list.find(e => e.creditId == creditId)
+    checkCredit(serviceId) {
+        let creditIndex = this.list.findIndex(e => e.serviceId == serviceId && e.status == 'active')
+        if (creditIndex >= 0)
+            return this.list[creditIndex].creditId
+        else
+            return false
     }
 
-    findAvailableCredit(serviceId) {
-        return this.list.findIndex(e => e.serviceId == serviceId && e.status == 'active')
+    clearCredits() {
+        this.list = []
     }
 }

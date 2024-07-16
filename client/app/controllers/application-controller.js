@@ -59,6 +59,10 @@ export class ApplicationController {
                 throw Error('Page not found')
         }
     }
-    
-    loginUser() {}
+
+    checkLoggedser() {
+        let user = {id: 1, name: 'Pedro'}
+        return user
+        return false
+    }
 }

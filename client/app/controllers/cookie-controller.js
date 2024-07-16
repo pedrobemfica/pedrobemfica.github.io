@@ -27,3 +27,8 @@ export function getCookie(name) {
     }
     return false;
 }
+
+// if (!getCookie('name')) {
+//     createCookie('name', JSON.stringify(variable))
+// } else
+// variable.push(JSON.parse(getCookie('name')))
