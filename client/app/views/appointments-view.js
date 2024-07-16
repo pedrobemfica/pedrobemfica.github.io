@@ -1,5 +1,5 @@
 import { AppointmentsController } from "../controllers/appointments-controller.js"
-import { SERVICES } from "../helpers/entities-helper.js"
+import { Services } from "../helpers/services-helper.js"
 
 export class AppointmentsView {
     constructor() {
@@ -163,12 +163,14 @@ export class AppointmentsView {
 
     startServicesSelector() {
         this.inputServicesAppointmentFilter.innerHTML = ''
-        for (let service in SERVICES) {
+        let serviceObj = new Services()
+        let services = serviceObj.getServiceList
+        for (let service in services) {
             let selected = ''
             if (!service)
                 selected = 'selected'
-            this.inputServicesAppointmentFilter.innerHTML += `<option ${selected} value="${SERVICES[service].id}">
-                                                            ${SERVICES[service].name}</option>`
+            this.inputServicesAppointmentFilter.innerHTML += `<option ${selected} value="${services[service].id}">
+                                                            ${services[service].name}</option>`
         }
         this.inputServicesAppointmentFilter.addEventListener('input', () => this.clearAvailabilitiesList())
     }

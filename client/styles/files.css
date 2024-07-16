@@ -1,40 +1,58 @@
-.files-page {
-    background-color: white;
-    margin: 0;
-    padding: 0;
-}
-
-.files--upload-container {
-    background-color: whitesmoke;
-    border: 0;
-    border-radius: 1%;
-    margin: 1rem;
-    padding: 1rem;
-}
-
-.files--upload-container form {
+.files-container {
     display: flex;
-    justify-content: start;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem;
 }
 
-.files--upload-label {
-    display: inline;
-    margin: 0 2rem;
-    width: 15rem;
-}
-
-.files--list-container {
-    background-color: whitesmoke;
-    border: 0;
-    border-radius: 1%;
-    margin: 1rem;
+.files-upload {
+    background-color: rgb(245, 245, 245);
+    border-radius: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
     padding: 1rem;
 }
 
-.files--list-container ul li {
-    margin: 1rem;
+#uploadFileForm {
+    display: flex;
+    justify-content: space-around;
 }
 
-.file--list-alert {
-    display: none;
+.files-list {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
 }
+
+.files-list h2 {
+    margin-bottom: 1rem;
+}
+
+#filesTable {
+    width: 100%;
+}
+
+#filesTable thead tr th {
+    padding: 1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#filesCompleteList tr td {
+    padding: .5rem 2rem;
+    border-bottom: 1px solid #CCC;
+}
+
+#filesCompleteList tr td:last-child {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    #filesCompleteList tr td {
+        padding: .5rem .5rem;
+    }
+} 

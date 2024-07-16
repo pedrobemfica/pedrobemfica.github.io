@@ -1,4 +1,3 @@
-import { User } from "../models/user-model.js"
 import { AppointmentsView } from "../views/appointments-view.js"
 
 export class ApplicationController {

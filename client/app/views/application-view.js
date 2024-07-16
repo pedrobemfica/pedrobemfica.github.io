@@ -1,5 +1,5 @@
 import { ApplicationController } from "../controllers/application-controller.js"
-import { getCookie, createCookie } from "../controllers/cookie-controller.js"
+import { Cookies } from "../controllers/cookie-controller.js"
 
 export class ApplicationView {
     constructor() {
@@ -9,9 +9,12 @@ export class ApplicationView {
         this.userProfile = document.getElementById("userProfile")
         this.userCart = document.getElementById("userCart")
         this.userProfileName = document.getElementById('userProfileName')
-        this.checkLoggedUser()
-        this.initializeCookies()
 
+        document.addEventListener('DOMContentLoaded', function() {
+            this.checkLoggedUser()
+            this.initializeCookies()
+        })
+        
         this.navPageList = [...document.getElementsByClassName("nav-page")]
         this.navPageList.forEach(page => {
             let path = page.getAttribute('data-nav-target')
@@ -38,24 +41,9 @@ export class ApplicationView {
         }
     }
 
-    userUpdate() {
-        if (isAuthenticated) {
-            
-        } else {
-            
-        }       
-    }
-
     initializeCookies() {
-        document.addEventListener('DOMContentLoaded', function() {
-        // Check if the user has already accepted cookies
-        if (!getCookie('cookiesAccepted')) {
-            document.getElementById('cookieConsent').style.display = 'block'
-        }
-    
-        document.getElementById('acceptCookies').addEventListener('click', function() {
-            createCookie('cookiesAccepted', JSON.stringify('true'))
-            document.getElementById('cookieConsent').style.display = 'none'
-        })
-    })}
+        let cookieConsent = document.getElementById('cookieConsent')
+        let cookieAccept = document.getElementById('acceptCookies')
+        Cookies.cookieConsent(cookieConsent, cookieAccept)
+    }
 }
