@@ -1,12 +1,10 @@
 import { AppointmentsController } from "../controllers/appointments-controller.js"
-import { alertMessage } from "../helpers/alert-helper.js"
 import { SERVICES } from "../helpers/entities-helper.js"
 
 export class AppointmentsView {
     constructor() {
         this.creditsList = []
         this.appointmentsList = []
-        this.loggedUser = ''
 
         this.appointmentsController = new AppointmentsController()
 
@@ -49,16 +47,6 @@ export class AppointmentsView {
             this.updateView()
         })
         this.updateView()
-    }
-
-    getRadioTime() {
-        let inputTimeAppointmentFilter = document.getElementsByName('inputTimeAppointmentFilter')
-        let inputTimeAppointment = ''
-        inputTimeAppointmentFilter.forEach(e => {
-            if (e.checked)
-                inputTimeAppointment = e.value
-        })
-        return inputTimeAppointment
     }
     
     updateView() {
@@ -120,7 +108,7 @@ export class AppointmentsView {
                                                     data-bs-title="Remove o agendamento">
                                                     <i class="fa-solid fa-trash-can"></i></button>
                                                     <button type="button" class="btn btn-outline-primary"
-                                                    name="apointmentDownloadCalendarAction"
+                                                    name="appointmentDownloadCalendarAction"
                                                     value="${this.appointmentsList[appointment].getAppointmentId}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-custom-class="custom-tooltip"
@@ -162,6 +150,16 @@ export class AppointmentsView {
         this.availabilitiesListTitle.classList.add('element-hidden')
         this.availabilitiesListButton.classList.add('element-hidden')
     }
+     
+    getRadioTime() {
+        let inputTimeAppointmentFilter = document.getElementsByName('inputTimeAppointmentFilter')
+        let inputTimeAppointment = ''
+        inputTimeAppointmentFilter.forEach(e => {
+            if (e.checked)
+                inputTimeAppointment = e.value
+        })
+        return inputTimeAppointment
+    }
 
     startServicesSelector() {
         this.inputServicesAppointmentFilter.innerHTML = ''
@@ -187,14 +185,14 @@ export class AppointmentsView {
     
     setAppointmentsActions() {
         let appointmentItemRemoveAction = document.getElementsByName('appointmentItemRemoveAction')
-        let apointmentDownloadCalendarAction = document.getElementsByName('apointmentDownloadCalendarAction')
+        let appointmentDownloadCalendarAction = document.getElementsByName('appointmentDownloadCalendarAction')
         
         appointmentItemRemoveAction.forEach(element => element.addEventListener('click', event => {
             event.preventDefault()           
             this.appointmentsController.deleteAppointment(element.value)
             this.updateView()
         }))
-        apointmentDownloadCalendarAction.forEach(element => element.addEventListener('click', event => {
+        appointmentDownloadCalendarAction.forEach(element => element.addEventListener('click', event => {
             event.preventDefault()           
             this.appointmentsController.generateCalendar(element.value)
             this.updateView()

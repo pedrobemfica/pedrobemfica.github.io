@@ -8,8 +8,6 @@ import { Availabilities } from "../models/availabilities-model.js"
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
 
-import { createCookie, getCookie } from "./cookie-controller.js"
-
 export class AppointmentsController  {
     constructor() {
         this.appointments = new Appointments()

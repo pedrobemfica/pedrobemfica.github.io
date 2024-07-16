@@ -6,7 +6,7 @@ export class Files {
     }
 
     get getFiles() {
-        return this.list
+        return [].concat(this.list)
     }
 
     insertFile(fileObject) {

@@ -56,5 +56,31 @@ export const routes = {
 
     getAvailabilityServer({year, month, day}, serviceId) {
         return mockAvailability.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
-    }
+    },
+
+    getFilesServer() {
+        return [].concat(mockFiles)
+    },
+
+    nextFilesId() {
+        return Math.max(...mockFiles.map(e => e.fileId)) + 1
+    },
+
+    newFile(file) {
+        let dateObj = {year: file.year, month: file.month, day: file.day}
+        let newObj = {
+            fileId: file.fileId,
+            userId: file.userId,
+            date: dateObj,
+            path: file.path
+        };
+        mockFiles.push(newObj)
+        return true
+    },
+
+    deleteFile(fileId) {
+        let index = mockFiles.findIndex(e => e.fileId == fileId)
+        mockFiles.splice(index, 1)
+        return true
+    },
 }
