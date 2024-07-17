@@ -30,7 +30,7 @@ export const Cookies = {
         if (!this.getCookie('cookiesAccepted')) {
             elementConsent.style.display = 'block'
             elementAccept.addEventListener('click', () => {
-                createCookie('cookiesAccepted', JSON.stringify('true'))
+                this.createCookie('cookiesAccepted', JSON.stringify('true'))
                 elementConsent.style.display = 'none'
             })
         } else 

@@ -1,5 +1,5 @@
 import { ApplicationController } from "../controllers/application-controller.js"
-import { Cookies } from "../controllers/cookie-controller.js"
+import { Cookies } from "../helpers/cookie-helper.js"
 
 export class ApplicationView {
     constructor() {
@@ -9,11 +9,9 @@ export class ApplicationView {
         this.userProfile = document.getElementById("userProfile")
         this.userCart = document.getElementById("userCart")
         this.userProfileName = document.getElementById('userProfileName')
-
-        document.addEventListener('DOMContentLoaded', function() {
-            this.checkLoggedUser()
-            this.initializeCookies()
-        })
+        
+        this.checkLoggedUser()
+        this.initializeCookies()
         
         this.navPageList = [...document.getElementsByClassName("nav-page")]
         this.navPageList.forEach(page => {

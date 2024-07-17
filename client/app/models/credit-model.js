@@ -1,14 +1,14 @@
-import { SERVICES } from "../helpers/entities-helper.js"
+import { Services } from "../helpers/services-helper.js"
 
 export class Credit {
     constructor(creditId, userId, serviceId, status = 'active') {
         this.creditId = creditId
         this.userId = userId
         
-        if (SERVICES.find(e => e.id == serviceId))
-            this.serviceId = serviceId
+        if (Services.getNameById(serviceId))
+            this.serviceId = serviceId;
         else
-            throw Error('Service not provided')
+            throw Error('Service not provided');
 
         this.status = status
     }

@@ -1,4 +1,4 @@
-import { FilesController } from "../controllers/file-controller.js"
+import { FilesController } from "../controllers/files-controller.js"
 
 export class FilesView {
     constructor() {
@@ -32,11 +32,12 @@ export class FilesView {
 
     updateView() {
         this.checkLoggedUser()
+        this.inputUploadFileLabel.value = ''
         this.showFilesList()
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.Controller.checkLoggedser()
+        this.loggedUser = this.filesController.checkLoggedser()
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')
@@ -58,17 +59,17 @@ export class FilesView {
             for (let file in this.filesList) {
                 this.filesCompleteList.innerHTML += `<td>${this.filesList[file].getDateString}</td>
                                                     <td>${this.filesList[file].getLabel}</td>
-                                                    <td><form id="fileItemForm${this.filesList[file].getfileId}">
+                                                    <td><form id="fileItemForm${this.filesList[file].getFileId}">
                                                     <button type="button" class="btn btn-outline-primary"
                                                     name="fileItemRemoveAction"
-                                                    value="${this.filesList[file].getfileId}"
+                                                    value="${this.filesList[file].getFileId}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-custom-class="custom-tooltip"
                                                     data-bs-title="Remove o arquivo">
                                                     <i class="fa-solid fa-trash-can"></i></button>
                                                     <button type="button" class="btn btn-outline-primary"
                                                     name="fileItemDownloadAction"
-                                                    value="${this.filesList[file].getfileId}"
+                                                    value="${this.filesList[file].getFileId}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-custom-class="custom-tooltip"
                                                     data-bs-title="Download do arquivo">

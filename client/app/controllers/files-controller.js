@@ -24,14 +24,15 @@ export class FilesController {
         return this.files.getFiles
     }
 
-    uploadFile(file, label){
-        file = file // Handle upload and save file
+    uploadFile(fileInfo, labelInput){
+        fileInfo = fileInfo // Handle upload and save file
         let userId = this.checkLoggedser().id
         let currentDate = new Date()
         let currentYear = currentDate.getFullYear()
         let currentMonth = currentDate.getMonth()
         let currentDay = currentDate.getDate() 
         let date = {year: currentYear, month: currentMonth, day: currentDay}
+        let label = labelInput.value
         let path = '' // Get from handling upload
         let fileId = routes.nextFileId()
 
@@ -43,7 +44,7 @@ export class FilesController {
     }
 
     deleteFile(fileId) {
-        let file = file // Handle remove the file in the server
+        //let file = file // Handle remove the file in the server
         let confirm = routes.deleteFile(fileId)
         if (confirm) {
             alertMessage('Arquivo removido', 'O arquivo foi removido do servidor.')
@@ -55,6 +56,12 @@ export class FilesController {
 
     downloadFile(fileId) {
         fileId = fileId // Handle download the file from the server
+    }
+
+    checkLoggedser() {
+        let user = {id: 1, name: 'Pedro'}
+        return user
+        return false
     }
 }
 

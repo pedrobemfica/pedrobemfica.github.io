@@ -163,8 +163,7 @@ export class AppointmentsView {
 
     startServicesSelector() {
         this.inputServicesAppointmentFilter.innerHTML = ''
-        let serviceObj = new Services()
-        let services = serviceObj.getServiceList
+        let services = Services.getServiceList()
         for (let service in services) {
             let selected = ''
             if (!service)

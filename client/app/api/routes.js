@@ -1,4 +1,4 @@
-import { mockAvailability, mockAppointments, mockCredits } from "../../mockServer.js"
+import { mockAvailability, mockAppointments, mockCredits, mockFiles } from "../../mockServer.js"
 
 export const routes = {
     getAppointmentsServer() {
@@ -6,7 +6,10 @@ export const routes = {
     },
 
     nextAppointmentId() {
-        return Math.max(...mockAppointments.map(e => e.appointmentId)) + 1
+        let nextAppointmentId = Math.max(...mockAppointments.map(e => e.appointmentId)) + 1
+        if (nextAppointmentId == -Infinity)
+            nextAppointmentId = 1
+        return nextAppointmentId
     },
 
     newAppointment(appointment) {
@@ -34,7 +37,10 @@ export const routes = {
     },
 
     nextCreditId() {
-        return Math.max(...mockCredits.map(e => e.creditId)) + 1
+        let nextCreditId = Math.max(...mockCredits.map(e => e.creditId)) + 1
+        if (nextCreditId == -Infinity)
+            nextCreditId = 1
+        return nextCreditId
     },
 
     newCredit(credit) {
@@ -62,8 +68,11 @@ export const routes = {
         return [].concat(mockFiles)
     },
 
-    nextFilesId() {
-        return Math.max(...mockFiles.map(e => e.fileId)) + 1
+    nextFileId() {
+        let nextFileId = Math.max(...mockFiles.map(e => e.fileId)) + 1
+        if (nextFileId == -Infinity)
+            nextFileId = 1
+        return nextFileId
     },
 
     newFile(file) {
@@ -72,6 +81,7 @@ export const routes = {
             fileId: file.fileId,
             userId: file.userId,
             date: dateObj,
+            label: file.label,
             path: file.path
         };
         mockFiles.push(newObj)

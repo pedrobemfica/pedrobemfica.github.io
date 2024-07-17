@@ -1,5 +1,5 @@
 import { Credit } from './credit-model.js'
-import { SERVICES } from '../helpers/entities-helper.js'
+import { Services } from "../helpers/services-helper.js"
 
 export class Credits {
     constructor() {
@@ -13,7 +13,7 @@ export class Credits {
     get getShortCredits() {
         let shortList =[]
         this.list.map(e => {
-            let creditName = SERVICES.find(eservice => eservice.id == e.serviceId).name
+            let creditName = Services.getNameById(e.serviceId)
             let creditIndex = shortList.findIndex(o => o.name == creditName)
             if (creditIndex != -1) 
                 shortList[creditIndex].quantity += 1

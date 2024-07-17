@@ -1,4 +1,4 @@
-import { SERVICES } from "../helpers/entities-helper.js"
+import { Services } from "../helpers/services-helper.js"
 
 export class Appointment {
     constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
@@ -11,7 +11,7 @@ export class Appointment {
         this.hour = hour
         this.minute = minute
         
-        if (SERVICES.find(e => e.id == serviceId))
+        if (Services.getNameById(serviceId))
             this.serviceId = serviceId;
         else
             throw Error('Service not provided');
@@ -36,8 +36,7 @@ export class Appointment {
     }
 
     get getServiceString() {
-        let serviceIndex = SERVICES.findIndex(e => e.id == this.serviceId)
-        let serviceString = SERVICES[serviceIndex].name
+        let serviceString = Services.getNameById(this.serviceId)
         return serviceString
     }
 }

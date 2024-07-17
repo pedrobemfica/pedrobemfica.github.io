@@ -16,8 +16,13 @@
 }
 
 #uploadFileForm {
+    align-items: center;
     display: flex;
     justify-content: space-around;
+}
+
+#uploadFileForm button, #uploadFileForm label, #uploadFileForm input {
+    margin: 1rem;
 }
 
 .files-list {

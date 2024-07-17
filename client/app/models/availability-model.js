@@ -1,4 +1,4 @@
-import { SERVICES } from "../helpers/entities-helper.js"
+import { Services } from "../helpers/services-helper.js"
 
 export class Availability {
     constructor({year, month, day}, {hour, minute}, serviceId) {
@@ -21,8 +21,7 @@ export class Availability {
     }
 
     get getServiceString() {
-        let serviceId = SERVICES.find(e => e.id == this.serviceId)
-        let serviceString = SERVICES[serviceId].name
+        let serviceString = Services.getNameById(this.serviceId)
         return serviceString
     }
 }

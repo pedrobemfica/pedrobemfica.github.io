@@ -29,4 +29,8 @@ export class Files {
     findFileById(fileId) {
         return this.list.find(e => e.fileId == fileId)
     }
+
+    clearFiles() {
+        this.list = []
+    }
 }
