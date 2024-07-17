@@ -93,4 +93,10 @@ export const routes = {
         mockFiles.splice(index, 1)
         return true
     },
+
+    addToCart(serviceId) {
+        let newObj = {serviceId: serviceId}
+        mockCart.push(newObj)
+        return true
+    }
 }
