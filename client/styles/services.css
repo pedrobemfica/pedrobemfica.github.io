@@ -18,7 +18,8 @@
     width: 100%;
 }
 
-#servicesList {
+#servicesCompleteList {
+    align-items: stretch;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -26,4 +27,18 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+#servicesCompleteList li {
+    align-items: stretch;
+    height: auto;
+    margin: 1rem;
+}
+
+#servicesCompleteList li div {
+    height: 100%;
+}
+
+.services-item--card {
+    justify-content: space-between;
 }

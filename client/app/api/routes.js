@@ -1,4 +1,4 @@
-import { mockAvailability, mockAppointments, mockCredits, mockFiles } from "../../mockServer.js"
+import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart } from "../../mockServer.js"
 
 export const routes = {
     getAppointmentsServer() {
@@ -97,6 +97,7 @@ export const routes = {
     addToCart(serviceId) {
         let newObj = {serviceId: serviceId}
         mockCart.push(newObj)
+        console.log(mockCart)
         return true
     }
 }

@@ -21,6 +21,15 @@ export class ApplicationView {
                 this.applicationController.navigateTo(path)
             })
         })
+
+        const offcanvasElementList = document.querySelectorAll('.offcanvas')
+        const offcanvasList = [...offcanvasElementList].map(offcanvasEl => new bootstrap.Offcanvas(offcanvasEl))
+
+        this.userCart.addEventListener('click', event => {
+            event.preventDefault()
+            const bsOffcanvas = new bootstrap.Offcanvas('#offCanvasCart')
+            bsOffcanvas.show()
+        })
     }
 
     checkLoggedUser() {

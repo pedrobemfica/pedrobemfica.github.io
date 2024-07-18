@@ -20,7 +20,9 @@ export class FilesController {
         })
     }
 
-    c
+    retrieveFiles() {
+        return this.files.getFiles
+    }
 
     uploadFile(fileInfo, labelInput){
         fileInfo = fileInfo // Handle upload and save file

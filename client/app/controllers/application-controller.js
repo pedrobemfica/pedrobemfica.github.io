@@ -1,5 +1,6 @@
 import { AppointmentsView } from "../views/appointments-view.js"
 import { FilesView } from "../views/files-view.js"
+import { ServicesView } from "../views/services-view.js"
 
 export class ApplicationController {
     constructor() {
@@ -45,6 +46,7 @@ export class ApplicationController {
             case 'payment':
                 break
             case 'services':
+                view = new ServicesView()
                 break
             case 'appointments':
                 view = new AppointmentsView()

@@ -5,11 +5,11 @@ import { alertMessage } from "../helpers/alert-helper.js"
  
 export class ServicesController {
     constructor(){
-        this.services = Services.getServiceList
+        this.services = Services.getServiceList()
     }
 
     retrieveServices() {
-        return [].concat(this.files)
+        return [].concat(this.services)
     }
 
     addToCart(serviceId) {
