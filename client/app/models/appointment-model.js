@@ -1,4 +1,4 @@
-import { Services } from "../helpers/services-helper.js"
+import { Services } from "./services-model.js"
 
 export class Appointment {
     constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
@@ -11,10 +11,11 @@ export class Appointment {
         this.hour = hour
         this.minute = minute
         
-        if (Services.getNameById(serviceId))
+        let services = new Services()
+        if (services.getById(serviceId)) 
             this.serviceId = serviceId;
         else
-            throw Error('Service not provided');
+            throw Error('Service not provided')
     }
 
     get getAppointmentId() {
@@ -36,7 +37,8 @@ export class Appointment {
     }
 
     get getServiceString() {
-        let serviceString = Services.getNameById(this.serviceId)
+        let services = new Services()
+        let serviceString = services.getStringById(this.serviceId)
         return serviceString
     }
 }

@@ -1,5 +1,5 @@
 import { AppointmentsController } from "../controllers/appointments-controller.js"
-import { Services } from "../helpers/services-helper.js"
+import { Services } from "../models/services-model.js"
 
 export class AppointmentsView {
     constructor() {
@@ -72,6 +72,7 @@ export class AppointmentsView {
     
     showCreditsShortList() { 
         this.creditsList = this.appointmentsController.retrieveShortCredits()
+        let services = new Services()
         if (this.creditsList.length <= 0) {
             this.creditsShortListMessage.classList.remove('element-hidden')
             this.creditsShortList.classList.add('element-hidden')
@@ -79,10 +80,12 @@ export class AppointmentsView {
             this.creditsShortListMessage.classList.add('element-hidden')
             this.creditsShortList.classList.remove('element-hidden')
             this.creditsShortList.innerHTML = ''
-            for (let credit in this.creditsList)
+            for (let credit in this.creditsList) {
+                let serviceName = services.getStringById(this.creditsList[credit].serviceId)
                 this.creditsShortList.innerHTML += `<button type="button" class="btn btn-primary credit-appointment--badge">
-                                        ${this.creditsList[credit].name}<span class="badge text-bg-secondary">
+                                        ${serviceName}<span class="badge text-bg-secondary">
                                         ${this.creditsList[credit].quantity}</span></button>`
+            }
         }
     }
 
@@ -162,14 +165,15 @@ export class AppointmentsView {
     }
 
     startServicesSelector() {
+
+        let services = new Services()
         this.inputServicesAppointmentFilter.innerHTML = ''
-        let services = Services.getServiceList()
-        for (let service in services) {
+        for (let credit in this.creditsList) {
             let selected = ''
-            if (!service)
+            if (!credit)
                 selected = 'selected'
-            this.inputServicesAppointmentFilter.innerHTML += `<option ${selected} value="${services[service].id}">
-                                                            ${services[service].name}</option>`
+            this.inputServicesAppointmentFilter.innerHTML += `<option ${selected} value="${this.creditsList[credit].serviceId}">
+                                                            ${services.getStringById(this.creditsList[credit].serviceId)}</option>`
         }
         this.inputServicesAppointmentFilter.addEventListener('input', () => this.clearAvailabilitiesList())
     }

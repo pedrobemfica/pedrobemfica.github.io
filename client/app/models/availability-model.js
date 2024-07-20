@@ -1,4 +1,4 @@
-import { Services } from "../helpers/services-helper.js"
+import { Services } from "./services-model.js"
 
 export class Availability {
     constructor({year, month, day}, {hour, minute}, serviceId) {
@@ -21,7 +21,8 @@ export class Availability {
     }
 
     get getServiceString() {
-        let serviceString = Services.getNameById(this.serviceId)
+        let services = new Services()
+        let serviceString = services.getById(e.serviceId).name
         return serviceString
     }
 }

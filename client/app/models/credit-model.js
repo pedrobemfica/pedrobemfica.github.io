@@ -1,14 +1,15 @@
-import { Services } from "../helpers/services-helper.js"
+import { Services } from "./services-model.js"
 
 export class Credit {
     constructor(creditId, userId, serviceId, status = 'active') {
         this.creditId = creditId
         this.userId = userId
         
-        if (Services.getNameById(serviceId))
+        let services = new Services()
+        if (services.getById(serviceId))
             this.serviceId = serviceId;
         else
-            throw Error('Service not provided');
+            throw Error('Service not provided')
 
         this.status = status
     }
@@ -35,8 +36,8 @@ export class Credit {
     }
 
     get getServiceString() {
-        let serviceId = SERVICES.find(e => e.id == this.serviceId)
-        let serviceString = SERVICES[serviceId].name
+        let services = new Services()
+        let serviceString = services.getById(this.serviceId).name
         return serviceString
     }
 }

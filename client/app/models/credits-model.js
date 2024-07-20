@@ -1,5 +1,5 @@
 import { Credit } from './credit-model.js'
-import { Services } from "../helpers/services-helper.js"
+import { Services } from "./services-model.js"
 
 export class Credits {
     constructor() {
@@ -13,12 +13,11 @@ export class Credits {
     get getShortCredits() {
         let shortList =[]
         this.list.map(e => {
-            let creditName = Services.getNameById(e.serviceId)
-            let creditIndex = shortList.findIndex(o => o.name == creditName)
+            let creditIndex = shortList.findIndex(o => o.serviceId == e.serviceId)
             if (creditIndex != -1) 
                 shortList[creditIndex].quantity += 1
             else {
-                shortList.push({name: creditName, quantity: 1})
+                shortList.push({serviceId: e.serviceId, quantity: 1})
             }
         })
         return [].concat(shortList)

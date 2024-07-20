@@ -2,7 +2,7 @@ export const mockAppointments = [
     { appointmentId: 1, userId: 1, date: {year: 2024, month: 7, day: 10}, time: {hour: 8, minute: 0}, serviceId: 11 },
     { appointmentId: 2, userId: 1, date: {year: 2024, month: 8, day: 11}, time: {hour: 9, minute: 15}, serviceId: 12 },
     { appointmentId: 3, userId: 1, date: {year: 2024, month: 9, day: 12}, time: {hour: 10, minute: 30}, serviceId: 13 },
-    { appointmentId: 4, userId: 1, date: {year: 2024, month: 10, day: 13}, time: {hour: 13, minute: 45}, serviceId: 31 },
+    { appointmentId: 4, userId: 1, date: {year: 2024, month: 10, day: 13}, time: {hour: 13, minute: 45}, serviceId: 17 },
     { appointmentId: 5, userId: 1, date: {year: 2024, month: 11, day: 14}, time: {hour: 14, minute: 0}, serviceId: 11 },
 ]
 

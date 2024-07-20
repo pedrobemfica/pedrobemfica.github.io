@@ -10,27 +10,32 @@ export class ServicesView {
         this.userLoggedMessage = document.getElementById('userLoggedMessage')
 
         this.inputSingleServiceName = document.getElementById('inputSingleServiceName')
-        this.inputSingleServiceName.addEventListener('change', () => {this.updateComplement()})
         this.inputSingleServiceComplement = document.getElementById('inputSingleServiceComplement')
-        this.inputSingleServiceComplement.addEventListener('change', () => {this.updateLocation()})
         this.inputSingleServiceLocation = document.getElementById('inputSingleServiceLocation')
-        this.inputSingleServiceLocation.addEventListener('change', () => {this.enableButton()})
+
+        this.buttonSingleService = document.getElementById('buttonSingleService')
+        this.inputComboLocationFilter = document.getElementById('inputComboLocationFilter')
+        this.inputComboLocationFilter.addEventListener('change', () => {
+            this.showComboList()
+        })
 
         this.singleServiceForm = document.getElementById('singleServiceForm')
         this.singleServiceForm.addEventListener('submit', event => {
             event.preventDefault()
-
+            this.servicesController.addSingleToCart(
+                this.inputSingleServiceName.value,
+                this.inputSingleServiceComplement.value,
+                this.inputSingleServiceLocation.value
+            )
             this.updateView()    
         })
-
-
-    
         this.updateView()
     }
 
     updateView() {
         this.clearSingle()
         this.updateName()
+        this.startComboFilterSelector()
         this.showComboList()
         this.checkLoggedUser()
     }
@@ -38,30 +43,48 @@ export class ServicesView {
     updateName() {
         this.inputSingleServiceName.innerHTML = ''
         let names = this.servicesController.retrieveSingleNames()
-        for (let name in names) {
-            let selected = ''
-            if (!name)
-                selected = 'selected'
-            this.inputSingleServiceName.innerHTML += `<option ${selected} value="${names[name].name}">
-                                                            ${names[name].name}</option>`
-        }
-        //this.inputServicesAppointmentFilter.addEventListener('input', () => this.clearAvailabilitiesList())
+        for (let name in names) 
+            this.inputSingleServiceName.innerHTML += `<option value="${names[name]}">
+                                                            ${names[name]}</option>`
+        this.inputSingleServiceName.value = ''                                                    
+        this.inputSingleServiceName.addEventListener('change', () => this.updateComplement())
+        this.inputSingleServiceComplement.value = ''
     }
 
     updateComplement() {
-        
+        this.inputSingleServiceComplement.innerHTML = ''
+        let complements = this.servicesController.retrieveSingleComplement(this.inputSingleServiceName.value)
+        for (let complement in complements) 
+            this.inputSingleServiceComplement.innerHTML += `<option value="${complements[complement]}">
+                                                            ${complements[complement]}</option>`
+        this.inputSingleServiceComplement.value = ''
+        this.inputSingleServiceComplement.addEventListener('change', () => this.updateLocation())
+        this.inputSingleServiceLocation.value = ''    
     }
 
     updateLocation() {
-
+        this.inputSingleServiceLocation.innerHTML = ''
+        let locations = this.servicesController.retrieveSingleLocation(this.inputSingleServiceName.value, this.inputSingleServiceComplement.value)
+        for (let location in locations) 
+            this.inputSingleServiceLocation.innerHTML += `<option value="${locations[location]}">
+                                                            ${locations[location]}</option>`
+        this.inputSingleServiceLocation.value = ''
+        this.inputSingleServiceLocation.addEventListener('change', () => this.enableSingleButton())
+        this.inputSingleServiceLocation.value = ''  
     }
 
-    enableButton() {
-
+    enableSingleButton() {
+        if (this.servicesController.retrieveSingleLocation(this.inputSingleServiceName.value, this.inputSingleServiceComplement.value, this.inputSingleServiceLocation.value))
+            this.buttonSingleService.disabled = false
+        else
+            this.buttonSingleService.disabled = true
     }
 
     clearSingle() {
-
+        this.inputSingleServiceName.value = ''
+        this.inputSingleServiceComplement.value = ''
+        this.inputSingleServiceLocation.value = ''
+        this.buttonSingleService.disabled = true
     }
 
     checkLoggedUser() {
@@ -76,8 +99,21 @@ export class ServicesView {
         }
     }
 
+    startComboFilterSelector() {
+        this.inputComboLocationFilter.innerHTML = ''
+        this.inputComboLocationFilter.innerHTML += `<option value=""></option>`
+        let locations = this.servicesController.retrieveComboLocation()
+        for (let location in locations) 
+            this.inputComboLocationFilter.innerHTML += `<option value="${locations[location]}">
+                                                            ${locations[location]}</option>`
+        this.inputComboLocationFilter.value = ''           
+    }
+
     showComboList() {
         this.comboList = this.servicesController.retrieveCombo()
+        if (this.inputComboLocationFilter.value != '')
+            this.comboList = this.comboList.filter(e => e.location == this.inputComboLocationFilter.value)
+
         this.servicesComboList.innerHTML = ''
         for (let combo in this.comboList) {
             this.servicesComboList.innerHTML += `<li><div class="card" style="width: 18rem;">
@@ -94,11 +130,11 @@ export class ServicesView {
     }
 
     setComboActions() {
-        let serviceItemAddToCart = document.getElementsByName('serviceItemAddToCart')
+        let comboItemAddToCart = document.getElementsByName('comboItemAddToCart')
         
-        serviceItemAddToCart.forEach(element => element.addEventListener('click', event => {
+        comboItemAddToCart.forEach(element => element.addEventListener('click', event => {
             event.preventDefault()           
-            this.servicesController.addToCart(element.value)
+            this.servicesController.addComboToCart(element.value)
             this.updateView()
         }))
     }

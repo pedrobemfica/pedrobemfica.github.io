@@ -25,3 +25,9 @@ body {
 .element-hidden {
     display: none;
 }
+
+h2 {
+    font-size: large;
+    font-weight: bold;
+    text-align: start;
+}

@@ -1,5 +1,3 @@
-import { SERVICES } from "../helpers/entities-helper.js"
-
 export class Cart {
     constructor(userId) {
         this.userId = userId
@@ -14,44 +12,48 @@ export class Cart {
         return [].concat(this.cartList)
     }
 
-    addToCart(service) {
-        if (service in SERVICES) {
-            let targetObj = this.cartList.find(obj => obj.service == service)
+    addToCart(product) {
+        if (this.checkProduct(product)) {
+            let targetObj = this.cartList.find(obj => obj.product == product)
             if (!targetObj) {
-                newObj = {service: service, quantity: 1}
+                newObj = {product: product, quantity: 1}
                 this.cartList.push(newObj)
             } else
                 targetObj.quantity += 1
             return true
-        } 
+        }
         return false
     }
 
-    reduceFromCart(service) {
-        if (service in SERVICES) {
-            let targetObj = this.cartList.find(obj => obj.service === service)
+    reduceFromCart(product) {
+        if (this.checkProduct(product)) {
+            let targetObj = this.cartList.find(obj => obj.product === product)
             if (targetObj)
                 targetObj.quantity -= 1
             else
                 return false
-            if (targetObj.quantity <= 0) {
-                let index = this.cartList.findIndex(obj => obj.service === service)
-                this.cartList.splice(index, 1)
-            }
+            if (targetObj.quantity <= 0)
+                this.removeFromCart(product)
             return true
-        } 
+        }
         return false
     }
 
-    removeFromCart(service) {
-        if (service in SERVICES) {
-            let targetObj = this.cartList.find(obj => obj.service === service)
+    removeFromCart(product) {
+        if (this.checkProduct(product)) {
+            let targetObj = this.cartList.find(obj => obj.product === product)
             if (targetObj) {
-                let index = this.cartList.findIndex(obj => obj.service === service)
+                let index = this.cartList.findIndex(obj => obj.product === product)
                 this.cartList.splice(index, 1)
                 return true
             }
-        } 
+        }
+        return false
+    }
+
+    checkProduct(product) {
+        // Check if product meet the criteria
+        return true
         return false
     }
 }
