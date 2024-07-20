@@ -13,29 +13,65 @@
     width: 100%;
 }
 
-.services-list {
+.services-singles {
+    margin-bottom: 2rem;
     padding: 1rem;
     width: 100%;
 }
 
-#servicesCompleteList {
+#singleServiceForm {
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+}
+
+#singleServiceForm div {
+    flex: 1;
+    padding: 0 1rem;
+}
+
+#singleServiceForm button {
+    height: 2.5rem;
+    width: 8rem;
+}
+
+.services-combos {
+    padding: 1rem;
+    width: 100%;
+}
+
+.services-combos--filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .5rem;
+}
+
+.services-combos--filter label {
+    width: 10rem;
+}
+
+.services-combos--filter select {
+    width: 20rem;
+}
+
+#servicesComboList {
     align-items: stretch;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-#servicesCompleteList li {
+#servicesComboList li {
     align-items: stretch;
     height: auto;
     margin: 1rem;
 }
 
-#servicesCompleteList li div {
+#servicesComboList li div {
     height: 100%;
 }
 

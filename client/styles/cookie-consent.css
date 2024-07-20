@@ -1,26 +1,28 @@
-.cookie-consent {
-    align-items: center;
+#cookieConsent {
     bottom: 0;
     background-color: #555555;
     color: #FFF;
-    display: flex;
-    justify-content: space-around;
-    margin: 0;
-    padding: 1rem;
     position: fixed;
-    text-align: center;
     width: 100%;
     z-index: 1000;
 }
 
-.cookie-consent p {
-    display: inline;
+.cookie-consent {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     margin: 0;
+    padding: 1rem;
+}
+
+.cookie-consent p {
+    display: inline-block;
+    margin: 0 2rem;
     padding: 0;
-    text-align: center;
 }
 
 .cookie-consent button {
+    display: inline-block;
     height: 2.5rem;
     padding: .5rem;
     width: 5rem;

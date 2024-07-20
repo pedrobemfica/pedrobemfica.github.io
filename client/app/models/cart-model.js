@@ -1,9 +1,9 @@
 import { SERVICES } from "../helpers/entities-helper.js"
 
 export class Cart {
-    constructor(userId, cartList = []) {
+    constructor(userId) {
         this.userId = userId
-        this.cartList = cartList
+        this.cartList = []
     }
 
     get getUserId() {

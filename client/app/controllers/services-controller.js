@@ -1,19 +1,25 @@
-import { Services } from "../helpers/services-helper.js"
+import { Products } from "../models/products-model.js"
+import { Services } from "../models/services-model.js"
 
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
  
 export class ServicesController {
     constructor(){
-        this.services = Services.getServiceList()
+        this.products = new Products()
+        this.services = new Services()
     }
 
-    retrieveServices() {
-        return [].concat(this.services)
+    retrieveCombo() {
+        return this.products.getComboProducts
     }
 
-    addToCart(serviceId) {
-        let confirm = routes.addToCart(serviceId)
+    retrieveSingleNames() {
+        return this.products.getSingleNames
+    }
+
+    addToCart(product) {
+        let confirm = routes.addToCart(product)
         if (confirm)
             alertMessage('Serviço adicionado', 'O serviço foi adicionado ao seu carrinho de compras.')
         else
