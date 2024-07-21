@@ -1,0 +1,96 @@
+Here's an example of how you can implement this in a frontend application using JavaScript and the Fetch API:
+
+1. *Login and receive JWT:*
+
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('https://your-backend.com/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const jwt = data.token;
+
+                // Store JWT in localStorage
+                localStorage.setItem('jwt', jwt);
+
+                // Redirect to another page or update UI
+                console.log('Login successful');
+            } else {
+                console.log('Login failed');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+2. *Send JWT in every request:*
+
+You can create a function to handle requests with JWT and use it for all subsequent requests.
+
+javascript
+async function fetchWithJWT(url, options = {}) {
+    const jwt = localStorage.getItem('jwt');
+
+    if (!options.headers) {
+        options.headers = {};
+    }
+
+    options.headers['Authorization'] = `Bearer ${jwt}`;
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+}
+
+// Example usage
+document.getElementById('someButton').addEventListener('click', async function() {
+    try {
+        const data = await fetchWithJWT('https://your-backend.com/protected-endpoint');
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+
+### Explanation:
+
+1. *Login Form:*
+   - HTML form to capture username and password.
+   - JavaScript to handle form submission, send login request, receive JWT, and store it in localStorage.
+
+2. *fetchWithJWT Function:*
+   - Retrieves the JWT from localStorage.
+   - Adds the JWT to the request headers.
+   - Sends the request to the backend and returns the response.
+
+By using this structure, you ensure that the JWT is included in the headers of every request made to the backend, facilitating secure communication between your frontend and backend applications.

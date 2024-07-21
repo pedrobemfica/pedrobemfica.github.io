@@ -12,6 +12,7 @@ export class NavigationView {
         this.userCart = document.getElementById("userCart")
 
         this.bsOffcanvas = new bootstrap.Offcanvas('#offCanvasCart')
+        this.myModal = new bootstrap.Modal(document.getElementById('staticModal'))
 
         this.updateView()
     }
@@ -42,6 +43,20 @@ export class NavigationView {
             this.bsOffcanvas.hide()
         })
 
+        this.userRegistration.addEventListener('click', event => {
+            event.preventDefault()
+            this.myModal.show()
+        })
+
+        this.userLogin.addEventListener('click', event => {
+            event.preventDefault()
+            this.myModal.show()
+        })
+
+        document.getElementById('staticModalClose').addEventListener('click', event => {
+            event.preventDefault()
+            this.myModal.hide()
+        })
 
     }
 

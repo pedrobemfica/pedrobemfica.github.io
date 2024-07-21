@@ -1,24 +1,20 @@
-<div class="user-login-container">
+<div class="login-container">
   <h2>Login de usuário</h2>
-  <section class="user-login--username">
-    <form class="luser-login--forms" id="userLoginForm">
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" placeholder="E-mail" />
-      <label for="phone">Telefone:</label>
-      <input type="text" id="phone" placeholder="Telefone" />
-      <label for="password">Senha:</label>
-      <input type="password" id="password" placeholder="Senha" />
-      <button type="submit">Entrar</button>
+  <section class="login--username">
+    <form class="login--forms" id="userLoginForm">
+      <label for="email" class="form-label">E-mail:</label>
+      <input type="email" id="email" placeholder="E-mail" class="form-control"/>
+      <label for="password" class="form-label">Senha:</label>
+      <input type="password" id="password" placeholder="Senha" class="form-control"/>
+      <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
   </section>
-  <section class="user-login--external">
-    <div
-        id="google-login-btn"
-        class="g-signin2"
-        data-onsuccess="onGoogleSignIn"
-      ></div>
-    <div id="facebook-login-btn" onclick="facebookLogin()">
+  <section class="login--external">
+    <button id="google-login-btn" class="btn btn-primary" data-onsuccess="onGoogleSignIn">
+      Login com Google
+    </button>
+    <button id="facebook-login-btn" class="btn btn-primary" onclick="facebookLogin()">
       Login com Facebook
-    </div>
+    </button>
   </section>
 </div>

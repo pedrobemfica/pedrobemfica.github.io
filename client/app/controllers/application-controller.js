@@ -10,7 +10,7 @@ export class ApplicationController {
         let headerArea = document.getElementById('headerArea')
         let contentArea = document.getElementById('contentArea')
         let offCanvasArea = document.getElementById('offCanvasArea')
-        let modalArea = document.getElementById('modalArea')
+        let staticModalArea = document.getElementById('staticModalArea')
         let footerArea = document.getElementById('footerArea')
         let cookieConsent = document.getElementById('cookieConsent')
 
@@ -23,11 +23,11 @@ export class ApplicationController {
             {path: 'files', page: './pages/files.html', view: FilesView, target: contentArea, hash: true},
             {path: 'contact', page: './pages/contact.html', view: '', target: contentArea, hash: true},
             {path: 'terms', page: './pages/terms.html', view: '', target: contentArea, hash: true},
-            {path: 'profile', page: './pages/profile.html', view: '', target: contentArea, hash: true},
+            {path: 'profile', page: './pages/profile.html', view: '', target: staticModalArea, hash: false},
             {path: 'cart', page: './pages/cart.html', view: CartView, target: offCanvasArea, hash: false},
-            {path: 'payment', page: './pages/payment.html', view: '', target: modalArea, hash: false},
-            {path: 'login', page: './pages/login.html', view: '', target: modalArea, hash: false},
-            {path: 'register', page: './pages/register.html', view: '', target: modalArea, hash: false},
+            {path: 'payment', page: './pages/payment.html', view: '', target: staticModalArea, hash: false},
+            {path: 'login', page: './pages/login.html', view: '', target: staticModalArea, hash: false},
+            {path: 'register', page: './pages/register.html', view: '', target: staticModalArea, hash: false},
             {path: 'cookies', page: './pages/cookies.html', view: CookiesView, target: cookieConsent, hash: false}
         ]
 
@@ -64,7 +64,7 @@ export class ApplicationController {
 
     checkLoggedser() {
         let user = {id: 1, name: 'Pedro'}
-        return user
         return false
+        return user
     }
 }
