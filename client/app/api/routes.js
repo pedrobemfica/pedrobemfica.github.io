@@ -94,10 +94,12 @@ export const routes = {
         return true
     },
 
-    addToCart(serviceId) {
-        let newObj = {serviceId: serviceId}
-        mockCart.push(newObj)
-        console.log(mockCart)
+    addToCart(product) {
+        let productIndex = mockCart.findIndex(e => e.product.name == product.name && e.product.description == product.description)
+        if (productIndex == -1)
+            mockCart.push({product: product, quantity: 1})
+        else
+            mockCart[productIndex].quantity += 1
         return true
     }
 }

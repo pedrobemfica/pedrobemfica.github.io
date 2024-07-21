@@ -57,121 +57,33 @@
 
     <body>
     
-        <header class="header-container">
-            <div class="header--logo">
-              <a href="#" data-nav-target="home" class="nav-page">
-                <img src="./assets/logo/logo-white.png" alt="Logo" style="width: 130px; height: 50px" />
-              </a>
-            </div>
-          
-            <nav class="header--nav-user">
-              <ul>
-                <li id="userRegistration">
-                  <button data-nav-target="registration" type="button" class="btn btn-primary nav--user-register nav-page">
-                    Registrar
-                  </button>
-                </li>
-                <li id="userLogin">
-                  <button data-nav-target="login" type="button" class="btn btn-outline-primary nav--user-login nav-page">
-                    Entrar
-                  </button>
-                </li>
-                <li id="userProfile" class="element-hidden">
-                  <a data-nav-target="profile" class="nav--user-logged nav-page" href="#" >
-                    <i class="fa-solid fa-user"></i>
-                    <span id="userProfileName">Nome usuário</span>
-                  </a>
-                </li>
-                <li id="userCart" class="element-hidden">
-                  <a data-nav-target="cart" class="nav--user-cart nav-page" href="#">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            
-            <nav class="nav--menu">
-              <ul>
-                <li>
-                  <a href="#" data-nav-target="home" class="nav-page">
-                    <span class="nav--menu-icon"><i class="fa-solid fa-house"></i></span>
-                    <span class="nav--menu-text">Home</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-nav-target="services" class="nav-page">
-                    <span class="nav--menu-icon"><i class="fa-solid fa-stethoscope"></i></span>
-                    <span class="nav--menu-text">Serviços</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-nav-target="appointments" class="nav-page">
-                    <span class="nav--menu-icon"><i class="fa-solid fa-calendar-days"></i></span>
-                    <span class="nav--menu-text">Agendamentos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-nav-target="files" class="nav-page">
-                    <span class="nav--menu-icon"><i class="fa-solid fa-file"></i></span>
-                    <span class="nav--menu-text">Documentos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-nav-target="contact" class="nav-page">
-                    <span class="nav--menu-icon"><i class="fa-solid fa-message"></i></span>
-                    <span class="nav--menu-text">Contato</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+        <header id="headerArea">
+            <!-- Automatic load content here -->
         </header>
           
-        <main id="content">
+        <main id="contentArea">
             <!-- Automatic load content here -->
         </main>
           
-        <footer class="footer-container">
-            <div class="footer--logo">
-              <a href="#" data-nav-target="home" class="nav-page">
-                <img src="./assets/logo/logo-dark.png" alt="Logo" style="width: 130px; height: 50px" />
-              </a>
-            </div>
-            <div class="footer--contact">
-              <ul>
-                <li>Contatos:</li>
-                <li>Telefone: (31) 9 9603-0423 <i class="fa-brands fa-whatsapp"></i></li>
-                <li>E-mail: contato@clinicaolimpo.com</li>
-              </ul>
-            </div>
-            <nav class="footer--nav">
-              <ul>
-                <li>
-                  <a href="#" data-nav-target="terms" class="nav-page">Termos e Condições</a>
-                </li>
-              </ul>
-            </nav>
-        </footer>
+       <footer id="footerArea">
+            <!-- Automatic load content here -->
+       </footer>
           
-        <!--Cookie consent--> 
         <div id="cookieConsent">
-          <div class="cookie-consent">
-            <p>
-              Esta website utiliza cookies e tecnologias semelhantes para melhorar sua
-              navegação. <br>Ao continuar navegando você concorda com a nossa Política de
-              Privacidade.
-            </p>
-            <button id="acceptCookies" class="btn btn-primary">OK</button>
-          </div>
+            <!-- Automatic load content here -->
         </div>
           
         <!--Toast for alert--> 
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="toastAlert" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
               <div class="toast-header">
-                <strong class="me-auto" id="alertTitle"></strong>
+                <strong class="me-auto" id="alertTitle">
+                  <!-- Automatic load content here -->
+                </strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
               </div>
               <div class="toast-body" id="alertMessage">
+                <!-- Automatic load content here -->
               </div>
             </div>
         </div>
@@ -179,14 +91,14 @@
         <!-- OffCanvas for Cart -->
         <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="offCanvasCart" aria-labelledby="offCanvasCartLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offCanvasCartLabel">Carrinho</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 class="offcanvas-title" id="offCanvasCartLabel"></h5>
+            <button type="button" class="btn-close" id="offCanvasClose" aria-label="Close"></button>
           </div>
-          <div class="offcanvas-body" id="offCanvasCartBody">
-            <!-- Automatic load content here -->
+          <div class="offcanvas-body" id="offCanvasArea">
+            <div>
+              <!-- Automatic load content here -->
+            </div>
           </div>
-        
         </div>
-
     </body>
 </html>

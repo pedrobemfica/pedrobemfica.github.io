@@ -122,7 +122,7 @@ export class ServicesView {
                                                             <h5 class="card-title">${this.comboList[combo].name}</h5>
                                                             <p class="card-text">${this.comboList[combo].description}</p>
                                                             <button type="button" class="btn btn-primary" 
-                                                            name="comboItemAddToCart" value="${this.comboList[combo].id}">Adquirir</a>
+                                                            name="comboItemAddToCart" value="${this.comboList[combo].productId}">Adquirir</a>
                                                         </div>
                                                     </div></li>`
         }

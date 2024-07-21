@@ -1,13 +1,22 @@
 .contact-container {
-    padding: 2rem;
-}
-
-.contact-form {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     padding: 2rem;
 }
 
-#message {
+#userContactForm {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 5rem;
+}
+
+#userContactForm div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#userContactMessage {
     height: 6rem;
 }

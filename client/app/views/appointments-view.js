@@ -57,6 +57,8 @@ export class AppointmentsView {
         this.startServicesSelector()
         this.startInitialDateInput()
         this.clearAvailabilitiesList()
+
+        this.initializeElements()
     }
     
     checkLoggedUser() {
@@ -202,7 +204,9 @@ export class AppointmentsView {
             this.appointmentsController.generateCalendar(element.value)
             this.updateView()
         }))
+    }
 
+    initializeElements() {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }

@@ -58,8 +58,9 @@ export class ServicesController {
     }
 
     addSingleToCart(serviceName, serviceComplement, serviceLocation) {
-        let product = {name: serviceName, complement: serviceComplement, location: serviceLocation}
-        let confirm = true
+        let products = new Products()
+        let product = products.singleProduct(serviceName, serviceComplement, serviceLocation)
+        let confirm = routes.addToCart(product)
         if (confirm)
             alertMessage('Serviço adicionado', 'O serviço foi adicionado ao seu carrinho de compras.')
         else
@@ -67,8 +68,9 @@ export class ServicesController {
     }
 
     addComboToCart(productId) {
-        let product = {id: productId}
-        let confirm = true
+        let products = new Products()
+        let product = products.comboProduct(productId)
+        let confirm = routes.addToCart(product) 
         if (confirm)
             alertMessage('Combo adicionado', 'O combo foi adicionado ao seu carrinho de compras.')
         else
