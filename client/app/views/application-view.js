@@ -8,5 +8,6 @@ export class ApplicationView {
         this.applicationController.loadContent('home')
         this.applicationController.loadContent('footer')
         this.applicationController.loadContent('cookies')
+        this.applicationController.loadContent('cart')
     }
 }

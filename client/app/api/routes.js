@@ -101,5 +101,19 @@ export const routes = {
         else
             mockCart[productIndex].quantity += 1
         return true
+    },
+
+    getCartServer() {
+        return [].concat(mockCart)
+    },
+
+    deleteFomCart(index) {
+        mockCart.splice(index, 1)
+        return true   
+    },
+
+    clearCart() {
+        mockCart.splice(0, mockCart.length)
+        return true
     }
 }

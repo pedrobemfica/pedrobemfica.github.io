@@ -16,8 +16,7 @@ export class Cart {
         if (this.checkProduct(product)) {
             let targetObj = this.cartList.find(obj => obj.product == product)
             if (!targetObj) {
-                newObj = {product: product, quantity: 1}
-                this.cartList.push(newObj)
+                this.cartList.push(product)
             } else
                 targetObj.quantity += 1
             return true
@@ -55,5 +54,9 @@ export class Cart {
         // Check if product meet the criteria
         return true
         return false
+    }
+
+    clearCart() {
+        this.cartList = []
     }
 }

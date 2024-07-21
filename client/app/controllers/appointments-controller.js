@@ -35,7 +35,7 @@ export class AppointmentsController  {
         return this.credits.getShortCredits
     }
 
-    updateAppointments() {    
+    updateAppointments() {
         let getUserAppointments = []
         this.appointments.clearAppointments()
         getUserAppointments = routes.getAppointmentsServer()

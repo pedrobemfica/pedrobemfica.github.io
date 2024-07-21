@@ -1,12 +1,23 @@
-/* body {
-    font-family: Arial, sans-serif;
-} */
-.product {
-    margin: 20px 0;
+#cartTable {
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
-#cart {
-    margin-top: 20px;
+
+#cartTable thead tr th {
+    padding: .5rem;
+    font-weight: bold;
+    text-align: center;
 }
-.cart-item {
-    margin-bottom: 10px;
+
+#cartCompleteList tr td {
+    padding: .5rem;
+    border-bottom: .5px solid #CCC;
+}
+
+#cartTotal {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
+    text-align: end;
 }
