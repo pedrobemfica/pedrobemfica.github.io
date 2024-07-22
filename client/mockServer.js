@@ -33,17 +33,37 @@ export const mockCredits = [
 
 export const mockFiles = []
 
-export const mockUser = {
-    id: 1, 
-    username: 'pedrobemfica', 
-    password: '123', 
-    name: 'Pedro Bemfica', 
-    email: 'pedrobemfica@gmail.com', 
-    cell_phone: '', 
-    gender: 'M', 
-    birth_year: 1986, 
-    birth_month: 6, 
-    birth_day: 6
-}
+export const mockUser = [
+    {
+        id: 1, 
+        userName: 'pedrobemfica', 
+        password: '123',
+        jwt: 'a1',
+        preferences: {
+            name: 'Pedro Bemfica', 
+            email: 'pedrobemfica@gmail.com', 
+            cellPhone: '+55 31 99603-0423', 
+            gender: 'M', 
+            birthYear: 1986, 
+            birthMonth: 6, 
+            birthDay: 6
+        }
+    },
+    {
+        id: 2, 
+        userName: 'johndo', 
+        password: 'abc', 
+        preferences: {
+            name: 'John Do', 
+            email: 'johndo@gmail.com', 
+            cellPhone: '+1 157-345-0080', 
+            gender: 'M', 
+            birthYear: 1990, 
+            birthMonth: 2, 
+            birthDay: 8
+        }
+    }
+
+]
 
 export const mockCart = []

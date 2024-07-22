@@ -1,4 +1,4 @@
-import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart } from "../../mockServer.js"
+import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart, mockUser } from "../../mockServer.js"
 
 export const routes = {
     getAppointmentsServer() {
@@ -115,5 +115,30 @@ export const routes = {
     clearCart() {
         mockCart.splice(0, mockCart.length)
         return true
+    },
+
+    loginUser(userName, password) {
+        let data = mockUser.find(e => e.userName == userName && e.password == password)
+        if (data) {
+            let userId = data.userId
+            let jwt = data.jwt
+            let preferences = data.preferences
+            return {jwt: jwt, userId: userId, preferences: preferences}
+        }
+        return false
+    },
+
+    changeUserPassword(userName, password, newPassword, jwt) {
+        let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.jwt == jwt)
+        if (userIndex != -1) {
+            mockUser[userIndex].password = newPassword
+            return true
+        }
+        return false
+
+    },
+
+    updateUserPreferences(preferences) {
+
     }
 }

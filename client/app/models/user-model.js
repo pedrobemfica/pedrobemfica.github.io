@@ -1,18 +1,61 @@
+import { routes } from "../api/routes.js"
+import { Cookies } from "../helpers/cookie-helper.js"
+
 export class User {
-    constructor(userId, userName, password) {
-        
-        this.userId = userId
-        this.userName = userName
-        this.password = password
+    constructor() {
+        this.logged = false
+        this.userId = ''
+        this.userName = ''
+        this.jwt = ''
 
-        this.name = ''
-        this.email = ''
-        this.cellPhone = ''
+        this.preferences = {
+            name: '',
+            email: '',
+            cellPhone: '',
 
-        this.gender = ''
-        this.birthYear = null
-        this.birthMonth = null
-        this.birthDay = null
+            gender: '',
+            birthYear: null,
+            birthMonth: null,
+            birthDay: null
+        }
+
+        this.retrieveCookie()
+        this.saveCookie()
+    }
+
+    saveCookie() {
+        let cookieObj = {
+            userId: this.userId,
+            userName: this.userName,
+            jwt: this.jwt,
+            preferences: this.preferences
+        }
+        this.createCookie('user', JSON.stringify(cookieObj))    
+    }
+
+    retrieveCookie() {
+        if (this.getCookie('user')) {
+
+        }
+    }
+ 
+    login(userName, password) {
+        let data = routes.loginUser(userName, password)
+        if (data) {
+            this.jwt = data.jwt
+            this.userId = data.userId
+            this.preferences = data.preferences
+            this.saveCookie()
+            return true
+        } else
+            return false
+    }
+
+    changePassword(password, newPassword) {
+        let data = routes.changeUserPassword(this.userName, password, newPassword, this.jwt)
+        if (data)
+            return true
+        return false
     }
 
     set setName(name) {
@@ -89,19 +132,5 @@ export class User {
     get getBirthString() {
         let dateString = `${("0" + this.birthDay).slice(-2)}/${("0" + this.birthMonth).slice(-2)}/${("000" + this.birthYear).slice(-4)}`;
         return dateString;
-    }
-
-    checkCredentials(userName, password) {
-        if (userName == this.userName && password == this.password)
-            return true;
-        return false;
-    }
-
-    changePassword(userName, password, newPassword) {
-        if (userName == this.userName && password == this.password) {
-            this.password = newPassword;
-            return true;
-        }
-        return false;
     }
 }
