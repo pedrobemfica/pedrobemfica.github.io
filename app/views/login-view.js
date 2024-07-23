@@ -14,7 +14,7 @@ export class LoginView {
             event.preventDefault()
             if (this.userController.login(this.userLoginName.value, this.userLoginPassword.value)) {
                 this.userLoginFailMessage.classList.add('element-hidden')
-                document.location.href="/client/"
+                document.location.href="/"
             } else 
                 this.userLoginFailMessage.classList.remove('element-hidden')
         })
