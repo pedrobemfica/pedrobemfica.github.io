@@ -55,6 +55,7 @@
 
 .services-combos--filter select {
     width: 20rem;
+    max-height: 2.5rem;
 }
 
 #servicesComboList {

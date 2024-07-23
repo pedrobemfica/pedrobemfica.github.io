@@ -18,7 +18,12 @@
 #uploadFileForm {
     align-items: center;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: space-around;
+}
+
+#uploadFileForm input {
+    min-width: 10rem;
 }
 
 #uploadFileForm button, #uploadFileForm label, #uploadFileForm input {
@@ -59,5 +64,9 @@
 @media (max-width: 768px) {
     #filesCompleteList tr td {
         padding: .5rem .5rem;
+    }
+
+    #uploadFileForm {
+        flex-wrap: wrap;
     }
 } 
