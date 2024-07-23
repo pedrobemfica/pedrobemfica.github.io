@@ -30,6 +30,10 @@
     margin: 1rem;
 }
 
+#inputUploadFileSelect {
+    min-width: 10rem;
+}
+
 .files-list {
     align-items: center;
     display: flex;
@@ -68,5 +72,10 @@
 
     #uploadFileForm {
         flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    #uploadFileForm button, #uploadFileForm label, #uploadFileForm input {
+        margin: .25rem;
     }
 } 
