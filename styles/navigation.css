@@ -202,7 +202,7 @@ font-size: large;
         margin: 0;
     }
 
-    .nav--menu {
+    .navigation--menu {
         bottom: 0;
         height: var(--menu-height-small);
         top: auto;
@@ -211,7 +211,7 @@ font-size: large;
         padding: 0;
     }
 
-    .nav--menu ul {
+    .navigation--menu ul {
         flex: 1;
         flex-direction: row;
         justify-content: space-around;
@@ -219,11 +219,11 @@ font-size: large;
         padding: 0;
     }
     
-    .nav--menu ul li {
+    .navigation--menu ul li {
         padding: 0 .5rem;
     }
     
-    .nav--menu-text {
+    .navigation--menu-text {
         font-size: xx-small;
     }
 
