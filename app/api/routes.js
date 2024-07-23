@@ -1,18 +1,18 @@
 import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart, mockUser } from "../../mockServer.js"
 
 export const routes = {
-    getAppointmentsServer() {
+    getAppointmentsServer(userId, jwt) {
         return [].concat(mockAppointments)
     },
 
-    nextAppointmentId() {
+    nextAppointmentId(userId, jwt) {
         let nextAppointmentId = Math.max(...mockAppointments.map(e => e.appointmentId)) + 1
         if (nextAppointmentId == -Infinity)
             nextAppointmentId = 1
         return nextAppointmentId
     },
 
-    newAppointment(appointment) {
+    newAppointment(appointment, userId, jwt) {
         let dateObj = {year: appointment.year, month: appointment.month, day: appointment.day}
         let timeObj = {hour: appointment.hour, minute: appointment.minute}
         let newObj = {
@@ -26,24 +26,24 @@ export const routes = {
         return true
     },
 
-    deleteAppointment(appointmentId) {
+    deleteAppointment(appointmentId, userId, jwt) {
         let index = mockAppointments.findIndex(e => e.appointmentId == appointmentId)
         mockAppointments.splice(index, 1)
         return true
     },
 
-    getCreditsServer() {
+    getCreditsServer(userId, jwt) {
         return mockCredits.filter(e => e.status == 'active')
     },
 
-    nextCreditId() {
+    nextCreditId(userId, jwt) {
         let nextCreditId = Math.max(...mockCredits.map(e => e.creditId)) + 1
         if (nextCreditId == -Infinity)
             nextCreditId = 1
         return nextCreditId
     },
 
-    newCredit(credit) {
+    newCredit(credit, userId, jwt) {
         let newObj = {
             creditId: credit.creditId, 
             userId: credit.userId,
@@ -54,28 +54,28 @@ export const routes = {
         return true
     },
 
-    changeCreditStatus(creditId, newStatus) {
+    changeCreditStatus(creditId, newStatus, userId, jwt) {
         let index = mockCredits.findIndex(e => e.creditId == creditId)
         mockCredits[index].status = newStatus
         return true
     },
 
-    getAvailabilityServer({year, month, day}, serviceId) {
+    getAvailabilityServer({year, month, day}, serviceId, userId, jwt) {
         return mockAvailability.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
     },
 
-    getFilesServer() {
+    getFilesServer(userId, jwt) {
         return [].concat(mockFiles)
     },
 
-    nextFileId() {
+    nextFileId(userId, jwt) {
         let nextFileId = Math.max(...mockFiles.map(e => e.fileId)) + 1
         if (nextFileId == -Infinity)
             nextFileId = 1
         return nextFileId
     },
 
-    newFile(file) {
+    newFile(file, userId, jwt) {
         let dateObj = {year: file.year, month: file.month, day: file.day}
         let newObj = {
             fileId: file.fileId,
@@ -88,13 +88,13 @@ export const routes = {
         return true
     },
 
-    deleteFile(fileId) {
+    deleteFile(fileId, userId, jwt) {
         let index = mockFiles.findIndex(e => e.fileId == fileId)
         mockFiles.splice(index, 1)
         return true
     },
 
-    addToCart(product) {
+    addToCart(product, userId, jwt) {
         let productIndex = mockCart.findIndex(e => e.product.name == product.name && e.product.description == product.description)
         if (productIndex == -1)
             mockCart.push({product: product, quantity: 1})
@@ -103,16 +103,16 @@ export const routes = {
         return true
     },
 
-    getCartServer() {
+    getCartServer(userId, jwt) {
         return [].concat(mockCart)
     },
 
-    deleteFomCart(index) {
+    deleteFomCart(index, userId, jwt) {
         mockCart.splice(index, 1)
         return true   
     },
 
-    clearCart() {
+    clearCart(userId, jwt) {
         mockCart.splice(0, mockCart.length)
         return true
     },
@@ -121,15 +121,16 @@ export const routes = {
         let data = mockUser.find(e => e.userName == userName && e.password == password)
         if (data) {
             let userId = data.userId
+            let userName = data.userName
             let jwt = data.jwt
             let preferences = data.preferences
-            return {jwt: jwt, userId: userId, preferences: preferences}
+            return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
         }
         return false
     },
 
-    changeUserPassword(userName, password, newPassword, jwt) {
-        let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.jwt == jwt)
+    changeUserPassword(userName, password, newPassword, userId, jwt) {
+        let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.userId == userId && e.jwt == jwt)
         if (userIndex != -1) {
             mockUser[userIndex].password = newPassword
             return true
@@ -138,7 +139,12 @@ export const routes = {
 
     },
 
-    updateUserPreferences(preferences) {
-
+    updateUserPreferences(preferences, userId, jwt) {
+        let userIndex = mockUser.findIndex(e => e.userId == userId && e.jwt == jwt)
+        if (userIndex != -1) {
+            mockUser[userIndex].preferences = preferences
+            return true
+        }
+        return false
     }
 }

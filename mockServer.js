@@ -35,7 +35,7 @@ export const mockFiles = []
 
 export const mockUser = [
     {
-        id: 1, 
+        userId: 1, 
         userName: 'pedrobemfica', 
         password: '123',
         jwt: 'a1',

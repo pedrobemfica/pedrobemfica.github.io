@@ -1,11 +1,14 @@
 import { Cart } from "../models/cart-model.js";
+import { UserController } from "./user-controller.js"
+
 import { routes } from "../api/routes.js";
 import { alertMessage } from "../helpers/alert-helper.js"
 
 export class CartController  {
     constructor() {
-        this.userId = this.checkLoggedser()
-        this.cart = new Cart(this.userId)
+        this.userController = new UserController()
+        this.user = this.userController.checkUser()
+        this.cart = new Cart(this.user.userId)
 
         this.updateCart()
     }
@@ -13,7 +16,7 @@ export class CartController  {
     updateCart() {    
         let getCart = []
         this.cart.clearCart()
-        getCart = routes.getCartServer()
+        getCart = routes.getCartServer(this.user.userId, this.user.jwt)
         getCart.map(product => {this.cart.addToCart(product)})
     }
 
@@ -22,7 +25,7 @@ export class CartController  {
     }
 
     deleteItem(index) {
-        let confirm = routes.deleteFomCart(index)
+        let confirm = routes.deleteFomCart(index, this.user.userId, this.user.jwt)
         if (confirm) {
             alertMessage('Item removido', 'O item foi removido do seu carrinho.')
         } else
@@ -32,7 +35,7 @@ export class CartController  {
     }
 
     clearCart() {
-        let confirm = routes.clearCart()
+        let confirm = routes.clearCart(this.user.userId, this.user.jwt)
         if (confirm) {
             alertMessage('Carrinho limpo', 'Todos os itens foram removidos do seu carrinho.')
         } else
@@ -42,8 +45,9 @@ export class CartController  {
     }
 
     checkLoggedser() {
-        let user = {id: 1, name: 'Pedro'}
-        return user
+        if (this.user)
+            if (this.user.logged)
+                return this.user
         return false
     }
 }

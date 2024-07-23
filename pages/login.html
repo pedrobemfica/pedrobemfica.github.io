@@ -1,0 +1,25 @@
+<div class="login-container">
+  <h2>Login de usuário</h2>
+  <section class="login--username">
+    <form class="login--forms" id="userLoginForm">
+      <label for="userLoginName" class="form-label">Nome de usuário:</label>
+      <input type="text" id="userLoginName" placeholder="Nome de usuário" class="form-control"/>
+      <label for="userLoginPassword" class="form-label">Senha:</label>
+      <input type="password" id="userLoginPassword" placeholder="Senha" class="form-control"/>
+      <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+  </section>
+
+  <div class="alert alert-primary element-hidden" id="userLoginFailMessage" role="alert">
+    Usuário ou senha incorretos.
+  </div>
+
+  <!-- <section class="login--external">
+    <button id="google-login-btn" class="btn btn-primary" data-onsuccess="onGoogleSignIn">
+      Login com Google
+    </button>
+    <button id="facebook-login-btn" class="btn btn-primary" onclick="facebookLogin()">
+      Login com Facebook
+    </button>
+  </section> -->
+</div>

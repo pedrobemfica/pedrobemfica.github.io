@@ -1,11 +1,14 @@
 import { File } from "../models/file-model.js"
 import { Files } from "../models/files-model.js"
+import { UserController } from "./user-controller.js"
 
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
  
 export class FilesController {
     constructor(){
+        this.userController = new UserController()
+        this.user = this.userController.checkUser()
         this.files = new Files()
         this.updateFiles()
     }
@@ -13,7 +16,7 @@ export class FilesController {
     updateFiles() {
         let getUserFiles = []
         this.files.clearFiles()
-        getUserFiles = routes.getFilesServer()
+        getUserFiles = routes.getFilesServer(this.user.userId, this.user.jwt)
         getUserFiles.map(e => {
             let newFile = new File(e.fileId, e.userId, e.date, e.label, e.path)
             this.files.insertFile(newFile)
@@ -34,10 +37,10 @@ export class FilesController {
         let date = {year: currentYear, month: currentMonth, day: currentDay}
         let label = labelInput.value
         let path = '' // Get from handling upload
-        let fileId = routes.nextFileId()
+        let fileId = routes.nextFileId(this.user.userId, this.user.jwt)
 
         let file = new File(fileId, userId, date, label, path)
-        routes.newFile(file)
+        routes.newFile(file, this.user.userId, this.user.jwt)
         alertMessage('Arquivo enviado', 'O arquivo foi enviado para o servidor.')
        
         this.updateFiles()
@@ -45,7 +48,7 @@ export class FilesController {
 
     deleteFile(fileId) {
         //let file = file // Handle remove the file in the server
-        let confirm = routes.deleteFile(fileId)
+        let confirm = routes.deleteFile(fileId, this.user.userId, this.user.jwt)
         if (confirm) {
             alertMessage('Arquivo removido', 'O arquivo foi removido do servidor.')
         } else
@@ -59,8 +62,9 @@ export class FilesController {
     }
 
     checkLoggedser() {
-        let user = {id: 1, name: 'Pedro'}
-        return user
+        if (this.user)
+            if (this.user.logged)
+                return this.user
         return false
     }
 }

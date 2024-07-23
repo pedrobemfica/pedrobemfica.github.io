@@ -1,11 +1,14 @@
 import { Products } from "../models/products-model.js"
 import { Services } from "../models/services-model.js"
+import { UserController } from "./user-controller.js"
 
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
  
 export class ServicesController {
     constructor(){
+        this.userController = new UserController()
+        this.user = this.userController.checkUser()
         this.products = new Products()
         this.services = new Services()
     }
@@ -60,7 +63,7 @@ export class ServicesController {
     addSingleToCart(serviceName, serviceComplement, serviceLocation) {
         let products = new Products()
         let product = products.singleProduct(serviceName, serviceComplement, serviceLocation)
-        let confirm = routes.addToCart(product)
+        let confirm = routes.addToCart(product, this.user.userId, this.user.jwt)
         if (confirm)
             alertMessage('Serviço adicionado', 'O serviço foi adicionado ao seu carrinho de compras.')
         else
@@ -70,7 +73,7 @@ export class ServicesController {
     addComboToCart(productId) {
         let products = new Products()
         let product = products.comboProduct(productId)
-        let confirm = routes.addToCart(product) 
+        let confirm = routes.addToCart(product, this.user.userId, this.user.jwt) 
         if (confirm)
             alertMessage('Combo adicionado', 'O combo foi adicionado ao seu carrinho de compras.')
         else
@@ -78,8 +81,9 @@ export class ServicesController {
     }
 
     checkLoggedser() {
-        let user = {id: 1, name: 'Pedro'}
-        return user
+        if (this.user)
+            if (this.user.logged)
+                return this.user
         return false
     }
 }

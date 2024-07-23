@@ -4,9 +4,14 @@ import { FilesView } from "../views/files-view.js"
 import { ServicesView } from "../views/services-view.js"
 import { NavigationView } from "../views/navigation-view.js"
 import { CookiesView } from "../views/cookies-view.js"
+import { LoginView } from "../views/login-view.js"
+import { UserController } from "./user-controller.js"
 
 export class ApplicationController {
     constructor() {
+        this.userController = new UserController()
+        this.user = this.userController.checkUser()
+
         let headerArea = document.getElementById('headerArea')
         let contentArea = document.getElementById('contentArea')
         let offCanvasArea = document.getElementById('offCanvasArea')
@@ -26,7 +31,7 @@ export class ApplicationController {
             {path: 'profile', page: './pages/profile.html', view: '', target: staticModalArea, hash: false},
             {path: 'cart', page: './pages/cart.html', view: CartView, target: offCanvasArea, hash: false},
             {path: 'payment', page: './pages/payment.html', view: '', target: staticModalArea, hash: false},
-            {path: 'login', page: './pages/login.html', view: '', target: staticModalArea, hash: false},
+            {path: 'login', page: './pages/login.html', view: LoginView, target: staticModalArea, hash: false},
             {path: 'register', page: './pages/register.html', view: '', target: staticModalArea, hash: false},
             {path: 'cookies', page: './pages/cookies.html', view: CookiesView, target: cookieConsent, hash: false}
         ]
@@ -63,8 +68,9 @@ export class ApplicationController {
     }
 
     checkLoggedser() {
-        let user = {id: 1, name: 'Pedro'}
+        if (this.user)
+            if (this.user.logged)
+                return this.user
         return false
-        return user
     }
 }
