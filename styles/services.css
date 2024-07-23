@@ -23,6 +23,7 @@
     align-items: end;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 #singleServiceForm div {
