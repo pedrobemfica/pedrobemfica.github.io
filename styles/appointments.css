@@ -6,6 +6,7 @@
 }
 
 .appointments-credits {
+    align-items: center;
     display: flex;
     justify-content: flex-start;
     margin-bottom: 2rem;
@@ -15,14 +16,14 @@
 #creditsShortList {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     list-style-type: none;
     margin: 0;
-    margin-left: 1rem;
     padding: 0;
 }
 
 .credit-appointment--badge {
-    margin-left: 1rem;
+    margin: .5rem 1rem;
 }
 
 .credit-appointment--badge:hover {
@@ -116,5 +117,13 @@
 
     #appointmentsCompleteList tr td {
         padding: .5rem .5rem;
+    }
+
+    .appointments-credits {
+        flex-direction: column;
+    }
+
+    #creditsShortList {
+        flex-direction: column;
     }
 } 
