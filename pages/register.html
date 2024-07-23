@@ -1,0 +1,18 @@
+<div class="register-container">
+    <h2>Crie seu usuário</h2>
+    <section class="register--username">
+      <form class="register--forms" id="userRegisterForm">
+        <label for="userRegisterName" class="form-label">Nome de usuário:</label>
+        <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control"/>
+        <label for="userRegisterPassword" class="form-label">Senha:</label>
+        <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control"/>
+        <label for="userRegisterConfirmPassword" class="form-label">Confirmar a senha:</label>
+        <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control"/>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </form>
+    </section>
+
+    <div class="alert alert-primary element-hidden" id="userRegisterFailMessage" role="alert">
+        Usuário ou senha inválidos.
+    </div>
+</div>

@@ -1,28 +1,33 @@
-.login-container {
+.login-container, .register-container {
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-container h2 {
+.login-container h2, .register-container h2 {
     margin-bottom: 1rem;
     text-align: center;
 }
 
-.login--forms label, .login--forms input {
+.login--forms label, .login--forms input, .register--forms label, .register--forms input {
     margin: .25rem;
 }
 
-.login--forms button {
+.login--forms button, .register--forms button {
     display: block;
     width: 100%;
     margin: 1rem 0;
 }
 
-.login--username {
+.login--username, .register--username {
     border-bottom: 1px solid #CCC;
     margin-bottom: 1rem;
+}
+
+.login--others {
+    display: flex;
+    justify-content: space-between;
 }
 
 #google-login-btn {

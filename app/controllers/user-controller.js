@@ -1,6 +1,7 @@
 import { User } from "../models/user-model.js"
 import { Cookies } from "../helpers/cookie-helper.js"
 import { routes } from "../api/routes.js"
+import { alertMessage } from "../helpers/alert-helper.js"
 
 export class UserController {
     constructor() {
@@ -45,9 +46,12 @@ export class UserController {
             this.user.setLogged(false)
             this.saveCookie()
             this.checkUser()
+            alertMessage('Login efetuado', 'Login de usuário realizado com sucesso.')
             return true
-        } else
+        } else {
+            alertMessage('Falha no login', 'Não foi possível realizar o login do usuário.')
             return false
+        }
     }
 
     loadUser(userId, userName) {
@@ -61,8 +65,11 @@ export class UserController {
 
     changePassword(password, newPassword) {
         let data = routes.changeUserPassword(this.userName, password, newPassword, this.user.userId, this.user.jwt)
-        if (data)
+        if (data) {
+            alertMessage('Senha alterada', 'Senha do usuário alterada com sucesso.')
             return true
+        }
+        alertMessage('Senha não alterada', 'Não foi possível alterar a senha do usuário.')
         return false
     }
 
@@ -76,13 +83,25 @@ export class UserController {
 
     updatePreferences(preferences) {
         let data = routes.updateUserPreferences(preferences, this.user.userId, this.user.jwt)
-        if (data)
+        if (data) {
+            alertMessage('Preferências alteradas', 'Preferências do usuário alteradas com sucesso.')
             return true
+        }
+        alertMessage('Preferências não alteradas', 'Não foi possível alterar as preferências do usuário.')
         return false
     }
 
     logout() {
 
+    }
+
+    register(userName, password, confirmPassword) {
+
+        alertMessage('Usuário registrado', 'O usuário foi registrado com sucesso.')
+        return true
+
+        alertMessage('Usuário não registrado', 'Não foi possível registrar o usuário.')
+        return false
     }
 }
 
