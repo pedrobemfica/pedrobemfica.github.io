@@ -146,5 +146,36 @@ export const routes = {
             return true
         }
         return false
-    }
+    }, 
+
+    registerUser(userName, password, confirmPassword, email, cellPhone) {
+        if (password == confirmPassword) {
+            let userId = this.nextUserId()
+            let newObj = {
+                userId: userId, 
+                userName: userName, 
+                password: password,
+                jwt: '1',
+                preferences: {
+                    name: '', 
+                    email: email, 
+                    cellPhone: cellPhone, 
+                    gender: '', 
+                    birthYear: null, 
+                    birthMonth: null, 
+                    birthDay: null
+                }
+            }
+            mockUser.push(newObj)
+            return true
+        }
+        return false
+    },
+
+    nextUserId() {
+        let nextUserId = Math.max(...mockUser.map(e => e.userId)) + 1
+        if (nextUserId == -Infinity)
+            nextUserId = 1
+        return nextUserId
+    },
 }

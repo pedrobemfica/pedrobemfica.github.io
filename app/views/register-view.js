@@ -8,12 +8,20 @@ export class RegisterView {
         this.userRegisterName = document.getElementById('userRegisterName')
         this.userRegisterPassword = document.getElementById('userRegisterPassword')
         this.userRegisterConfirmPassword = document.getElementById('userRegisterConfirmPassword')
+        this.userRegisterEmail = document.getElementById('userRegisterEmail')
+        this.userRegisterPhone = document.getElementById('userRegisterPhone')
 
         this.userRegisterFailMessage = document.getElementById('userRegisterFailMessage')
 
         this.userRegisterForm.addEventListener('submit', event => {
             event.preventDefault()
-            if (this.userController.register(this.userRegisterName.value, this.userRegisterPassword.value, this.userRegisterConfirmPassword.value)) {
+            if (this.userController.register(
+                    this.userRegisterName.value, 
+                    this.userRegisterPassword.value, 
+                    this.userRegisterConfirmPassword.value,
+                    this.userRegisterEmail.value,
+                    this.userRegisterPhone.value
+                )) {
                 this.userRegisterFailMessage.classList.add('element-hidden')
                 document.location.href="/"
             } else 

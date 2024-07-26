@@ -9,7 +9,7 @@ export class LoginView {
         this.userLoginPassword = document.getElementById('userLoginPassword')
 
         this.userLoginFailMessage = document.getElementById('userLoginFailMessage')
-
+        
         this.userLoginForm.addEventListener('submit', event => {
             event.preventDefault()
             if (this.userController.login(this.userLoginName.value, this.userLoginPassword.value)) {

@@ -12,7 +12,7 @@ export class NavigationView {
         this.userCart = document.getElementById("userCart")
 
         this.bsOffcanvas = new bootstrap.Offcanvas('#offCanvasCart')
-        this.myModal = new bootstrap.Modal(document.getElementById('staticModal'))
+        this.myModal = new bootstrap.Modal('#staticModal')
 
         this.updateView()
     }

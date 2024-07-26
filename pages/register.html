@@ -1,14 +1,26 @@
 <div class="register-container">
     <h2>Crie seu usuário</h2>
-    <section class="register--username">
+    <section class="register--information">
       <form class="register--forms" id="userRegisterForm">
-        <label for="userRegisterName" class="form-label">Nome de usuário:</label>
-        <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control"/>
-        <label for="userRegisterPassword" class="form-label">Senha:</label>
-        <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control"/>
-        <label for="userRegisterConfirmPassword" class="form-label">Confirmar a senha:</label>
-        <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control"/>
-        <button type="submit" class="btn btn-primary">Registrar</button>
+        <div class="register--divider">
+          <label for="userRegisterName" class="form-label">Nome de usuário:</label>
+          <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control"/>
+          <label for="userRegisterPassword" class="form-label">Senha:</label>
+          <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control"/>
+          <label for="userRegisterConfirmPassword" class="form-label">Confirmar a senha:</label>
+          <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control"/>
+        </div>
+        <div class="register--divider">
+          <label for="userRegisterEmail" class="form-label">E-mail:</label>
+          <input type="email" id="userRegisterEmail" placeholder="E-mail" class="form-control"/>
+          <label for="userRegisterPhone" class="form-label">Telefone:</label>
+          <input type="text" id="userRegisterPhone" placeholder="Telefone" class="form-control"/>
+        </div>
+        <div class="register--divider">
+          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="reset" class="btn btn-primary">Limpar</button>
+        </div>
+        
       </form>
     </section>
 

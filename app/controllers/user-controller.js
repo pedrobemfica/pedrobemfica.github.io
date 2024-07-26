@@ -95,11 +95,12 @@ export class UserController {
 
     }
 
-    register(userName, password, confirmPassword) {
-
-        alertMessage('Usuário registrado', 'O usuário foi registrado com sucesso.')
-        return true
-
+    register(userName, password, confirmPassword, email, cellPhone) {
+        let confirm = routes.registerUser(userName, password, confirmPassword, email, cellPhone)
+        if (confirm) {
+            alertMessage('Usuário registrado', 'O usuário foi registrado com sucesso.')
+            return true
+        }
         alertMessage('Usuário não registrado', 'Não foi possível registrar o usuário.')
         return false
     }

@@ -50,7 +50,7 @@ export const mockUser = [
         }
     },
     {
-        id: 2, 
+        userId: 2, 
         userName: 'johndo', 
         password: 'abc', 
         preferences: {
