@@ -14,6 +14,12 @@ export class NavigationView {
         this.bsOffcanvas = new bootstrap.Offcanvas('#offCanvasCart')
         this.myModal = new bootstrap.Modal('#staticModal')
 
+        this.myModalEl = document.getElementById('staticModal')
+        this.myModalEl.addEventListener('hide.bs.modal', event => {
+
+            this.updateView()    
+        })
+
         this.updateView()
     }
    

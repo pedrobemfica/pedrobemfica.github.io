@@ -22,8 +22,11 @@ export class RegisterView {
                     this.userRegisterEmail.value,
                     this.userRegisterPhone.value
                 )) {
-                this.userRegisterFailMessage.classList.add('element-hidden')
-                document.location.href="/"
+                if (this.userController.login(this.userRegisterName.value, this.userRegisterPassword.value)) {
+                    this.userRegisterFailMessage.classList.add('element-hidden')
+                    bootstrap.Modal.getInstance('#staticModal').hide()
+                } else
+                    this.userRegisterFailMessage.classList.remove('element-hidden') 
             } else 
                 this.userRegisterFailMessage.classList.remove('element-hidden')
         })

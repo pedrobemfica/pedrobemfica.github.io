@@ -11,7 +11,8 @@ import { UserController } from "./user-controller.js"
 export class ApplicationController {
     constructor() {
         this.userController = new UserController()
-        this.user = this.userController.checkUser()
+        this.user = null
+        this.checkLoggedser()
 
         let headerArea = document.getElementById('headerArea')
         let contentArea = document.getElementById('contentArea')
@@ -69,6 +70,7 @@ export class ApplicationController {
     }
 
     checkLoggedser() {
+        this.user = this.userController.checkUser()
         if (this.user)
             if (this.user.logged)
                 return this.user

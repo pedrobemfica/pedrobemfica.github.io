@@ -23,8 +23,8 @@ export class UserController {
             this.user.setBirthMonth(cookieObj.birthMonth)
             this.user.setBirthDay(cookieObj.birthDay)
 
-            this.user.setLogged(false)
-            this.checkUser()
+            if (this.user.getJwt)
+                this.user.setLogged(true)
         } else
         return false
     }
@@ -44,14 +44,16 @@ export class UserController {
             this.user.setBirthDay(data.birthDay)
 
             this.user.setLogged(false)
-            this.saveCookie()
-            this.checkUser()
-            alertMessage('Login efetuado', 'Login de usuário realizado com sucesso.')
-            return true
-        } else {
-            alertMessage('Falha no login', 'Não foi possível realizar o login do usuário.')
-            return false
+
+            if (this.user.getJwt) {
+                this.user.setLogged(true)
+                alertMessage('Login efetuado', 'Login de usuário realizado com sucesso.')
+                this.saveCookie()
+                return true
+            }
         }
+        alertMessage('Falha no login', 'Não foi possível realizar o login do usuário.')
+        return false
     }
 
     loadUser(userId, userName) {
@@ -74,8 +76,8 @@ export class UserController {
     }
 
     checkUser() {
-        if (this.user.jwt) {
-            this.user.setLogged(true)
+        this.retrieveCookie()
+        if (this.user.getLogged) {
             return this.user
         }
         return false
