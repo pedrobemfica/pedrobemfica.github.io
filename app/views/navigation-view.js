@@ -16,7 +16,7 @@ export class NavigationView {
 
         this.myModalEl = document.getElementById('staticModal')
         this.myModalEl.addEventListener('hide.bs.modal', () => {
-            this.updateView()    
+            this.updateView()  
         })
 
         this.updateView()
@@ -71,7 +71,7 @@ export class NavigationView {
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.applicationController.checkLoggedser()
+        this.loggedUser = this.applicationController.checkLoggedUser()
 
         if (this.loggedUser) {
             this.userRegistration.classList.add('element-hidden')

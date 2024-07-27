@@ -81,7 +81,7 @@ export class UserController {
 
     checkUser() {
         this.retrieveCookie()
-        if (this.user.getLogged) {
+        if (Cookies.getCookie('user') && this.user.getLogged) {
             return this.user
         }
         return false
@@ -111,7 +111,6 @@ export class UserController {
         this.user = ''
         this.checkUser()
         return true
-
     }
 
     register(userName, password, confirmPassword, email, cellPhone) {

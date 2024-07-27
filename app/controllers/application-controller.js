@@ -13,7 +13,7 @@ export class ApplicationController {
     constructor() {
         this.userController = new UserController()
         this.user = null
-        this.checkLoggedser()
+        this.checkLoggedUser()
 
         let headerArea = document.getElementById('headerArea')
         let contentArea = document.getElementById('contentArea')
@@ -70,7 +70,7 @@ export class ApplicationController {
         .catch(error => console.error(`Error loading ${path}:`, error))
     }
 
-    checkLoggedser() {
+    checkLoggedUser() {
         this.user = this.userController.checkUser()
         if (this.user)
             if (this.user.logged)
