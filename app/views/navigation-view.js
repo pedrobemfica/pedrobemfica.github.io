@@ -15,8 +15,7 @@ export class NavigationView {
         this.myModal = new bootstrap.Modal('#staticModal')
 
         this.myModalEl = document.getElementById('staticModal')
-        this.myModalEl.addEventListener('hide.bs.modal', event => {
-
+        this.myModalEl.addEventListener('hide.bs.modal', () => {
             this.updateView()    
         })
 
@@ -55,6 +54,11 @@ export class NavigationView {
         })
 
         this.userLogin.addEventListener('click', event => {
+            event.preventDefault()
+            this.myModal.show()
+        })
+
+        this.userProfile.addEventListener('click', event => {
             event.preventDefault()
             this.myModal.show()
         })

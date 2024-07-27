@@ -6,6 +6,7 @@ import { NavigationView } from "../views/navigation-view.js"
 import { CookiesView } from "../views/cookies-view.js"
 import { LoginView } from "../views/login-view.js"
 import { RegisterView } from "../views/register-view.js"
+import { ProfileView } from "../views/profile-view.js"
 import { UserController } from "./user-controller.js"
 
 export class ApplicationController {
@@ -30,7 +31,7 @@ export class ApplicationController {
             {path: 'files', page: './pages/files.html', view: FilesView, target: contentArea, hash: true},
             {path: 'contact', page: './pages/contact.html', view: '', target: contentArea, hash: true},
             {path: 'terms', page: './pages/terms.html', view: '', target: contentArea, hash: true},
-            {path: 'profile', page: './pages/profile.html', view: '', target: staticModalArea, hash: false},
+            {path: 'profile', page: './pages/profile.html', view: ProfileView, target: staticModalArea, hash: false},
             {path: 'cart', page: './pages/cart.html', view: CartView, target: offCanvasArea, hash: false},
             {path: 'payment', page: './pages/payment.html', view: '', target: staticModalArea, hash: false},
             {path: 'login', page: './pages/login.html', view: LoginView, target: staticModalArea, hash: false},

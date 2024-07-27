@@ -26,6 +26,17 @@ export const Cookies = {
         return false
     },
 
+    deleteCookie: function(name) {
+        let expires
+        if (COOKIE_EXPIRES) {
+            let date = new Date()
+            date.setTime(date.getTime() - 1)
+            expires = "; expires=" + date.toGMTString()
+        } else 
+            expires = ""
+        document.cookie = name + "=" + '' + expires + "; path=/"
+    },
+
     cookieConsent: function(elementConsent, elementAccept) {
         if (!this.getCookie('cookiesAccepted')) {
             elementConsent.style.display = 'block'

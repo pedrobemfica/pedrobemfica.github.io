@@ -65,6 +65,10 @@ export class UserController {
         Cookies.createCookie('user', JSON.stringify(cookieObj))    
     }
 
+    deleteCookie() {
+        Cookies.deleteCookie('user', '') 
+    }
+
     changePassword(password, newPassword) {
         let data = routes.changeUserPassword(this.userName, password, newPassword, this.user.userId, this.user.jwt)
         if (data) {
@@ -83,8 +87,16 @@ export class UserController {
         return false
     }
 
-    updatePreferences(preferences) {
-        let data = routes.updateUserPreferences(preferences, this.user.userId, this.user.jwt)
+    updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth) {
+        let data = routes.updateUserPreferences(
+            userProfileEmail, 
+            userProfilePhone, 
+            userProfileName, 
+            userProfileGender, 
+            userProfileBirth, 
+            this.user.userId, 
+            this.user.jwt
+        )
         if (data) {
             alertMessage('Preferências alteradas', 'Preferências do usuário alteradas com sucesso.')
             return true
@@ -94,6 +106,11 @@ export class UserController {
     }
 
     logout() {
+        alertMessage('Logout efetuado', 'Conta de usuário não está mais aberta.')
+        this.deleteCookie()
+        this.user = ''
+        this.checkUser()
+        return true
 
     }
 

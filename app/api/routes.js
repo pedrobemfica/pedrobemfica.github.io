@@ -139,9 +139,22 @@ export const routes = {
 
     },
 
-    updateUserPreferences(preferences, userId, jwt) {
+    updateUserPreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
         let userIndex = mockUser.findIndex(e => e.userId == userId && e.jwt == jwt)
         if (userIndex != -1) {
+            let date = new Date(userProfileBirth)
+            let birthYear = date.getFullYear()
+            let birthMonth = date.getMonth()
+            let birthDay = date.getDate()
+            let preferences = {
+                    name: userProfileName, 
+                    email: userProfileEmail, 
+                    cellPhone: userProfilePhone, 
+                    gender: userProfileGender, 
+                    birthYear: birthYear, 
+                    birthMonth: birthMonth, 
+                    birthDay: birthDay
+                }     
             mockUser[userIndex].preferences = preferences
             return true
         }

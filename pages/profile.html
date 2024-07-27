@@ -1,0 +1,41 @@
+<div class="profile-container">
+    <h2>Perfil de usuário</h2>
+    <section class="profile--information">
+      <form class="profile--forms" id="userProfileForm">
+        <div class="register--divider">
+            <label for="userProfileUserName" class="form-label">Nome de usuário:</label>
+            <input type="text" id="userProfileUserName" class="form-control" disabled/>
+        </div>
+        
+        <div class="register--divider">
+            <label for="userProfileEmail" class="form-label">E-mail:</label>
+            <input type="email" id="userProfileEmail" placeholder="Nome completo" class="form-control"/>
+            <label for="userProfilePhone" class="form-label">Telefone:</label>
+            <input type="text" id="userProfilePhone" placeholder="Nome completo" class="form-control"/>
+        </div>
+
+        <div class="register--divider">     
+            <label for="userProfileName" class="form-label">Nome completo:</label>
+            <input type="text" id="userProfileName" placeholder="Nome completo" class="form-control"/>
+            <label for="userProfileGender" class="form-label">Gênero:</label>
+            <select name="inputGender" class="form-select" id="userProfileGender">
+                <option selected value="null">Selecione</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+            <div name="inputHelp" class="form-text">Solicitamos informações de gênero por questões fisiológicas de interesse médico.</div>
+            <label for="userProfileBirth" class="form-label">Data de nascimento:</label>
+            <input name="inputDate" class="form-control" type="date" id="userProfileBirth">
+        </div>
+
+        <div class="register--divider">
+            <button type="submit" class="btn btn-primary">Alterar informações</button>
+            <button type="button" class="btn btn-danger" id="userProfileLogout">Sair da conta</button>
+        </div>
+      </form>
+    </section>
+
+    <div class="alert alert-primary element-hidden" id="userProfileFailMessage" role="alert">
+        As informações não podem ser alteradas.
+    </div>
+</div>
