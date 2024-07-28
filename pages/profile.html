@@ -2,19 +2,19 @@
     <h2>Perfil de usuário</h2>
     <section class="profile--information">
       <form class="profile--forms" id="userProfileForm">
-        <div class="register--divider">
+        <div class="profile--divider">
             <label for="userProfileUserName" class="form-label">Nome de usuário:</label>
-            <input type="text" id="userProfileUserName" class="form-control" disabled/>
+            <input type="text" id="userProfileUserName" class="form-control" placeholder="Nome de usuário" disabled/>
         </div>
         
-        <div class="register--divider">
+        <div class="profile--divider">
             <label for="userProfileEmail" class="form-label">E-mail:</label>
-            <input type="email" id="userProfileEmail" placeholder="Nome completo" class="form-control"/>
+            <input type="email" id="userProfileEmail" placeholder="E-mail" class="form-control"/>
             <label for="userProfilePhone" class="form-label">Telefone:</label>
-            <input type="text" id="userProfilePhone" placeholder="Nome completo" class="form-control"/>
+            <input type="text" id="userProfilePhone" placeholder="Telefone" class="form-control"/>
         </div>
 
-        <div class="register--divider">     
+        <div class="profile--divider">     
             <label for="userProfileName" class="form-label">Nome completo:</label>
             <input type="text" id="userProfileName" placeholder="Nome completo" class="form-control"/>
             <label for="userProfileGender" class="form-label">Gênero:</label>
@@ -25,10 +25,10 @@
             </select>
             <div name="inputHelp" class="form-text">Solicitamos informações de gênero por questões fisiológicas de interesse médico.</div>
             <label for="userProfileBirth" class="form-label">Data de nascimento:</label>
-            <input name="inputDate" class="form-control" type="date" id="userProfileBirth">
+            <input name="inputDate" class="form-control" type="date" value="1900-01-01" id="userProfileBirth">
         </div>
 
-        <div class="register--divider">
+        <div class="profile--divider">
             <button type="submit" class="btn btn-primary">Alterar informações</button>
             <button type="button" class="btn btn-danger" id="userProfileLogout">Sair da conta</button>
         </div>

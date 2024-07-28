@@ -14,7 +14,7 @@
     margin: .25rem;
 }
 
-.login--forms button, .register--forms button {
+.login--forms button, .register--forms button, .profile--forms button {
     display: block;
     width: 100%;
     margin: .5rem 0;
@@ -30,9 +30,9 @@
     justify-content: space-between;
 }
 
-.register--divider {
-    background-color: #EEE;
-    border: 1px solid #EEE;
+.register--divider, .profile--divider {
+    background-color: #F5F5F5;
+    border: 1px solid #F5F5F5;
     border-radius: 5px;
     margin: .5rem;
     padding: .5rem;

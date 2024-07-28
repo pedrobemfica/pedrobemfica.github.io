@@ -16,7 +16,7 @@ export class NavigationView {
 
         this.myModalEl = document.getElementById('staticModal')
         this.myModalEl.addEventListener('hide.bs.modal', () => {
-            this.updateView()  
+            this.checkLoggedUser()  
         })
 
         this.updateView()
@@ -31,10 +31,11 @@ export class NavigationView {
         this.navPageList = [...document.getElementsByClassName("navigation-page")]
         this.navPageList.forEach(page => {
             let path = page.getAttribute('data-nav-target')
+            page.removeEventListener('click', this)
             page.addEventListener('click', event => {
                 event.preventDefault()
                 this.applicationController.loadContent(path)
-                this.updateView()
+                this.checkLoggedUser()
             })
         })
 
