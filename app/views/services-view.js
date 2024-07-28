@@ -75,9 +75,11 @@ export class ServicesView {
 
     enableSingleButton() {
         if (this.servicesController.retrieveSingleLocation(this.inputSingleServiceName.value, this.inputSingleServiceComplement.value, this.inputSingleServiceLocation.value))
-            this.buttonSingleService.disabled = false
-        else
-            this.buttonSingleService.disabled = true
+            if (this.loggedUser) {
+                this.buttonSingleService.disabled = false
+                return null
+            }
+        this.buttonSingleService.disabled = true
     }
 
     clearSingle() {
@@ -132,10 +134,17 @@ export class ServicesView {
     setComboActions() {
         let comboItemAddToCart = document.getElementsByName('comboItemAddToCart')
         
-        comboItemAddToCart.forEach(element => element.addEventListener('click', event => {
-            event.preventDefault()           
-            this.servicesController.addComboToCart(element.value)
-            this.updateView()
-        }))
+        comboItemAddToCart.forEach(element => 
+            {
+                element.addEventListener('click', event => {
+                event.preventDefault()           
+                this.servicesController.addComboToCart(element.value)
+                this.updateView()
+            })
+            if (this.loggedUser) 
+                element.disabled = false
+            else
+                element.disabled = true
+        })
     }
 }
