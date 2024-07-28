@@ -133,7 +133,7 @@ export class ServicesView {
 
     setComboActions() {
         let comboItemAddToCart = document.getElementsByName('comboItemAddToCart')
-        
+        this.checkLoggedUser()
         comboItemAddToCart.forEach(element => 
             {
                 element.addEventListener('click', event => {
