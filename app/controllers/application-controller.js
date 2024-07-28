@@ -11,10 +11,6 @@ import { UserController } from "./user-controller.js"
 
 export class ApplicationController {
     constructor() {
-        this.userController = new UserController()
-        this.user = null
-        this.checkLoggedUser()
-
         let headerArea = document.getElementById('headerArea')
         let contentArea = document.getElementById('contentArea')
         let offCanvasArea = document.getElementById('offCanvasArea')
@@ -38,6 +34,12 @@ export class ApplicationController {
             {path: 'register', page: './pages/register.html', view: RegisterView, target: staticModalArea, hash: false},
             {path: 'cookies', page: './pages/cookies.html', view: CookiesView, target: cookieConsent, hash: false}
         ]
+    }
+
+    initiate() {
+        this.userController = new UserController()
+        this.user = null
+        this.checkLoggedUser()
 
         window.addEventListener('DOMContentLoaded', () => {
             let normalizedPage = window.location.pathname.replace('/client/', '')

@@ -4,8 +4,8 @@
     --menu-background-collor: #024950;
     --menu-items-collor: white;
     --menu-items-hover: #0FA4AF;
-    --navigation-height-full: 75px;
-    --navigation-height-colapsed: 40px;
+    --navigation-height-full: 90px;
+    --navigation-height-colapsed: 60px;
     --navigation-background-collor: #024950;
     --navigation-items-collor: white;
     --navigation-items-hover: #0FA4AF;
@@ -51,11 +51,12 @@
     display: flex;
     justify-content: center;
     margin: 0;
+    margin-right: 3rem;
     padding: 0;
 }
 
 .navigation--nav-user ul li {
-    padding: 0 1rem;
+    padding: 0 .5rem;
 }
 
 .navigation--nav-user ul i {
@@ -90,8 +91,8 @@
     display: flex;
     list-style: none;
     flex-direction: column;
-    justify-content: center;
-    padding: 0;
+    justify-content: space-around;
+    padding: 4rem 0;
 }
 
 .navigation--menu ul li {
@@ -99,7 +100,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1.5rem 0;
+    padding: .5rem 0;
 }
 
 .navigation--menu ul li a {

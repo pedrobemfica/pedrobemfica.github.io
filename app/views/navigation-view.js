@@ -4,6 +4,7 @@ export class NavigationView {
     constructor() {
 
         this.applicationController = new ApplicationController()
+        this.applicationController.initiate()
 
         this.userRegistration = document.getElementById("userRegistration")
         this.userLogin = document.getElementById("userLogin")

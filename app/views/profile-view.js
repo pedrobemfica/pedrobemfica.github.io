@@ -1,8 +1,10 @@
 import { UserController } from "../controllers/user-controller.js"
+import { ApplicationController } from "../controllers/application-controller.js"
 
 export class ProfileView {
     constructor() {
         this.userController = new UserController()
+        this.applicationController = new ApplicationController()
 
         this.userProfileForm = document.getElementById('userProfileForm')
         this.userProfileLogout = document.getElementById('userProfileLogout')
@@ -35,6 +37,7 @@ export class ProfileView {
             event.preventDefault()
             this.userController.logout()
             bootstrap.Modal.getInstance('#staticModal').hide()
+            this.applicationController.loadContent('home')
         })
     }
 }
