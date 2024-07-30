@@ -6,14 +6,21 @@ export class ProfileView {
         this.userController = new UserController()
         this.applicationController = new ApplicationController()
 
+        let user = this.userController.checkUser()
+
         this.userProfileForm = document.getElementById('userProfileForm')
         this.userProfileLogout = document.getElementById('userProfileLogout')
 
         this.userProfileUserName = document.getElementById('userProfileUserName')
+        this.userProfileUserName.value = user.userName
         this.userProfileEmail = document.getElementById('userProfileEmail')
+        this.userProfileEmail.value = user.email
         this.userProfilePhone = document.getElementById('userProfilePhone')
+        this.userProfilePhone.value = user.cellPhone
         this.userProfileName = document.getElementById('userProfileName')
+        this.userProfileName.value = user.name
         this.userProfileGender = document.getElementById('userProfileGender')
+        this.userProfileGender.value = user.gender
         this.userProfileBirth = document.getElementById('userProfileBirth')
 
         this.userProfileFailMessage = document.getElementById('userProfileFailMessage')

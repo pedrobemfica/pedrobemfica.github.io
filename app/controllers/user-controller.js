@@ -12,7 +12,7 @@ export class UserController {
     retrieveCookie() {
         if (Cookies.getCookie('user')) {
             let cookieObj = JSON.parse(Cookies.getCookie('user'))
-            this.loadUser(cookieObj.userId, cookieObj.userName)
+            this.user = new User(cookieObj.userId, cookieObj.userName)
             this.user.setJwt(cookieObj.jwt)
 
             this.user.setName(cookieObj.name)
@@ -26,13 +26,13 @@ export class UserController {
             if (this.user.getJwt)
                 this.user.setLogged(true)
         } else
-        return false
+            return false
     }
  
     login(userName, password) {
         let data = routes.loginUser(userName, password)
         if (data) {
-            this.loadUser(data.userId, data.userName)
+            this.user = new User(data.userId, data.userName)
             this.user.setJwt(data.jwt)
             
             this.user.setName(data.name)
@@ -54,10 +54,6 @@ export class UserController {
         }
         alertMessage('Falha no login', 'Não foi possível realizar o login do usuário.')
         return false
-    }
-
-    loadUser(userId, userName) {
-        this.user = new User(userId, userName)
     }
 
     saveCookie() {
