@@ -1,4 +1,4 @@
-import { BACKEND } from "./routes"
+import { BACKEND } from "./routes.js"
 
 export class ApiAuthentication {
 
@@ -12,7 +12,7 @@ export class ApiAuthentication {
             console.log(data)
         } else 
             console.log('fail')
-    } 
+    }
 
     static async login(username, password) {
         const response = await fetch('backend/auth/login', {
