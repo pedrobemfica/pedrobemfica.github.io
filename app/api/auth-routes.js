@@ -1,4 +1,18 @@
+import { BACKEND } from "./routes"
+
 export class ApiAuthentication {
+
+    static async test() {
+        const response = await fetch(`${BACKEND}/test`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })           
+        if (response.ok) {
+            const data = await response.json()
+            console.log(data)
+        } else 
+            console.log('fail')
+    }
 
     static async login(username, password) {
         const response = await fetch('backend/auth/login', {

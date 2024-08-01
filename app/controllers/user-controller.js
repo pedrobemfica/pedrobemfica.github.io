@@ -2,6 +2,7 @@ import { User } from "../models/user-model.js"
 import { Cookies } from "../helpers/cookie-helper.js"
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
+import { ApiAuthentication } from "../api/auth-routes.js"
 
 export class UserController {
     constructor() {
@@ -83,22 +84,23 @@ export class UserController {
         return false
     }
 
-    updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth) {
-        let data = routes.updateUserPreferences(
-            userProfileEmail, 
-            userProfilePhone, 
-            userProfileName, 
-            userProfileGender, 
-            userProfileBirth, 
-            this.user.userId, 
-            this.user.jwt
-        )
-        if (data) {
-            alertMessage('Preferências alteradas', 'Preferências do usuário alteradas com sucesso.')
-            return true
-        }
-        alertMessage('Preferências não alteradas', 'Não foi possível alterar as preferências do usuário.')
-        return false
+    async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth) {
+        let data = await ApiAuthentication.test()
+        // let data = routes.updateUserPreferences(
+        //     userProfileEmail, 
+        //     userProfilePhone, 
+        //     userProfileName, 
+        //     userProfileGender, 
+        //     userProfileBirth, 
+        //     this.user.userId, 
+        //     this.user.jwt
+        // )
+        // if (data) {
+        //     alertMessage('Preferências alteradas', 'Preferências do usuário alteradas com sucesso.')
+        //     return true
+        // }
+        // alertMessage('Preferências não alteradas', 'Não foi possível alterar as preferências do usuário.')
+        // return false
     }
 
     logout() {

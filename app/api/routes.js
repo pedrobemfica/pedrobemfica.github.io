@@ -1,6 +1,6 @@
 import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart, mockUser } from "../../mockServer.js"
 
-export const BACKEND = 'https://backend-olimpo.azurewebsites.net/'
+export const BACKEND = 'https://backend-olimpo.azurewebsites.net'
 
 export const routes = {
     getAppointmentsServer(userId, jwt) {
