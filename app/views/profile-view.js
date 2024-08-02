@@ -27,24 +27,29 @@ export class ProfileView {
 
         this.userProfileForm.addEventListener('submit', event => {
             event.preventDefault()
-            if (this.userController.updatePreferences(
+            this.userController.updatePreferences(
                 this.userProfileEmail.value,
                 this.userProfilePhone.value,
                 this.userProfileName.value,
                 this.userProfileGender.value,
                 this.userProfileBirth.value
-                )) {
-                    this.userProfileFailMessage.classList.add('element-hidden')
-                    bootstrap.Modal.getInstance('#staticModal').hide()
-                } else
-                    this.userProfileFailMessage.classList.remove('element-hidden') 
+            )
+            .then(confirmation => {
+                if (confirmation) {
+                        this.userProfileFailMessage.classList.add('element-hidden')
+                        bootstrap.Modal.getInstance('#staticModal').hide()
+                    } else
+                        this.userProfileFailMessage.classList.remove('element-hidden') 
+            })
         })
 
         this.userProfileLogout.addEventListener('click', event => {
             event.preventDefault()
             this.userController.logout()
-            bootstrap.Modal.getInstance('#staticModal').hide()
-            this.applicationController.loadContent('home')
+            .then(() => {
+                bootstrap.Modal.getInstance('#staticModal').hide()
+                this.applicationController.loadContent('home')
+            })
         })
     }
 }

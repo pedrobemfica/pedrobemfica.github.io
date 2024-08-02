@@ -14,13 +14,15 @@ export class LoginView {
         
         this.userLoginForm.addEventListener('submit', event => {
             event.preventDefault()
-            if (this.userController.login(this.userLoginName.value, this.userLoginPassword.value)) {
-                this.userLoginFailMessage.classList.add('element-hidden')
-                bootstrap.Modal.getInstance('#staticModal').hide()
-                this.applicationController.loadContent('home')
-            } else 
-                this.userLoginFailMessage.classList.remove('element-hidden')
-        })
-        
+            this.userController.login(this.userLoginName.value, this.userLoginPassword.value)
+            .then(confirmation => {
+                if (confirmation) {
+                    this.userLoginFailMessage.classList.add('element-hidden')
+                    bootstrap.Modal.getInstance('#staticModal').hide()
+                    this.applicationController.loadContent('home')
+                } else 
+                    this.userLoginFailMessage.classList.remove('element-hidden')
+            })
+        })      
     }
 }

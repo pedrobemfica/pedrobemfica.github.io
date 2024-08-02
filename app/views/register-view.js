@@ -17,21 +17,24 @@ export class RegisterView {
 
         this.userRegisterForm.addEventListener('submit', event => {
             event.preventDefault()
-            if (this.userController.register(
-                    this.userRegisterName.value, 
-                    this.userRegisterPassword.value, 
-                    this.userRegisterConfirmPassword.value,
-                    this.userRegisterEmail.value,
-                    this.userRegisterPhone.value
-                )) {
-                if (this.userController.login(this.userRegisterName.value, this.userRegisterPassword.value)) {
-                    this.userRegisterFailMessage.classList.add('element-hidden')
-                    bootstrap.Modal.getInstance('#staticModal').hide()
-                    this.applicationController.loadContent('home')
-                } else
-                    this.userRegisterFailMessage.classList.remove('element-hidden') 
-            } else 
-                this.userRegisterFailMessage.classList.remove('element-hidden')
+            this.userController.register(
+                this.userRegisterName.value, 
+                this.userRegisterPassword.value, 
+                this.userRegisterConfirmPassword.value,
+                this.userRegisterEmail.value,
+                this.userRegisterPhone.value
+            )
+            .then(confirmation => {
+                if (confirmation) {
+                    if (this.userController.login(this.userRegisterName.value, this.userRegisterPassword.value)) {
+                        this.userRegisterFailMessage.classList.add('element-hidden')
+                        bootstrap.Modal.getInstance('#staticModal').hide()
+                        this.applicationController.loadContent('home')
+                    } else
+                        this.userRegisterFailMessage.classList.remove('element-hidden') 
+                } else 
+                    this.userRegisterFailMessage.classList.remove('element-hidden')
+            })
         })
     }
 }
