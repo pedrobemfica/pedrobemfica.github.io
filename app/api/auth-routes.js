@@ -3,7 +3,7 @@ import { BACKEND } from "./routes.js"
 export class ApiAuth {
 
     static async login(username, password) {
-        fetch('backend/auth/login', {
+        fetch(`${BACKEND}/auth/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password })
@@ -23,7 +23,7 @@ export class ApiAuth {
     }
     
     static async logout(userId, jwt) {
-        fetch('backend/auth/logout', {
+        fetch(`${BACKEND}/auth/logout`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userId, jwt })
@@ -37,7 +37,7 @@ export class ApiAuth {
     }
 
     static async register(userName, password, confirmPassword, email, cellPhone) {
-        fetch('backend/auth/register', {
+        fetch(`${BACKEND}/auth/register`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userName, password, confirmPassword, email, cellPhone })
@@ -57,7 +57,7 @@ export class ApiAuth {
     }
 
     static async changePassword(userName, password, newPassword, userId, jwt) {
-        fetch('backend/auth/change-password', {
+        fetch(`${BACKEND}/auth/change-password`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userName, password, newPassword, userId, jwt })
@@ -71,7 +71,7 @@ export class ApiAuth {
     }
 
     static async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
-        fetch('backend/auth/update-preferences', {
+        fetch(`${BACKEND}/auth/update-preferences`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt })
