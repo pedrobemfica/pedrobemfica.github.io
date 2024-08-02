@@ -86,6 +86,7 @@ export class UserController {
 
     async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth) {
         let data = await ApiAuthentication.test()
+        console.log(data)
         // let data = routes.updateUserPreferences(
         //     userProfileEmail, 
         //     userProfilePhone, 

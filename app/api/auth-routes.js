@@ -3,13 +3,14 @@ import { BACKEND } from "./routes.js"
 export class ApiAuthentication {
 
     static async test() {
-        const response = await fetch(`${BACKEND}/test`, {
+        const response = await fetch(`${BACKEND}/users/test`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
-        })           
+        })   
+        console.log(response)        
         if (response.ok) {
             const data = await response.json()
-            console.log(data)
+            return data
         } else 
             console.log('fail')
     }
