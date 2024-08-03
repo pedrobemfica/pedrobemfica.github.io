@@ -119,78 +119,78 @@ export const routes = {
         return true
     },
 
-    loginUser(userName, password) {
-        let data = mockUser.find(e => e.userName == userName && e.password == password)
-        if (data) {
-            let userId = data.userId
-            let userName = data.userName
-            let jwt = data.jwt
-            let preferences = data.preferences
-            return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
-        }
-        return false
-    },
+    // loginUser(userName, password) {
+    //     let data = mockUser.find(e => e.userName == userName && e.password == password)
+    //     if (data) {
+    //         let userId = data.userId
+    //         let userName = data.userName
+    //         let jwt = data.jwt
+    //         let preferences = data.preferences
+    //         return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
+    //     }
+    //     return false
+    // },
 
-    changeUserPassword(userName, password, newPassword, userId, jwt) {
-        let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.userId == userId && e.jwt == jwt)
-        if (userIndex != -1) {
-            mockUser[userIndex].password = newPassword
-            return true
-        }
-        return false
+    // changeUserPassword(userName, password, newPassword, userId, jwt) {
+    //     let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.userId == userId && e.jwt == jwt)
+    //     if (userIndex != -1) {
+    //         mockUser[userIndex].password = newPassword
+    //         return true
+    //     }
+    //     return false
 
-    },
+    // },
 
-    updateUserPreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
-        let userIndex = mockUser.findIndex(e => e.userId == userId && e.jwt == jwt)
-        if (userIndex != -1) {
-            let date = new Date(userProfileBirth)
-            let birthYear = date.getFullYear()
-            let birthMonth = date.getMonth()
-            let birthDay = date.getDate()
-            let preferences = {
-                    name: userProfileName, 
-                    email: userProfileEmail, 
-                    cellPhone: userProfilePhone, 
-                    gender: userProfileGender, 
-                    birthYear: birthYear, 
-                    birthMonth: birthMonth, 
-                    birthDay: birthDay
-                }     
-            mockUser[userIndex].preferences = preferences
-            return true
-        }
-        return false
-    }, 
+    // updateUserPreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
+    //     let userIndex = mockUser.findIndex(e => e.userId == userId && e.jwt == jwt)
+    //     if (userIndex != -1) {
+    //         let date = new Date(userProfileBirth)
+    //         let birthYear = date.getFullYear()
+    //         let birthMonth = date.getMonth()
+    //         let birthDay = date.getDate()
+    //         let preferences = {
+    //                 name: userProfileName, 
+    //                 email: userProfileEmail, 
+    //                 cellPhone: userProfilePhone, 
+    //                 gender: userProfileGender, 
+    //                 birthYear: birthYear, 
+    //                 birthMonth: birthMonth, 
+    //                 birthDay: birthDay
+    //             }     
+    //         mockUser[userIndex].preferences = preferences
+    //         return true
+    //     }
+    //     return false
+    // }, 
 
-    registerUser(userName, password, confirmPassword, email, cellPhone) {
-        if (password == confirmPassword) {
-            let userId = this.nextUserId()
-            let newObj = {
-                userId: userId, 
-                userName: userName, 
-                password: password,
-                jwt: '1',
-                preferences: {
-                    name: '', 
-                    email: email, 
-                    cellPhone: cellPhone, 
-                    gender: '', 
-                    birthYear: null, 
-                    birthMonth: null, 
-                    birthDay: null
-                }
-            }
-            mockUser.push(newObj)
-            return true
-        }
-        return false
-    },
+    // registerUser(userName, password, confirmPassword, email, cellPhone) {
+    //     if (password == confirmPassword) {
+    //         let userId = this.nextUserId()
+    //         let newObj = {
+    //             userId: userId, 
+    //             userName: userName, 
+    //             password: password,
+    //             jwt: '1',
+    //             preferences: {
+    //                 name: '', 
+    //                 email: email, 
+    //                 cellPhone: cellPhone, 
+    //                 gender: '', 
+    //                 birthYear: null, 
+    //                 birthMonth: null, 
+    //                 birthDay: null
+    //             }
+    //         }
+    //         mockUser.push(newObj)
+    //         return true
+    //     }
+    //     return false
+    // },
 
-    nextUserId() {
-        let nextUserId = Math.max(...mockUser.map(e => e.userId)) + 1
-        if (nextUserId == -Infinity)
-            nextUserId = 1
-        return nextUserId
-    },
+    // nextUserId() {
+    //     let nextUserId = Math.max(...mockUser.map(e => e.userId)) + 1
+    //     if (nextUserId == -Infinity)
+    //         nextUserId = 1
+    //     return nextUserId
+    // },
 }
