@@ -1,77 +1,85 @@
 import { BACKEND } from "./routes.js"
 
+const BASE_ROUTE = '/auth'
 export class ApiAuth {
 
+
     static async login(username, password) {
-        fetch(`${BACKEND}/auth/login`, {
+        const response = await fetch(`${BACKEND}${BASE_ROUTE}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password })
         })
-        .then(response => {
-            if (response.ok) {
-                const data = response.json()
-                let userId = data.userId
-                let userName = data.userName
-                let jwt = data.jwt
-                let preferences = data.preferences
-                return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
-            }
-        })
-        .catch(err => console.log(`unable to fetch data from server with error = ${err}`))         
-        return false
+        const data = await response.json()
+        
+        if (response.ok) {
+            let userId = data.userId
+            let username = data.username
+            let jwt = data.jwt
+            let preferences = data.preferences
+            return {userId: userId, username: username, jwt: jwt, preferences: preferences}
+        } else {
+            console.log(`unable to fetch data from server`)
+            return false
+        }
     }
     
     static async logout(userId, jwt) {
-        fetch(`${BACKEND}/auth/logout`, {
+        const response = await fetch(`${BACKEND}${BASE_ROUTE}/logout`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userId, jwt })
         })
-        .then(response => {
-            if (response.ok)
-                return true
-        })
-        .catch(err => console.log(`unable to fetch data from server with error = ${err}`)) 
-        return false
+        const data = await response.json()
+
+        if (response.ok) {
+            let message = data.message
+            return {result: true, message: message}
+        } else {
+            console.log(`unable to fetch data from server`)
+            return false
+        }
     }
 
-    static async register(userName, password, confirmPassword, email, cellPhone) {
-        fetch(`${BACKEND}/auth/register`, {
+    static async register(username, password, confirmPassword, email, cellPhone) {
+        const response = await fetch(`${BACKEND}${BASE_ROUTE}/register`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ userName, password, confirmPassword, email, cellPhone })
+            body: JSON.stringify({ username, password, confirmPassword, email, cellPhone })
         })
-        .then(response => {
-            if (response.ok) {
-                const data = response.json()
-                let userId = data.userId
-                let userName = data.userName
-                let jwt = data.jwt
-                let preferences = data.preferences
-                return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
-            }
-        })
-        .catch(err => console.log(`unable to fetch data from server with error = ${err}`))
-        return false
+        const data = await response.json()
+
+        if (response.ok) {
+            let userId = data.userId
+            let username = data.username
+            let jwt = data.jwt
+            let preferences = data.preferences
+            return {userId: userId, username: username, jwt: jwt, preferences: preferences}
+        } else {
+            console.log(`unable to fetch data from server`)
+            return false
+        }
     }
 
-    static async changePassword(userName, password, newPassword, userId, jwt) {
-        fetch(`${BACKEND}/auth/change-password`, {
+    static async changePassword(username, password, newPassword, userId, jwt) {
+        const response = fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ userName, password, newPassword, userId, jwt })
+            body: JSON.stringify({ username, password, newPassword, userId, jwt })
         })
-        .then(response => {
-            if (response.ok)
-                return true
-        })
-        .catch(err => console.log(`unable to fetch data from server with error = ${err}`))
-        return false
+        const data = await response.json()
+
+        if (response.ok) {
+            let message = data.message
+            return {result: true, message: message}
+        } else {
+            console.log(`unable to fetch data from server`)
+            return false
+        }
     }
 
     static async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
-        fetch(`${BACKEND}/auth/update-preferences`, {
+        fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt })

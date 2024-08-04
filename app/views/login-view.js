@@ -12,17 +12,15 @@ export class LoginView {
 
         this.userLoginFailMessage = document.getElementById('userLoginFailMessage')
         
-        this.userLoginForm.addEventListener('submit', event => {
+        this.userLoginForm.addEventListener('submit', async event => {
             event.preventDefault()
-            this.userController.login(this.userLoginName.value, this.userLoginPassword.value)
-            .then(confirmation => {
-                if (confirmation) {
-                    this.userLoginFailMessage.classList.add('element-hidden')
-                    bootstrap.Modal.getInstance('#staticModal').hide()
-                    this.applicationController.loadContent('home')
-                } else 
-                    this.userLoginFailMessage.classList.remove('element-hidden')
-            })
+            const confirmation = await this.userController.login(this.userLoginName.value, this.userLoginPassword.value)
+            if (confirmation) {
+                this.userLoginFailMessage.classList.add('element-hidden')
+                bootstrap.Modal.getInstance('#staticModal').hide()
+                this.applicationController.loadContent('home')
+            } else 
+                this.userLoginFailMessage.classList.remove('element-hidden')
         })      
     }
 }

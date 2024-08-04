@@ -9,64 +9,61 @@ export class UserController {
         this.retrieveCookie()
     }
  
-    async login(userName, password) {
-        ApiAuth.login(userName, password)
-        .then(data => {
-            if (data) {
-                this.user = new User(data.userId, data.userName)
-                this.user.setJwt(data.jwt)
-                
-                this.user.setName(data.name)
-                this.user.setEmail(data.email)
-                this.user.setCellPhone(data.cellPhone) 
-                this.user.setGender(data.gender) 
-                this.user.setBirthYear(data.birthYear) 
-                this.user.setBirthMonth(data.birthMonth)
-                this.user.setBirthDay(data.birthDay)
-    
-                this.user.setLogged(false)
-    
-                if (this.user.getJwt) {
-                    this.user.setLogged(true)
-                    alertMessage('loginSuccess')
-                    this.saveCookie()
-                    return true
-                }
+    async login(username, password) {
+        const data = await ApiAuth.login(username, password)
+        if (data) {
+            this.user = new User(data.userId, data.username)
+            this.user.setJwt(data.jwt)
+            
+            this.user.setName(data.name)
+            this.user.setEmail(data.email)
+            this.user.setCellPhone(data.cellPhone) 
+            this.user.setGender(data.gender) 
+            this.user.setBirthYear(data.birthYear) 
+            this.user.setBirthMonth(data.birthMonth)
+            this.user.setBirthDay(data.birthDay)
+
+            this.user.setLogged(false)
+
+            if (this.user.getJwt) {
+                this.user.setLogged(true)
+                alertMessage('loginSuccess')
+                this.saveCookie()
+                return true
             }
-        })
-        alertMessage('loginFail')
-        return false
+        } else {
+            alertMessage('loginFail')
+            return false
+        }
     }
 
     async logout() {
-        ApiAuth.logout(this.user.userId, this.user.jwt)
-        .then(data => {
-            if (data) {
-                this.deleteCookie()
-                this.user = ''
-                this.checkUser()
-                alertMessage('logoutSuccess')
-                return true
-            }
-        })
-        alertMessage('logoutFail')
-        return false
+        const data = await ApiAuth.logout(this.user.userId, this.user.jwt)
+        this.deleteCookie()
+        this.user = ''
+        this.checkUser()
+        if (data) {
+            alertMessage('logoutSuccess')
+            return true
+        } else {
+            alertMessage('logoutFail')
+            return false
+        }
     }
 
-    async register(userName, password, confirmPassword, email, cellPhone) {
-        ApiAuth.register(userName, password, confirmPassword, email, cellPhone)
-        .then(data => {
-            if (data) {
-                alertMessage('registerSuccess')
-                return true
-            }
-        })
+    async register(username, password, confirmPassword, email, cellPhone) {
+        const data = await ApiAuth.register(username, password, confirmPassword, email, cellPhone)
+        if (data) {
+            alertMessage('registerSuccess')
+            return true
+        }
         alertMessage('registerFail')
         return false
+        
     }
 
     async changePassword(password, newPassword) {
-        ApiAuth.changePassword(this.userName, password, newPassword, this.user.userId, this.user.jwt)
+        ApiAuth.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
         .then(data => {
             if (data) {
                 alertMessage('changePasswordSuccess')
@@ -108,7 +105,7 @@ export class UserController {
     retrieveCookie() {
         if (Cookies.getCookie('user')) {
             let cookieObj = JSON.parse(Cookies.getCookie('user'))
-            this.user = new User(cookieObj.userId, cookieObj.userName)
+            this.user = new User(cookieObj.userId, cookieObj.username)
             this.user.setJwt(cookieObj.jwt)
 
             this.user.setName(cookieObj.name)

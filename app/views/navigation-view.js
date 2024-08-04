@@ -80,7 +80,7 @@ export class NavigationView {
             this.userLogin.classList.add('element-hidden')
             this.userProfile.classList.remove('element-hidden')
             this.userCart.classList.remove('element-hidden')  
-            this.userProfileName.innerHTML = this.loggedUser.userName      
+            this.userProfileName.innerHTML = this.loggedUser.username      
         } else {
             this.userRegistration.classList.remove('element-hidden')
             this.userLogin.classList.remove('element-hidden')

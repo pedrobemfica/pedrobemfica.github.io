@@ -1,7 +1,7 @@
 export class User {
-    constructor(userId, userName) {
+    constructor(userId, username) {
         this.userId = userId
-        this.userName = userName
+        this.username = username
         this.jwt = ''
         this.logged = false
 
@@ -18,8 +18,8 @@ export class User {
         return this.userId
     }
 
-    get getUserName() {
-        return this.userName
+    get getUsername() {
+        return this.username
     }
 
     get getJwt() {

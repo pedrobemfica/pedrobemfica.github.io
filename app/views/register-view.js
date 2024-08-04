@@ -15,26 +15,25 @@ export class RegisterView {
 
         this.userRegisterFailMessage = document.getElementById('userRegisterFailMessage')
 
-        this.userRegisterForm.addEventListener('submit', event => {
+        this.userRegisterForm.addEventListener('submit', async event => {
             event.preventDefault()
-            this.userController.register(
+            const confirmation = await this.userController.register(
                 this.userRegisterName.value, 
                 this.userRegisterPassword.value, 
                 this.userRegisterConfirmPassword.value,
                 this.userRegisterEmail.value,
                 this.userRegisterPhone.value
             )
-            .then(confirmation => {
-                if (confirmation) {
-                    if (this.userController.login(this.userRegisterName.value, this.userRegisterPassword.value)) {
-                        this.userRegisterFailMessage.classList.add('element-hidden')
-                        bootstrap.Modal.getInstance('#staticModal').hide()
-                        this.applicationController.loadContent('home')
-                    } else
-                        this.userRegisterFailMessage.classList.remove('element-hidden') 
-                } else 
+            if (confirmation) {
+                const login = await this.userController.login(this.userRegisterName.value, this.userRegisterPassword.value)
+                if (login) {
+                    this.userRegisterFailMessage.classList.add('element-hidden')
+                    bootstrap.Modal.getInstance('#staticModal').hide()
+                    this.applicationController.loadContent('home')
+                } else
                     this.userRegisterFailMessage.classList.remove('element-hidden')
-            })
+            } else 
+                this.userRegisterFailMessage.classList.remove('element-hidden') 
         })
     }
 }
