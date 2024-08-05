@@ -193,6 +193,8 @@ export class UserController {
             return {result: false, message: 'E-mail inválido'}
         if (!this.validCheckPhone(cellPhone) && cellPhone != '')
             return {result: false, message: 'Número de telefone inválido'}
+        if (!this.validCheckName(profileName) && profileName != '')
+            return {result: false, message: 'Nome pode conter apenas caracteres alfabéticos'}
         if (!this.validCheckGender(gender) && gender != '')
             return {result: false, message: 'Gênero inválido'}
         if (!this.validCheckBirth(birth) && birth != '')
@@ -201,28 +203,33 @@ export class UserController {
     }
 
     validCheckUsername(username) {
-        return true
-        return false
+        let regex = /[a-zA-Z0-9]{4,15}/
+        return regex.test(username)
     }
 
     validCheckPassword(password) {
-        return true
-        return false
+        let regex = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}/
+        return regex.test(password)
     }
 
     validCheckEmail(email) {
-        return true
-        return false
+        let regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+        return regex.test(email)
     }
 
     validCheckPhone(phone) {
-        return true
-        return false
+        let regex = /\(?\d{2}\)?[\s-]?9?\d{4}[\s-]?\d{4}/
+        return regex.test(phone)
+    }
+
+    validCheckName(name) {
+        let regex = /[a-zA-Z]+/
+        return regex.test(name)
     }
 
     validCheckGender(gender) {
-        return true
-        return false
+        let regex = /(masculino|feminino)/
+        return regex.test(gender)
     }
 
     validCheckBirth(birth) {
