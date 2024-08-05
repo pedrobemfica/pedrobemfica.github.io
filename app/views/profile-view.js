@@ -1,5 +1,6 @@
 import { UserController } from "../controllers/user-controller.js"
 import { ApplicationController } from "../controllers/application-controller.js"
+import { dateHelper } from "../helpers/date-helper.js"
 
 export class ProfileView {
     constructor() {
@@ -22,6 +23,7 @@ export class ProfileView {
         this.userProfileGender = document.getElementById('userProfileGender')
         this.userProfileGender.value = user.gender
         this.userProfileBirth = document.getElementById('userProfileBirth')
+        this.userProfileBirth.value = dateHelper.UTCtoInput(user.birth)
 
         this.userProfileFailMessage = document.getElementById('userProfileFailMessage')
 

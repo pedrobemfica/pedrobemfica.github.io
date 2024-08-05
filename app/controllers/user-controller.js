@@ -1,7 +1,7 @@
 import { User } from "../models/user-model.js"
 import { Cookies } from "../helpers/cookie-helper.js"
 import { alertMessage } from "../helpers/alert-helper.js"
-import { ApiAuth } from "../api/auth-routes.js"
+import { ApiUser } from "../api/user-routes.js"
 
 export class UserController {
     constructor() {
@@ -18,46 +18,53 @@ export class UserController {
         } 
         
         // Server side check
-        const data = await ApiAuth.login(username, password)
-        if (data && data.result) {
-            this.user = new User(data.user.userId, data.user.username)
-            this.user.setJwt(data.user.jwt)
-            
-            this.user.setName(data.user.name)
-            this.user.setEmail(data.user.email)
-            this.user.setCellPhone(data.user.cellPhone) 
-            this.user.setGender(data.user.gender) 
-            this.user.setBirthYear(data.user.birthYear) 
-            this.user.setBirthMonth(data.user.birthMonth)
-            this.user.setBirthDay(data.user.birthDay)
+        try {
+            const data = await ApiUser.login(username, password)
+            if (data && data.result) {
+                this.user = new User(data.user.userId, data.user.username)
+                this.user.setJwt(data.user.jwt)
+                
+                this.user.setName(data.user.name)
+                this.user.setEmail(data.user.email)
+                this.user.setCellPhone(data.user.cellPhone) 
+                this.user.setGender(data.user.gender) 
+                this.user.setBirth(data.user.birth) 
 
-            if (this.user.getJwt) {
-                this.user.setLogged(true)
-                alertMessage('Login realizado', 'Usuário conectado com sucesso')
-                this.saveCookie()
-                return true
-            } else {
-                alertMessage('Falha no login', 'Token de usuário não registrado')
-            }
-        } else if (data && !data.result)
-            alertMessage('Falha no login', data.message)
-        else 
-            alertMessage('Falha no login', 'Não foi possível conectar com o servidor')
+                if (this.user.getJwt) {
+                    this.user.setLogged(true)
+                    alertMessage('Login realizado', 'Usuário conectado com sucesso')
+                    this.saveCookie()
+                    return true
+                } else {
+                    alertMessage('Falha no login', 'Token de usuário não registrado')
+                }
+            } else if (data && !data.result)
+                alertMessage('Falha no login', data.message)
+            else 
+                throw Error('Não foi possível conectar com o servidor')
+        } catch(err) {
+            alertMessage('Falha no login', 'Não foi possível conectar com o servidor' || err)
+        }
         return false
     }
 
     async logout() {
-        const data = await ApiAuth.logout(this.user.userId, this.user.jwt)
-        this.deleteCookie()
-        this.user = ''
-        this.checkUser()
-        if (data && data.result) {
-            alertMessage('Logout', data.message)
-            return true
-        } else if (data && !data.result)
-            alertMessage('Falha no logout', data.message)
-        else
-            alertMessage('Falha no logout', 'Não foi possível conectar com o servidor')
+        try {
+            const data = await ApiUser.logout(this.user.userId, this.user.jwt)
+            if (data && data.result) {
+                alertMessage('Logout', data.message)
+                return true
+            } else if (data && !data.result)
+                alertMessage('Falha no logout', data.message)
+            else
+                throw Error('Não foi possível conectar com o servidor')
+        } catch(err) {
+            alertMessage('Falha no logout', 'Não foi possível conectar com o servidor' || err)
+        } finally {
+            this.deleteCookie()
+            this.user = ''
+            this.checkUser()
+        }
         return false
     }
 
@@ -70,14 +77,18 @@ export class UserController {
         }
 
         // Server side check
-        const data = await ApiAuth.register(username, password, confirmPassword, email, cellPhone)
-        if (data && data.result) {
-            alertMessage('Registrado', data.message)
-            return true
-        } else if (data && !data.result)
-            alertMessage('Falha no registro', data.message)
-        else
-            alertMessage('Falha no registro', 'Não foi possível conectar com o servidor')
+        try {
+            const data = await ApiUser.register(username, password, confirmPassword, email, cellPhone)
+            if (data && data.result) {
+                alertMessage('Registrado', data.message)
+                return true
+            } else if (data && !data.result)
+                alertMessage('Falha no registro', data.message)
+            else
+                throw Error('Não foi possível conectar com o servidor')
+        } catch(err) {
+            alertMessage('Falha no registro', 'Não foi possível conectar com o servidor' || err)
+        }
         return false
     }
 
@@ -90,7 +101,7 @@ export class UserController {
         }
 
         // Server side check
-        const data = await ApiAuth.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
+        const data = await ApiUser.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
         if (data && data.result) {
             alertMessage('Senha alterada', data.message)
             return true
@@ -110,7 +121,7 @@ export class UserController {
         }
 
         // Server side check
-        const data = await ApiAuth.updatePreferences(email, cellPhone, profileName, gender, birth, this.user.userId, this.user.jwt)
+        const data = await ApiUser.updatePreferences(email, cellPhone, profileName, gender, birth, this.user.userId, this.user.jwt)
         if (data && data.result) {
             alertMessage('Preferências atualizadas', data.message)
             return true
@@ -139,9 +150,7 @@ export class UserController {
             this.user.setEmail(cookieObj.email)
             this.user.setCellPhone(cookieObj.cellPhone) 
             this.user.setGender(cookieObj.gender) 
-            this.user.setBirthYear(cookieObj.birthYear) 
-            this.user.setBirthMonth(cookieObj.birthMonth)
-            this.user.setBirthDay(cookieObj.birthDay)
+            this.user.setBirth(cookieObj.birth) 
 
             if (this.user.getJwt)
                 this.user.setLogged(true)
@@ -233,7 +242,7 @@ export class UserController {
     }
 
     validCheckBirth(birth) {
-        return true
-        return false
+        const date = new Date(birth)
+        return !isNaN(date.getTime())
     }
 }

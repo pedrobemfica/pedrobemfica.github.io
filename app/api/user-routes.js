@@ -1,7 +1,7 @@
 import { BACKEND } from "./routes.js"
 
-const BASE_ROUTE = '/auth'
-export class ApiAuth {
+const BASE_ROUTE = '/user'
+export class ApiUser {
 
 
     static async login(username, password) {
