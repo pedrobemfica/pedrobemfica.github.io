@@ -10,31 +10,40 @@ export class UserController {
     }
  
     async login(username, password) {
+        // Client side check
+        let check = this.checkLogin(username, password)
+        if (!check.result) {
+            alertMessage('Falha no login', check.message)
+            return false
+        } 
+        
+        // Server side check
         const data = await ApiAuth.login(username, password)
-        if (data) {
-            this.user = new User(data.userId, data.username)
-            this.user.setJwt(data.jwt)
+        if (data && data.result) {
+            this.user = new User(data.user.userId, data.user.username)
+            this.user.setJwt(data.user.jwt)
             
-            this.user.setName(data.name)
-            this.user.setEmail(data.email)
-            this.user.setCellPhone(data.cellPhone) 
-            this.user.setGender(data.gender) 
-            this.user.setBirthYear(data.birthYear) 
-            this.user.setBirthMonth(data.birthMonth)
-            this.user.setBirthDay(data.birthDay)
-
-            this.user.setLogged(false)
+            this.user.setName(data.user.name)
+            this.user.setEmail(data.user.email)
+            this.user.setCellPhone(data.user.cellPhone) 
+            this.user.setGender(data.user.gender) 
+            this.user.setBirthYear(data.user.birthYear) 
+            this.user.setBirthMonth(data.user.birthMonth)
+            this.user.setBirthDay(data.user.birthDay)
 
             if (this.user.getJwt) {
                 this.user.setLogged(true)
-                alertMessage('loginSuccess')
+                alertMessage('Login realizado', 'Usuário conectado com sucesso')
                 this.saveCookie()
                 return true
+            } else {
+                alertMessage('Falha no login', 'Token de usuário não registrado')
             }
-        } else {
-            alertMessage('loginFail')
-            return false
-        }
+        } else if (data && !data.result)
+            alertMessage('Falha no login', data.message)
+        else 
+            alertMessage('Falha no login', 'Não foi possível conectar com o servidor')
+        return false
     }
 
     async logout() {
@@ -42,55 +51,73 @@ export class UserController {
         this.deleteCookie()
         this.user = ''
         this.checkUser()
-        if (data) {
-            alertMessage('logoutSuccess')
+        if (data && data.result) {
+            alertMessage('Logout', data.message)
             return true
-        } else {
-            alertMessage('logoutFail')
-            return false
-        }
+        } else if (data && !data.result)
+            alertMessage('Falha no logout', data.message)
+        else
+            alertMessage('Falha no logout', 'Não foi possível conectar com o servidor')
+        return false
     }
 
     async register(username, password, confirmPassword, email, cellPhone) {
-        const data = await ApiAuth.register(username, password, confirmPassword, email, cellPhone)
-        if (data) {
-            alertMessage('registerSuccess')
-            return true
+        // Client side check
+        let check = this.checkRegister(username, password, confirmPassword, email, cellPhone)
+        if (!check.result) {
+            alertMessage('Falha no registro', check.message)
+            return false
         }
-        alertMessage('registerFail')
+
+        // Server side check
+        const data = await ApiAuth.register(username, password, confirmPassword, email, cellPhone)
+        if (data && data.result) {
+            alertMessage('Registrado', data.message)
+            return true
+        } else if (data && !data.result)
+            alertMessage('Falha no registro', data.message)
+        else
+            alertMessage('Falha no registro', 'Não foi possível conectar com o servidor')
         return false
-        
     }
 
     async changePassword(password, newPassword) {
-        ApiAuth.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
-        .then(data => {
-            if (data) {
-                alertMessage('changePasswordSuccess')
-                return true
-            }
-        })
-        alertMessage('changePasswordFail')
+        // Client side check
+        let check = this.checkChangePassword(password, newPassword)
+        if (!check.result) {
+            alertMessage('Falha ao alterar senha', check.message)
+            return false
+        }
+
+        // Server side check
+        const data = await ApiAuth.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
+        if (data && data.result) {
+            alertMessage('Senha alterada', data.message)
+            return true
+        } else if (data && !data.result)
+            alertMessage('Falha ao alterar senha', data.message)
+        else
+            alertMessage('Falha ao alterar senha', 'Não foi possível conectar com o servidor')
         return false
     }
 
-    async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth) {
-        ApiAuth.updatePreferences(
-            userProfileEmail,
-            userProfilePhone,
-            userProfileName,
-            userProfileGender,
-            userProfileBirth,
-            this.user.userId,
-            this.user.jwt
-        )
-        .then(data => {
-            if (data) {
-                alertMessage('updatePreferencesSuccess')
-                return true
-            }
-        })
-        alertMessage('updatePreferencesFail')
+    async updatePreferences(email, cellPhone, profileName, gender, birth) {
+        // Client side check
+        let check = this.checkUpdatePreferences(email, cellPhone, profileName, gender, birth)
+        if (!check.result) {
+            alertMessage('Falha ao atualizar preferências', check.message)
+            return false
+        }
+
+        // Server side check
+        const data = await ApiAuth.updatePreferences(email, cellPhone, profileName, gender, birth, this.user.userId, this.user.jwt)
+        if (data && data.result) {
+            alertMessage('Preferências atualizadas', data.message)
+            return true
+        } else if (data && !data.result)
+            alertMessage('Falha ao atualizar preferências', data.message)
+        else
+            alertMessage('Falha ao atualizar preferências', 'Não foi possível conectar com o servidor')
         return false
     }
 
@@ -129,5 +156,77 @@ export class UserController {
 
     deleteCookie() {
         Cookies.deleteCookie('user', '') 
+    }
+
+    checkLogin(username, password) {
+        if (username == '' || password == '')
+            return {result: false, message: 'Nome de usuário ou senha em branco'}
+        return {result: true}
+    }
+
+    checkRegister(username, password, confirmPassword, email, cellPhone) {
+        if (username == '' || password == '')
+            return {result: false, message: 'Nome de usuário ou senha em branco'}
+        if (password != confirmPassword)
+            return {result: false, message: 'Confirmação de senha não condiz com senha digitada'}
+        if (email == '' || cellPhone == '')
+            return {result: false, message: 'Pelo menos uma informação de contato deve ser fornecida'}
+        if (!this.validCheckUsername(username))
+            return {result: false, message: 'Nome de usuário inválido'}
+        if (!this.validCheckPassword(password))
+            return {result: false, message: 'Senha inválida'}
+        if (!this.validCheckEmail(email) && email != '')
+            return {result: false, message: 'E-mail inválido'}
+        if (!this.validCheckPhone(cellPhone) && cellPhone != '')
+            return {result: false, message: 'Número de telefone inválido'}
+        return {result: true}
+    }
+
+    checkChangePassword(password, newPassword) {
+        if (!this.validCheckPassword(newPassword))
+            return {result: false, message: 'Nova senha inválida'}
+        return {result: true}
+    }
+
+    checkUpdatePreferences(email, cellPhone, profileName, gender, birth) {
+        if (!this.validCheckEmail(email) && email != '')
+            return {result: false, message: 'E-mail inválido'}
+        if (!this.validCheckPhone(cellPhone) && cellPhone != '')
+            return {result: false, message: 'Número de telefone inválido'}
+        if (!this.validCheckGender(gender) && gender != '')
+            return {result: false, message: 'Gênero inválido'}
+        if (!this.validCheckBirth(birth) && birth != '')
+            return {result: false, message: 'Data de nascimento inválida'}
+        return {result: true}
+    }
+
+    validCheckUsername(username) {
+        return true
+        return false
+    }
+
+    validCheckPassword(password) {
+        return true
+        return false
+    }
+
+    validCheckEmail(email) {
+        return true
+        return false
+    }
+
+    validCheckPhone(phone) {
+        return true
+        return false
+    }
+
+    validCheckGender(gender) {
+        return true
+        return false
+    }
+
+    validCheckBirth(birth) {
+        return true
+        return false
     }
 }

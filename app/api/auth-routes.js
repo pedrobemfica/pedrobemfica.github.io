@@ -11,16 +11,19 @@ export class ApiAuth {
             body: JSON.stringify({ username, password })
         })
         const data = await response.json()
+
+        if (!data)
+            return false
         
         if (response.ok) {
             let userId = data.userId
             let username = data.username
             let jwt = data.jwt
             let preferences = data.preferences
-            return {userId: userId, username: username, jwt: jwt, preferences: preferences}
+            return {result: true, user: {userId: userId, username: username, jwt: jwt, preferences: preferences}}
         } else {
-            console.log(`unable to fetch data from server`)
-            return false
+            let message = data.message  
+            return {result: false, message: message}
         }
     }
     
@@ -32,13 +35,14 @@ export class ApiAuth {
         })
         const data = await response.json()
 
-        if (response.ok) {
-            let message = data.message
-            return {result: true, message: message}
-        } else {
-            console.log(`unable to fetch data from server`)
+        if (!data)
             return false
-        }
+
+        let message = data.message
+        if (response.ok)
+            return {result: true, message: message}
+        else
+            return {result: false, message: message}
     }
 
     static async register(username, password, confirmPassword, email, cellPhone) {
@@ -49,46 +53,49 @@ export class ApiAuth {
         })
         const data = await response.json()
 
-        if (response.ok) {
-            let userId = data.userId
-            let username = data.username
-            let jwt = data.jwt
-            let preferences = data.preferences
-            return {userId: userId, username: username, jwt: jwt, preferences: preferences}
-        } else {
-            console.log(`unable to fetch data from server`)
+        if (!data)
             return false
-        }
+
+        let message = data.message
+        if (response.ok)
+            return {result: true, message: message}
+        else
+            return {result: false, message: message}
     }
 
     static async changePassword(username, password, newPassword, userId, jwt) {
-        const response = fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
+        const response = await fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password, newPassword, userId, jwt })
         })
         const data = await response.json()
 
-        if (response.ok) {
-            let message = data.message
-            return {result: true, message: message}
-        } else {
-            console.log(`unable to fetch data from server`)
+        if (!data)
             return false
-        }
+
+        let message = data.message
+        if (response.ok)
+            return {result: true, message: message}
+        else
+            return {result: false, message: message}
     }
 
     static async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
-        fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
+        const response = await fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt })
         })
-        .then(response => {
-            if (response.ok)
-                return true
-        })
-        .catch(err => console.log(`unable to fetch data from server with error = ${err}`))
-        return false
+        const data = await response.json()
+
+        if (!data)
+            return false
+
+        let message = data.message
+        if (response.ok)
+            return {result: true, message: message}
+        else
+            return {result: false, message: message}
     }
 }
