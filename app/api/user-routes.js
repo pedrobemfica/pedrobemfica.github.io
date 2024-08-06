@@ -6,7 +6,7 @@ export class ApiUser {
 
     static async login(username, password) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/login`, {
-            method: 'POST',
+            method: 'GET',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password })
         })
@@ -29,7 +29,7 @@ export class ApiUser {
     
     static async logout(userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/logout`, {
-            method: 'POST',
+            method: 'GET',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userId, jwt })
         })
@@ -65,7 +65,7 @@ export class ApiUser {
 
     static async changePassword(username, password, newPassword, userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password, newPassword, userId, jwt })
         })
@@ -81,11 +81,11 @@ export class ApiUser {
             return {result: false, message: message}
     }
 
-    static async updatePreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
+    static async updatePreferences(email, cellPhone, profileName, gender, birth, userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt })
+            body: JSON.stringify({ email, cellPhone, profileName, gender, birth, userId, jwt })
         })
         const data = await response.json()
 

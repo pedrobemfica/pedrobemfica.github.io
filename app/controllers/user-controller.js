@@ -212,32 +212,32 @@ export class UserController {
     }
 
     validCheckUsername(username) {
-        let regex = /[a-zA-Z0-9]{4,15}/
+        let regex = /^[a-zA-Z0-9]{4,15}$/
         return regex.test(username)
     }
 
     validCheckPassword(password) {
-        let regex = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}/
+        let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
         return regex.test(password)
     }
 
     validCheckEmail(email) {
-        let regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+        let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         return regex.test(email)
     }
 
     validCheckPhone(phone) {
-        let regex = /\(?\d{2}\)?[\s-]?9?\d{4}[\s-]?\d{4}/
+        let regex = /^\(?\d{2}\)?[\s-]?9?\d{4}[\s-]?\d{4}$/
         return regex.test(phone)
     }
 
     validCheckName(name) {
-        let regex = /[a-zA-Z]+/
+        let regex = /^[a-zA-Z]+$/
         return regex.test(name)
     }
 
     validCheckGender(gender) {
-        let regex = /(masculino|feminino)/
+        let regex = /masculino|feminino/
         return regex.test(gender)
     }
 
