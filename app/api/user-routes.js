@@ -14,7 +14,7 @@ export class ApiUser {
         const data = await response.json()
 
         if (!data)
-            return false
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
         
         if (response.ok) {
             let userId = data.userId
@@ -41,7 +41,7 @@ export class ApiUser {
         const data = await response.json()
 
         if (!data)
-            return false
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
 
         let message = data.message
         if (response.ok)
@@ -59,7 +59,7 @@ export class ApiUser {
         const data = await response.json()
 
         if (!data)
-            return false
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
 
         let message = data.message
         if (response.ok)
@@ -70,14 +70,14 @@ export class ApiUser {
 
     static async changePassword(username, password, newPassword, userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password, newPassword, userId, jwt })
         })
         const data = await response.json()
 
         if (!data)
-            return false
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
 
         let message = data.message
         if (response.ok)
@@ -88,14 +88,14 @@ export class ApiUser {
 
     static async updatePreferences(email, phone, profileName, gender, birth, userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ email, phone, profileName, gender, birth, userId, jwt })
         })
         const data = await response.json()
 
         if (!data)
-            return false
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
 
         let message = data.message
         if (response.ok)

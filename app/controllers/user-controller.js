@@ -2,6 +2,7 @@ import { User } from "../models/user-model.js"
 import { Cookies } from "../helpers/cookie-helper.js"
 import { alertMessage } from "../helpers/alert-helper.js"
 import { ApiUser } from "../api/user-routes.js"
+import { validateHelper } from "../helpers/validate-helper.js"
 
 export class UserController {
     constructor() {
@@ -20,7 +21,7 @@ export class UserController {
         // Server side check
         try {
             const data = await ApiUser.login(username, password)
-            if (data && data.result) {
+            if (data.result) {
                 this.user = new User(data.user.userId, data.user.username)
                 this.user.setJwt(data.user.jwt)
                 
@@ -38,13 +39,11 @@ export class UserController {
                 } else {
                     alertMessage('Falha no login', 'Token de usuário não registrado')
                 }
-            } else if (data && !data.result)
-                alertMessage('Falha no login', data.message)
-            else 
-                throw Error('Não foi possível conectar com o servidor')
+            } else
+                alertMessage('Falha no login', data.message)  
         } catch(err) {
             console.log(err)
-            alertMessage('Falha no login', 'Não foi possível conectar com o servidor' || err)
+            alertMessage('Falha no login', err)
         }
         return false
     }
@@ -52,15 +51,14 @@ export class UserController {
     async logout() {
         try {
             const data = await ApiUser.logout(this.user.userId, this.user.jwt)
-            if (data && data.result) {
+            if (data.result) {
                 alertMessage('Logout', data.message)
                 return true
-            } else if (data && !data.result)
+            } else 
                 alertMessage('Falha no logout', data.message)
-            else
-                throw Error('Não foi possível conectar com o servidor')
         } catch(err) {
-            alertMessage('Falha no logout', 'Não foi possível conectar com o servidor' || err)
+            console.log(err)
+            alertMessage('Falha no logout', err)
         } finally {
             this.deleteCookie()
             this.user = ''
@@ -80,15 +78,14 @@ export class UserController {
         // Server side check
         try {
             const data = await ApiUser.register(username, password, confirmPassword, email, phone)
-            if (data && data.result) {
+            if (data.result) {
                 alertMessage('Registrado', data.message)
                 return true
-            } else if (data && !data.result)
+            } else 
                 alertMessage('Falha no registro', data.message)
-            else 
-                throw Error('Não foi possível conectar com o servidor')
         } catch(err) {
-            alertMessage('Falha no registro', 'Não foi possível conectar com o servidor' || err)
+            console.log(err)
+            alertMessage('Falha no registro', err)
         }
         return false
     }
@@ -102,14 +99,17 @@ export class UserController {
         }
 
         // Server side check
-        const data = await ApiUser.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
-        if (data && data.result) {
-            alertMessage('Senha alterada', data.message)
-            return true
-        } else if (data && !data.result)
-            alertMessage('Falha ao alterar senha', data.message)
-        else
-            alertMessage('Falha ao alterar senha', 'Não foi possível conectar com o servidor')
+        try {
+            const data = await ApiUser.changePassword(this.username, password, newPassword, this.user.userId, this.user.jwt)
+            if (data.result) {
+                alertMessage('Senha alterada', data.message)
+                return true
+            } else
+                alertMessage('Falha ao alterar a senha', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha no alterar a senha', err)
+        }
         return false
     }
 
@@ -122,14 +122,17 @@ export class UserController {
         }
 
         // Server side check
-        const data = await ApiUser.updatePreferences(email, phone, profileName, gender, birth, this.user.userId, this.user.jwt)
-        if (data && data.result) {
-            alertMessage('Preferências atualizadas', data.message)
-            return true
-        } else if (data && !data.result)
-            alertMessage('Falha ao atualizar preferências', data.message)
-        else
-            alertMessage('Falha ao atualizar preferências', 'Não foi possível conectar com o servidor')
+        try {
+            const data = await ApiUser.updatePreferences(email, phone, profileName, gender, birth, this.user.userId, this.user.jwt)
+            if (data.result) {
+                alertMessage('Preferências atualizadas', data.message)
+                return true
+            } else
+                alertMessage('Falha ao atualizar preferências', data.message)        
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao atualizar preferências', err)
+        }
         return false
     }
 
@@ -181,69 +184,34 @@ export class UserController {
             return {result: false, message: 'Confirmação de senha não condiz com senha digitada'}
         if (email == '' && phone == '')
             return {result: false, message: 'Pelo menos uma informação de contato deve ser fornecida'}
-        if (!this.validCheckUsername(username))
+        if (!validateHelper.checkUsername(username))
             return {result: false, message: 'Nome de usuário inválido'}
-        if (!this.validCheckPassword(password))
+        if (!validateHelper.checkPassword(password))
             return {result: false, message: 'Senha inválida'}
-        if (!this.validCheckEmail(email) && email != '')
+        if (!validateHelper.checkEmail(email) && email != '')
             return {result: false, message: 'E-mail inválido'}
-        if (!this.validCheckPhone(phone) && phone != '')
+        if (!validateHelper.checkPhone(phone) && phone != '')
             return {result: false, message: 'Número de telefone inválido'}
         return {result: true}
     }
 
     checkChangePassword(password, newPassword) {
-        if (!this.validCheckPassword(newPassword))
+        if (!validateHelper.checkPassword(newPassword))
             return {result: false, message: 'Nova senha inválida'}
         return {result: true}
     }
 
     checkUpdatePreferences(email, phone, profileName, gender, birth) {
-        if (!this.validCheckEmail(email) && email != '')
+        if (!validateHelper.checkEmail(email) && email != '')
             return {result: false, message: 'E-mail inválido'}
-        if (!this.validCheckPhone(phone) && phone != '')
+        if (!validateHelper.checkPhone(phone) && phone != '')
             return {result: false, message: 'Número de telefone inválido'}
-        if (!this.validCheckName(profileName) && profileName != '')
+        if (!validateHelper.checkName(profileName) && profileName != '')
             return {result: false, message: 'Nome pode conter apenas caracteres alfabéticos'}
-        if (!this.validCheckGender(gender) && gender != '')
+        if (!validateHelper.checkGender(gender) && gender != '')
             return {result: false, message: 'Gênero inválido'}
-        if (!this.validCheckBirth(birth) && birth != '')
+        if (!validateHelper.checkDate(birth) && birth != '')
             return {result: false, message: 'Data de nascimento inválida'}
         return {result: true}
-    }
-
-    validCheckUsername(username) {
-        let regex = /^[a-zA-Z0-9]{4,15}$/
-        return regex.test(username)
-    }
-
-    validCheckPassword(password) {
-        let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
-        return regex.test(password)
-    }
-
-    validCheckEmail(email) {
-        let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        return regex.test(email)
-    }
-
-    validCheckPhone(phone) {
-        let regex = /^\(?\d{2}\)?[\s-]?9?\d{4}[\s-]?\d{4}$/
-        return regex.test(phone)
-    }
-
-    validCheckName(name) {
-        let regex = /^[a-zA-Z]+$/
-        return regex.test(name)
-    }
-
-    validCheckGender(gender) {
-        let regex = /masculino|feminino/
-        return regex.test(gender)
-    }
-
-    validCheckBirth(birth) {
-        const date = new Date(birth)
-        return !isNaN(date.getTime())
     }
 }

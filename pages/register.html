@@ -5,12 +5,12 @@
         <div class="register--divider">
           <label for="userRegisterName" class="form-label">Nome de usuário:</label>
           <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control"/>
-          <div name="inputHelp" class="form-text">- Deve conter entre 4 e 15 caracteres.<br>
-            - Deve conter apenas caracteres alfabéticos e numéricos. </div>
+          <div name="inputHelp" id="userRegisterNameRules" class="form-text element-hidden">Deve conter entre 4 e 15 caracteres.<br>
+            Deve conter apenas caracteres alfabéticos e numéricos. </div>
           <label for="userRegisterPassword" class="form-label">Senha:</label>
           <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control"/>
-          <div name="inputHelp" class="form-text">- Deve conter no mínimo 6 caracteres.<br>
-            - Deve conter no mínimo: 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial. </div>
+          <div name="inputHelp" id="userRegisterPasswordRules" class="form-text element-hidden">Deve conter no mínimo 6 caracteres.<br>
+            Deve conter no mínimo: <br> - 1 letra maiúscula, <br> - 1 letra minúscula, <br> - 1 número, <br> - 1 caractere especial. </div>
           <label for="userRegisterConfirmPassword" class="form-label">Confirmar a senha:</label>
           <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control"/>
         </div>
@@ -19,10 +19,10 @@
           <input type="email" id="userRegisterEmail" placeholder="E-mail" class="form-control"/>
           <label for="userRegisterPhone" class="form-label">Telefone:</label>
           <input type="text" id="userRegisterPhone" placeholder="Telefone" class="form-control"/>
-          <div name="inputHelp" class="form-text">Formato: (99)99999-9999 </div>
+          <div name="inputHelp" id="userRegisterPhoneRules" class="form-text element-hidden">Formato: (99) 99999-9999 </div>
         </div>
         <div class="register--divider">
-          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="submit" id="registerSubmitButton" class="btn btn-primary">Registrar</button>
           <button type="reset" class="btn btn-primary">Limpar</button>
         </div>
         
@@ -30,6 +30,6 @@
     </section>
 
     <div class="alert alert-primary element-hidden" id="userRegisterFailMessage" role="alert">
-        Usuário ou senha inválidos.
+        Falhas no preenchimento do registro.
     </div>
 </div>
