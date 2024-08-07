@@ -9,7 +9,7 @@ export class User {
 
         this.name = '',
         this.email = '',
-        this.cellPhone = '',
+        this.phone = '',
         this.gender = '',
         this.birth = null
     }
@@ -46,8 +46,8 @@ export class User {
         this.email = email
     }
 
-    setCellPhone(cellPhone) {
-        this.cellPhone = cellPhone
+    setPhone(phone) {
+        this.phone = phone
     }
 
     setGender(gender) {
@@ -66,8 +66,8 @@ export class User {
         return this.email
     }
 
-    get getCellPhone() {
-        return this.cellPhone
+    get getPhone() {
+        return this.phone
     }
 
     get getGender() {

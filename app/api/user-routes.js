@@ -6,10 +6,11 @@ export class ApiUser {
 
     static async login(username, password) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/login`, {
-            method: 'GET',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username, password })
         })
+
         const data = await response.json()
 
         if (!data)
@@ -19,8 +20,12 @@ export class ApiUser {
             let userId = data.userId
             let username = data.username
             let jwt = data.jwt
-            let preferences = data.preferences
-            return {result: true, user: {userId: userId, username: username, jwt: jwt, preferences: preferences}}
+            let name = data.name
+            let email = data.email
+            let phone = data.phone
+            let gender = data.gender
+            let birth = data.birth
+            return {result: true, user: {userId: userId, username: username, jwt: jwt, name: name, email: email, phone: phone, gender: gender, birth: birth}}
         } else {
             let message = data.message  
             return {result: false, message: message}
@@ -29,7 +34,7 @@ export class ApiUser {
     
     static async logout(userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/logout`, {
-            method: 'GET',
+            method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ userId, jwt })
         })
@@ -45,11 +50,11 @@ export class ApiUser {
             return {result: false, message: message}
     }
 
-    static async register(username, password, confirmPassword, email, cellPhone) {
+    static async register(username, password, confirmPassword, email, phone) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/register`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ username, password, confirmPassword, email, cellPhone })
+            body: JSON.stringify({ username, password, confirmPassword, email, phone })
         })
         const data = await response.json()
 
@@ -81,11 +86,11 @@ export class ApiUser {
             return {result: false, message: message}
     }
 
-    static async updatePreferences(email, cellPhone, profileName, gender, birth, userId, jwt) {
+    static async updatePreferences(email, phone, profileName, gender, birth, userId, jwt) {
         const response = await fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ email, cellPhone, profileName, gender, birth, userId, jwt })
+            body: JSON.stringify({ email, phone, profileName, gender, birth, userId, jwt })
         })
         const data = await response.json()
 

@@ -26,7 +26,7 @@ export class UserController {
                 
                 this.user.setName(data.user.name)
                 this.user.setEmail(data.user.email)
-                this.user.setCellPhone(data.user.cellPhone) 
+                this.user.setPhone(data.user.phone) 
                 this.user.setGender(data.user.gender) 
                 this.user.setBirth(data.user.birth) 
 
@@ -43,6 +43,7 @@ export class UserController {
             else 
                 throw Error('Não foi possível conectar com o servidor')
         } catch(err) {
+            console.log(err)
             alertMessage('Falha no login', 'Não foi possível conectar com o servidor' || err)
         }
         return false
@@ -68,9 +69,9 @@ export class UserController {
         return false
     }
 
-    async register(username, password, confirmPassword, email, cellPhone) {
+    async register(username, password, confirmPassword, email, phone) {
         // Client side check
-        let check = this.checkRegister(username, password, confirmPassword, email, cellPhone)
+        let check = this.checkRegister(username, password, confirmPassword, email, phone)
         if (!check.result) {
             alertMessage('Falha no registro', check.message)
             return false
@@ -78,13 +79,13 @@ export class UserController {
 
         // Server side check
         try {
-            const data = await ApiUser.register(username, password, confirmPassword, email, cellPhone)
+            const data = await ApiUser.register(username, password, confirmPassword, email, phone)
             if (data && data.result) {
                 alertMessage('Registrado', data.message)
                 return true
             } else if (data && !data.result)
                 alertMessage('Falha no registro', data.message)
-            else
+            else 
                 throw Error('Não foi possível conectar com o servidor')
         } catch(err) {
             alertMessage('Falha no registro', 'Não foi possível conectar com o servidor' || err)
@@ -112,16 +113,16 @@ export class UserController {
         return false
     }
 
-    async updatePreferences(email, cellPhone, profileName, gender, birth) {
+    async updatePreferences(email, phone, profileName, gender, birth) {
         // Client side check
-        let check = this.checkUpdatePreferences(email, cellPhone, profileName, gender, birth)
+        let check = this.checkUpdatePreferences(email, phone, profileName, gender, birth)
         if (!check.result) {
             alertMessage('Falha ao atualizar preferências', check.message)
             return false
         }
 
         // Server side check
-        const data = await ApiUser.updatePreferences(email, cellPhone, profileName, gender, birth, this.user.userId, this.user.jwt)
+        const data = await ApiUser.updatePreferences(email, phone, profileName, gender, birth, this.user.userId, this.user.jwt)
         if (data && data.result) {
             alertMessage('Preferências atualizadas', data.message)
             return true
@@ -148,7 +149,7 @@ export class UserController {
 
             this.user.setName(cookieObj.name)
             this.user.setEmail(cookieObj.email)
-            this.user.setCellPhone(cookieObj.cellPhone) 
+            this.user.setPhone(cookieObj.phone) 
             this.user.setGender(cookieObj.gender) 
             this.user.setBirth(cookieObj.birth) 
 
@@ -173,12 +174,12 @@ export class UserController {
         return {result: true}
     }
 
-    checkRegister(username, password, confirmPassword, email, cellPhone) {
+    checkRegister(username, password, confirmPassword, email, phone) {
         if (username == '' || password == '')
             return {result: false, message: 'Nome de usuário ou senha em branco'}
         if (password != confirmPassword)
             return {result: false, message: 'Confirmação de senha não condiz com senha digitada'}
-        if (email == '' || cellPhone == '')
+        if (email == '' && phone == '')
             return {result: false, message: 'Pelo menos uma informação de contato deve ser fornecida'}
         if (!this.validCheckUsername(username))
             return {result: false, message: 'Nome de usuário inválido'}
@@ -186,7 +187,7 @@ export class UserController {
             return {result: false, message: 'Senha inválida'}
         if (!this.validCheckEmail(email) && email != '')
             return {result: false, message: 'E-mail inválido'}
-        if (!this.validCheckPhone(cellPhone) && cellPhone != '')
+        if (!this.validCheckPhone(phone) && phone != '')
             return {result: false, message: 'Número de telefone inválido'}
         return {result: true}
     }
@@ -197,10 +198,10 @@ export class UserController {
         return {result: true}
     }
 
-    checkUpdatePreferences(email, cellPhone, profileName, gender, birth) {
+    checkUpdatePreferences(email, phone, profileName, gender, birth) {
         if (!this.validCheckEmail(email) && email != '')
             return {result: false, message: 'E-mail inválido'}
-        if (!this.validCheckPhone(cellPhone) && cellPhone != '')
+        if (!this.validCheckPhone(phone) && phone != '')
             return {result: false, message: 'Número de telefone inválido'}
         if (!this.validCheckName(profileName) && profileName != '')
             return {result: false, message: 'Nome pode conter apenas caracteres alfabéticos'}

@@ -17,7 +17,7 @@ export class ProfileView {
         this.userProfileEmail = document.getElementById('userProfileEmail')
         this.userProfileEmail.value = user.email
         this.userProfilePhone = document.getElementById('userProfilePhone')
-        this.userProfilePhone.value = user.cellPhone
+        this.userProfilePhone.value = user.phone
         this.userProfileName = document.getElementById('userProfileName')
         this.userProfileName.value = user.name
         this.userProfileGender = document.getElementById('userProfileGender')
