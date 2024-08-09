@@ -20,7 +20,7 @@ export const validateHelper = {
     },
 
     checkName(name) {
-        let regex = /^[a-zA-Z]+$/
+        let regex = /^[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)*$/
         return regex.test(name)
     },
 

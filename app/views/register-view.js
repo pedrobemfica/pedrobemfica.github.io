@@ -77,7 +77,7 @@ export class RegisterView {
 
     enableRegister() {
         if(
-            validateHelper.checkName(this.userRegisterName.value)
+            validateHelper.checkUsername(this.userRegisterName.value)
             && validateHelper.checkPassword(this.userRegisterPassword.value)
             && (this.userRegisterConfirmPassword.value != '')
             && (validateHelper.checkEmail(this.userRegisterEmail.value) || validateHelper.checkPhone(this.userRegisterPhone.value))

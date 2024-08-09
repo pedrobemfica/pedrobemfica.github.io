@@ -12,11 +12,14 @@
             <input type="email" id="userProfileEmail" placeholder="E-mail" class="form-control"/>
             <label for="userProfilePhone" class="form-label">Telefone:</label>
             <input type="text" id="userProfilePhone" placeholder="Telefone" class="form-control"/>
+            <div name="inputHelp" id="userProfilePhoneRules" class="form-text element-hidden">Formato: (99) 99999-9999 </div>
         </div>
 
         <div class="profile--divider">     
-            <label for="userProfileName" class="form-label">Nome completo:</label>
-            <input type="text" id="userProfileName" placeholder="Nome completo" class="form-control"/>
+            <label for="userProfileInputName" class="form-label">Nome completo:</label>
+            <input type="text" id="userProfileInputName" placeholder="Nome completo" class="form-control"/>
+            <div name="inputHelp" id="userProfileNameRules" class="form-text element-hidden">Deve começar com letra. <br>
+            Não pode conter números e caracteres especiais. </div>
             <label for="userProfileGender" class="form-label">Gênero:</label>
             <select name="inputGender" class="form-select" id="userProfileGender">
                 <option selected value="null">Selecione</option>
@@ -29,7 +32,7 @@
         </div>
 
         <div class="profile--divider">
-            <button type="submit" class="btn btn-primary">Alterar informações</button>
+            <button type="submit" id="profileSubmitButton" class="btn btn-primary">Alterar informações</button>
             <button type="button" class="btn btn-danger" id="userProfileLogout">Sair da conta</button>
         </div>
       </form>

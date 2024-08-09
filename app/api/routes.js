@@ -1,7 +1,7 @@
 import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart, mockUser } from "../../mockServer.js"
 
-export const BACKEND = 'https://backend-olimpo.azurewebsites.net'
-// export const BACKEND = 'http://localhost:8080'
+// export const BACKEND = 'https://backend-olimpo.azurewebsites.net'
+export const BACKEND = 'http://localhost:8080'
 
 export const routes = {
     getAppointmentsServer(userId, jwt) {
@@ -16,8 +16,8 @@ export const routes = {
     },
 
     newAppointment(appointment, userId, jwt) {
-        let dateObj = {year: appointment.year, month: appointment.month, day: appointment.day}
-        let timeObj = {hour: appointment.hour, minute: appointment.minute}
+        let dateObj = { year: appointment.year, month: appointment.month, day: appointment.day }
+        let timeObj = { hour: appointment.hour, minute: appointment.minute }
         let newObj = {
             appointmentId: appointment.appointmentId,
             userId: appointment.userId,
@@ -48,7 +48,7 @@ export const routes = {
 
     newCredit(credit, userId, jwt) {
         let newObj = {
-            creditId: credit.creditId, 
+            creditId: credit.creditId,
             userId: credit.userId,
             serviceId: credit.serviceId,
             status: credit.status
@@ -63,7 +63,7 @@ export const routes = {
         return true
     },
 
-    getAvailabilityServer({year, month, day}, serviceId, userId, jwt) {
+    getAvailabilityServer({ year, month, day }, serviceId, userId, jwt) {
         return mockAvailability.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
     },
 
@@ -79,7 +79,7 @@ export const routes = {
     },
 
     newFile(file, userId, jwt) {
-        let dateObj = {year: file.year, month: file.month, day: file.day}
+        let dateObj = { year: file.year, month: file.month, day: file.day }
         let newObj = {
             fileId: file.fileId,
             userId: file.userId,
@@ -100,7 +100,7 @@ export const routes = {
     addToCart(product, userId, jwt) {
         let productIndex = mockCart.findIndex(e => e.product.name == product.name && e.product.description == product.description)
         if (productIndex == -1)
-            mockCart.push({product: product, quantity: 1})
+            mockCart.push({ product: product, quantity: 1 })
         else
             mockCart[productIndex].quantity += 1
         return true
@@ -112,7 +112,7 @@ export const routes = {
 
     deleteFomCart(index, userId, jwt) {
         mockCart.splice(index, 1)
-        return true   
+        return true
     },
 
     clearCart(userId, jwt) {

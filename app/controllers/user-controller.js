@@ -113,9 +113,9 @@ export class UserController {
         return false
     }
 
-    async updatePreferences(email, phone, profileName, gender, birth) {
+    async updatePreferences(email, phone, name, gender, birth) {
         // Client side check
-        let check = this.checkUpdatePreferences(email, phone, profileName, gender, birth)
+        let check = this.checkUpdatePreferences(email, phone, name, gender, birth)
         if (!check.result) {
             alertMessage('Falha ao atualizar preferências', check.message)
             return false
@@ -123,12 +123,28 @@ export class UserController {
 
         // Server side check
         try {
-            const data = await ApiUser.updatePreferences(email, phone, profileName, gender, birth, this.user.userId, this.user.jwt)
+            const data = await ApiUser.updatePreferences(email, phone, name, gender, birth, this.user.userId, this.user.jwt)
+            
             if (data.result) {
-                alertMessage('Preferências atualizadas', data.message)
-                return true
+                this.user = new User(data.user.userId, data.user.username)
+                this.user.setJwt(data.user.jwt)
+                
+                this.user.setName(data.user.name)
+                this.user.setEmail(data.user.email)
+                this.user.setPhone(data.user.phone) 
+                this.user.setGender(data.user.gender) 
+                this.user.setBirth(data.user.birth) 
+
+                if (this.user.getJwt) {
+                    this.user.setLogged(true)
+                    alertMessage('Preferências atualizadas', 'Informações atualizadas com sucesso')
+                    this.saveCookie()
+                    return true
+                } else {
+                    alertMessage('Falha ao atualizar preferências', 'Token de usuário não registrado')
+                }
             } else
-                alertMessage('Falha ao atualizar preferências', data.message)        
+                alertMessage('Falha ao atualizar preferências', data.message)    
         } catch(err) {
             console.log(err)
             alertMessage('Falha ao atualizar preferências', err)
@@ -201,12 +217,12 @@ export class UserController {
         return {result: true}
     }
 
-    checkUpdatePreferences(email, phone, profileName, gender, birth) {
+    checkUpdatePreferences(email, phone, name, gender, birth) {
         if (!validateHelper.checkEmail(email) && email != '')
             return {result: false, message: 'E-mail inválido'}
         if (!validateHelper.checkPhone(phone) && phone != '')
             return {result: false, message: 'Número de telefone inválido'}
-        if (!validateHelper.checkName(profileName) && profileName != '')
+        if (!validateHelper.checkName(name) && name != '')
             return {result: false, message: 'Nome pode conter apenas caracteres alfabéticos'}
         if (!validateHelper.checkGender(gender) && gender != '')
             return {result: false, message: 'Gênero inválido'}

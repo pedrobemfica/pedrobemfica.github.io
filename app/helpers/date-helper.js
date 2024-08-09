@@ -22,7 +22,7 @@ export const dateHelper = {
     InputtoUTC(localDateStr) {
         if (!localDateStr)
             return undefined
-        const localDate = new Date(`${localDateStr}T00:00:00-03:00`)
+        const localDate = new Date(localDateStr)
         const utcDate = new Date(localDate.toUTCString())
         const utcDateString = utcDate.toISOString()
     
