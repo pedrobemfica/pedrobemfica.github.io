@@ -1,12 +1,7 @@
-import { dateHelper } from "../helpers/date-helper.js"
-
 export class User {
     constructor(userId, username) {
         this._userId = userId
         this._username = username
-        this._jwt = ''
-        this._logged = false
-
         this._name = '',
         this._email = '',
         this._phone = '',
@@ -20,22 +15,6 @@ export class User {
 
     get username() {
         return this._username
-    }
-    
-    get jwt() {
-        return this._jwt
-    }
-
-    setJwt(jwt) {
-        this._jwt = jwt
-    }
-
-    get logged() {
-        return this._logged
-    }
-    
-    setLogged(state) {
-        this._logged = state
     }
     
     get name() {

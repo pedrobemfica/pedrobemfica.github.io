@@ -1,26 +1,26 @@
-.login-container, .register-container {
+.login-container, .register-container, .recover--container {
     background: white;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-container h2, .register-container h2 {
+.login-container h2, .register-container h2, .recover--container h2 {
     margin-bottom: .5rem;
     text-align: center;
 }
 
-.login--forms label, .login--forms input, .register--forms label, .register--forms input {
+.login--forms label, .login--forms input, .register--forms label, .register--forms input, .recover--forms label, .recover--forms input {
     margin: .25rem;
 }
 
-.login--forms button, .register--forms button, .profile--forms button {
+.login--forms button, .register--forms button, .profile--forms button, .recover--forms button {
     display: block;
     width: 100%;
     margin: .5rem 0;
 }
 
-.login--username {
+.login--username, .recover--username {
     border-bottom: 1px solid #CCC;
     margin-bottom: .5rem;
 }

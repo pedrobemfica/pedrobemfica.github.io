@@ -1,4 +1,4 @@
-const COOKIE_EXPIRES = 1
+const COOKIE_EXPIRES = 90
 
 export const Cookies = {
     createCookie: function(name, value) {
