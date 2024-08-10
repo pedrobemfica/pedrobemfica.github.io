@@ -3,16 +3,16 @@
   <section class="login--username">
     <form class="login--forms" id="userLoginForm">
       <label for="userLoginName" class="form-label">Nome de usuário:</label>
-      <input type="text" id="userLoginName" placeholder="Nome de usuário" class="form-control"/>
+      <input type="text" id="userLoginName" placeholder="Nome de usuário" class="form-control" required/>
       <label for="userLoginPassword" class="form-label">Senha:</label>
-      <input type="password" id="userLoginPassword" placeholder="Senha" class="form-control"/>
+      <input type="password" id="userLoginPassword" placeholder="Senha" class="form-control" required/>
       <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
   </section>
 
   <section class="login--others">
-    <a href="#">Esqueci minha senha</a>
-    <a href="#" data-nav-target="register" class="navigation-page">Registrar</a>
+    <a href="#" id="userLoginForgot">Esqueci minha senha</a>
+    <a href="#" id="userLoginRegister">Registrar</a>
   </section>
 
   <div class="alert alert-primary element-hidden" id="userLoginFailMessage" role="alert">

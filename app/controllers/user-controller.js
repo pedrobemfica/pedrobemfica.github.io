@@ -31,7 +31,7 @@ export class UserController {
                 this.user.setGender(data.user.gender) 
                 this.user.setBirth(data.user.birth) 
 
-                if (this.user.getJwt) {
+                if (this.user.jwt) {
                     this.user.setLogged(true)
                     alertMessage('Login realizado', 'Usuário conectado com sucesso')
                     this.saveCookie()
@@ -135,7 +135,7 @@ export class UserController {
                 this.user.setGender(data.user.gender) 
                 this.user.setBirth(data.user.birth) 
 
-                if (this.user.getJwt) {
+                if (this.user.jwt) {
                     this.user.setLogged(true)
                     alertMessage('Preferências atualizadas', 'Informações atualizadas com sucesso')
                     this.saveCookie()
@@ -154,7 +154,7 @@ export class UserController {
 
     checkUser() {
         this.retrieveCookie()
-        if (Cookies.getCookie('user') && this.user.getLogged) {
+        if (Cookies.getCookie('user') && this.user.logged) {
             return this.user
         }
         return false
@@ -172,14 +172,23 @@ export class UserController {
             this.user.setGender(cookieObj.gender) 
             this.user.setBirth(cookieObj.birth) 
 
-            if (this.user.getJwt)
+            if (this.user.jwt)
                 this.user.setLogged(true)
         } else
             return false
     }
 
     saveCookie() {
-        let cookieObj = this.user
+        let cookieObj = {
+            userId: this.user.userId,
+            username: this.user.username,
+            jwt: this.user.jwt,
+            name: this.user.name,
+            email: this.user.email,
+            phone: this.user.phone,
+            gender: this.user.gender ,
+            birth: this.user.birth
+        }
         Cookies.createCookie('user', JSON.stringify(cookieObj))    
     }
 

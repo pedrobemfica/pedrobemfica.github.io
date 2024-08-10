@@ -9,9 +9,12 @@ export class LoginView {
         this.userLoginForm = document.getElementById('userLoginForm')
         this.userLoginName = document.getElementById('userLoginName')
         this.userLoginPassword = document.getElementById('userLoginPassword')
+        
+        this.userLoginRegister = document.getElementById('userLoginRegister')
+        this.userLoginForgot = document.getElementById('userLoginForgot')
 
         this.userLoginFailMessage = document.getElementById('userLoginFailMessage')
-        
+
         this.userLoginForm.addEventListener('submit', async event => {
             event.preventDefault()
             const confirmation = await this.userController.login(this.userLoginName.value, this.userLoginPassword.value)
@@ -21,6 +24,14 @@ export class LoginView {
                 this.applicationController.loadContent('home')
             } else 
                 this.userLoginFailMessage.classList.remove('element-hidden')
-        })      
+        })
+
+        this.userLoginRegister.addEventListener('click', () => {
+            this.applicationController.loadContent('register')
+        })
+        
+        this.userLoginForgot.addEventListener('click', () => {
+            this.applicationController.loadContent('forgotpassword') 
+        })
     }
 }

@@ -2,79 +2,79 @@ import { dateHelper } from "../helpers/date-helper.js"
 
 export class User {
     constructor(userId, username) {
-        this.userId = userId
-        this.username = username
-        this.jwt = ''
-        this.logged = false
+        this._userId = userId
+        this._username = username
+        this._jwt = ''
+        this._logged = false
 
-        this.name = '',
-        this.email = '',
-        this.phone = '',
-        this.gender = '',
-        this.birth = null
+        this._name = '',
+        this._email = '',
+        this._phone = '',
+        this._gender = '',
+        this._birth = null
     }
 
-    get getUserId() {
-        return this.userId
+    get userId() {
+        return this._userId
     }
 
-    get getUsername() {
-        return this.username
+    get username() {
+        return this._username
     }
-
-    get getJwt() {
-        return this.jwt
+    
+    get jwt() {
+        return this._jwt
     }
 
     setJwt(jwt) {
-        this.jwt = jwt
+        this._jwt = jwt
     }
 
-    get getLogged() {
-        return this.logged
-    }
-
-    setLogged(state) {
-        this.logged = state
-    }
-
-    setName(name) {
-        this.name = name
-    }
-
-    setEmail(email) {
-        this.email = email
-    }
-
-    setPhone(phone) {
-        this.phone = phone
-    }
-
-    setGender(gender) {
-        this.gender = gender
-    }
-
-    setBirth(birth) {     
-        this.birth = dateHelper.InputtoUTC(birth)
-    }
-
-    get getName() {
-        return this.name
-    }
-
-    get getEmail() {
-        return this.email
-    }
-
-    get getPhone() {
-        return this.phone
-    }
-
-    get getGender() {
-        return this.gender
+    get logged() {
+        return this._logged
     }
     
-    get getBirth() {
-        return dateHelper.UTCtoString(this.birth)
+    setLogged(state) {
+        this._logged = state
+    }
+    
+    get name() {
+        return this._name
+    }
+    
+    setName(name) {
+        this._name = name
+    }
+    
+    get email() {
+        return this._email
+    }
+    
+    setEmail(email) {
+        this._email = email
+    }
+    
+    get phone() {
+        return this._phone
+    }
+    
+    setPhone(phone) {
+        this._phone = phone
+    }
+    
+    get gender() {
+        return this._gender
+    }
+    
+    setGender(gender) {
+        this._gender = gender
+    }
+    
+    get birth() {
+        return this._birth
+    }
+    
+    setBirth(birth) {   
+        this._birth = birth
     }
 }

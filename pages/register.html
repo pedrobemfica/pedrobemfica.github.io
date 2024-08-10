@@ -4,15 +4,15 @@
       <form class="register--forms" id="userRegisterForm">
         <div class="register--divider">
           <label for="userRegisterName" class="form-label">Nome de usuário:</label>
-          <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control"/>
+          <input type="text" id="userRegisterName" placeholder="Nome de usuário" class="form-control" required/>
           <div name="inputHelp" id="userRegisterNameRules" class="form-text element-hidden">Deve conter entre 4 e 15 caracteres.<br>
             Deve conter apenas caracteres alfabéticos e numéricos. </div>
           <label for="userRegisterPassword" class="form-label">Senha:</label>
-          <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control"/>
+          <input type="password" id="userRegisterPassword" placeholder="Senha" class="form-control" required/>
           <div name="inputHelp" id="userRegisterPasswordRules" class="form-text element-hidden">Deve conter no mínimo 6 caracteres.<br>
             Deve conter no mínimo: <br> - 1 letra maiúscula, <br> - 1 letra minúscula, <br> - 1 número, <br> - 1 caractere especial. </div>
           <label for="userRegisterConfirmPassword" class="form-label">Confirmar a senha:</label>
-          <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control"/>
+          <input type="password" id="userRegisterConfirmPassword" placeholder="Confirmar a senha" class="form-control" required/>
         </div>
         <div class="register--divider">
           <label for="userRegisterEmail" class="form-label">E-mail:</label>

@@ -32,6 +32,9 @@ export class ApplicationController {
             {path: 'payment', page: './pages/payment.html', view: '', target: staticModalArea, hash: false},
             {path: 'login', page: './pages/login.html', view: LoginView, target: staticModalArea, hash: false},
             {path: 'register', page: './pages/register.html', view: RegisterView, target: staticModalArea, hash: false},
+            {path: 'newpassword', page: './pages/newpassword.html', view: '', target: staticModalArea, hash: false},
+            {path: 'forgotpassword', page: './pages/forgotpassword.html', view: '', target: staticModalArea, hash: false},
+            {path: 'deleteuser', page: './pages/deleteuser.html', view: '', target: staticModalArea, hash: false},
             {path: 'cookies', page: './pages/cookies.html', view: CookiesView, target: cookieConsent, hash: false}
         ]
     }

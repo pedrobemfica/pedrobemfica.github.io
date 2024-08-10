@@ -22,7 +22,10 @@ export class ProfileView {
         this.userProfileInputName = document.getElementById('userProfileInputName')
         this.userProfileInputName.value = user.name
         this.userProfileGender = document.getElementById('userProfileGender')
-        this.userProfileGender.value = user.gender
+        if (user.gender) 
+            this.userProfileGender.value = user.gender
+        else
+            this.userProfileGender.value = ''
         this.userProfileBirth = document.getElementById('userProfileBirth')
         this.userProfileBirth.value = dateHelper.UTCtoInput(user.birth)
 
@@ -30,6 +33,9 @@ export class ProfileView {
 
         this.userProfileNameRules = document.getElementById('userProfileNameRules')
         this.userProfilePhoneRules = document.getElementById('userProfilePhoneRules')
+
+        this.userProfilePassword = document.getElementById('userProfilePassword')
+        this.userProfileDelete = document.getElementById('userProfileDelete')
 
         this.userProfileFailMessage = document.getElementById('userProfileFailMessage')
 
@@ -79,6 +85,14 @@ export class ProfileView {
         this.userProfileInputName.addEventListener('input', () => this.enableUpdate())
         this.userProfileEmail.addEventListener('input', () => this.enableUpdate())
         this.userProfilePhone.addEventListener('input', () => this.enableUpdate())
+
+        this.userProfilePassword.addEventListener('click', () => {
+            this.applicationController.loadContent('newpassword')
+        })
+        
+        this.userProfileDelete.addEventListener('click', () => {
+            this.applicationController.loadContent('deleteuser') 
+        })
 
         this.enableUpdate() 
     }

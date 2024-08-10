@@ -25,9 +25,10 @@
     margin-bottom: .5rem;
 }
 
-.login--others {
+.login--others, .profile--others {
     display: flex;
     justify-content: space-between;
+    margin: 0 .5rem;
 }
 
 .register--divider, .profile--divider {

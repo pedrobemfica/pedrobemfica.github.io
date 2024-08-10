@@ -22,7 +22,7 @@
             Não pode conter números e caracteres especiais. </div>
             <label for="userProfileGender" class="form-label">Gênero:</label>
             <select name="inputGender" class="form-select" id="userProfileGender">
-                <option selected value="null">Selecione</option>
+                <option selected value="" disabled>Selecione</option>
                 <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
             </select>
@@ -37,6 +37,10 @@
         </div>
       </form>
     </section>
+    <section class="profile--others">
+        <a href="#" id="userProfilePassword">Mudar senha</a>
+        <a href="#" id="userProfileDelete">Deletar usuário</a>
+      </section>
 
     <div class="alert alert-primary element-hidden" id="userProfileFailMessage" role="alert">
         As informações não podem ser alteradas.
