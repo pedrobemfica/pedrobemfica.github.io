@@ -1,6 +1,5 @@
 import { UserController } from "../controllers/user-controller.js"
 import { ApplicationController } from "../controllers/application-controller.js"
-import { dateHelper } from "../helpers/date-helper.js"
 import { validateHelper } from "../helpers/validate-helper.js"
 
 export class ProfileView {
@@ -27,7 +26,7 @@ export class ProfileView {
         else
             this.userProfileGender.value = ''
         this.userProfileBirth = document.getElementById('userProfileBirth')
-        this.userProfileBirth.value = dateHelper.UTCtoInput(user.birth)
+        this.userProfileBirth.value = user.birth
 
         this.profileSubmitButton = document.getElementById('profileSubmitButton')
 
@@ -35,7 +34,6 @@ export class ProfileView {
         this.userProfilePhoneRules = document.getElementById('userProfilePhoneRules')
 
         this.userProfilePassword = document.getElementById('userProfilePassword')
-        this.userProfileDelete = document.getElementById('userProfileDelete')
 
         this.userProfileFailMessage = document.getElementById('userProfileFailMessage')
 
@@ -87,11 +85,7 @@ export class ProfileView {
         this.userProfilePhone.addEventListener('input', () => this.enableUpdate())
 
         this.userProfilePassword.addEventListener('click', () => {
-            this.applicationController.loadContent('newpassword')
-        })
-        
-        this.userProfileDelete.addEventListener('click', () => {
-            this.applicationController.loadContent('deleteuser') 
+            this.applicationController.loadContent('changepass')
         })
 
         this.enableUpdate() 

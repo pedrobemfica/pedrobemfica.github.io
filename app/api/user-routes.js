@@ -1,4 +1,5 @@
 import { BACKEND } from "./routes.js"
+import { Cookies } from "../helpers/cookie-helper.js"
 
 const BASE_ROUTE = '/user'
 export class ApiUser {
@@ -79,13 +80,13 @@ export class ApiUser {
         }
     }
 
-    static async changePassword(password, newPassword) {
+    static async changePassword(password, confirmPassword) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ password, newPassword })
+                body: JSON.stringify({ password, confirmPassword })
             })
             const data = await response.json()
     
@@ -104,7 +105,7 @@ export class ApiUser {
 
     static async requestNewPassword(username) {
         try {
-            const response = await fetch(`${BACKEND}${BASE_ROUTE}/request-code`, {
+            const response = await fetch(`${BACKEND}${BASE_ROUTE}/new-password`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ username })
@@ -133,7 +134,7 @@ export class ApiUser {
                 body: JSON.stringify({ email, phone, name, gender, birth })
             })
             const data = await response.json()
-    
+
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     

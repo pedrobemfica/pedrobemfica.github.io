@@ -6,11 +6,11 @@ export class ApplicationView {
         this.openFirstPages()
     }
 
-    async openFirstPages() {
-        await this.applicationController.loadContent('home')
-        await this.applicationController.loadContent('footer')
-        await this.applicationController.loadContent('navigation')
-        await this.applicationController.loadContent('cookies')
-        await this.applicationController.loadContent('cart')
+    openFirstPages() {
+        this.applicationController.loadContent('home')
+        this.applicationController.loadContent('footer')
+        this.applicationController.loadContent('navigation')
+        this.applicationController.loadContent('cookies')
+        this.applicationController.loadContent('cart')
     }
 }

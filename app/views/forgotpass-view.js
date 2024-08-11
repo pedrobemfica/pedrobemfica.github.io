@@ -1,7 +1,7 @@
 import { UserController } from "../controllers/user-controller.js"
 import { ApplicationController } from "../controllers/application-controller.js"
 
-export class RecoverView {
+export class ForgotpassView {
     constructor() {
         this.userController = new UserController()
         this.applicationController = new ApplicationController()

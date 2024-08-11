@@ -1,0 +1,18 @@
+<div class="change-container">
+    <h2>Alterar a senha</h2>
+    <section class="change--username">
+      <form class="change--forms" id="userChangeForm">
+        <label for="userChangePassword" class="form-label">Nova Senha:</label>
+        <input type="password" id="userChangePassword" placeholder="Senha" class="form-control" required/>
+        <div name="inputHelp" id="userChangePasswordRules" class="form-text element-hidden">Deve conter no mínimo 6 caracteres.<br>
+            Deve conter no mínimo: <br> - 1 letra maiúscula, <br> - 1 letra minúscula, <br> - 1 número, <br> - 1 caractere especial. </div>
+        <label for="userChangeConfirmPassword" class="form-label">Confirmar a senha:</label>
+        <input type="password" id="userChangeConfirmPassword" placeholder="Senha" class="form-control" required/>
+        <button type="submit" class="btn btn-primary" id="changeSubmitButton">Alterar</button>
+      </form>
+    </section>
+  
+    <div class="alert alert-primary element-hidden" id="userChangeFailMessage" role="alert">
+      Não foi possível alterar a senha do usuário.
+    </div>
+  </div>

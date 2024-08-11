@@ -30,10 +30,10 @@ export class UserController {
                 this.user.setGender(data.user.gender) 
                 this.user.setBirth(data.user.birth) 
 
-                if(data.jwt) {
+                if(data.user.jwt) {
                     alertMessage('Login realizado', 'Usuário conectado com sucesso')
                     this.saveCookieUser()
-                    this.saveCookieJwt(data.jwt)
+                    this.saveCookieJwt(data.user.jwt)
                     return true
                 } else
                     alertMessage('Falha no login', 'Falha no token de autenticação')
@@ -89,9 +89,9 @@ export class UserController {
         return false
     }
 
-    async changePassword(password, newPassword) {
+    async changePassword(password, confirmPassword) {
         // Client side check
-        let check = this.checkChangePassword(newPassword)
+        let check = this.checkChangePassword(password, confirmPassword)
         if (!check.result) {
             alertMessage('Falha ao alterar senha', check.message)
             return false
@@ -99,7 +99,7 @@ export class UserController {
 
         // Server side check
         try {
-            const data = await ApiUser.changePassword(password, newPassword)
+            const data = await ApiUser.changePassword(password, confirmPassword)
             if (data.result) {
                 alertMessage('Senha alterada', data.message)
                 return true
@@ -191,7 +191,7 @@ export class UserController {
             gender: this.user.gender,
             birth: this.user.birth
         }
-        Cookies.createCookie('user', JSON.stringify(cookieObj))    
+        Cookies.createCookie('user', JSON.stringify(cookieObj), 90)    
     }
 
     deleteCookieUser() {
@@ -230,19 +230,11 @@ export class UserController {
         return {result: true}
     }
 
-    checkRetrievePassword(password, confirmPassword) {
+    checkChangePassword(password, confirmPassword) {
         if (confirmPassword == '' || password == '')
             return {result: false, message: 'Senha ou confirmação em branco'}
         if (password != confirmPassword)
             return {result: false, message: 'Confirmação de senha não condiz com senha digitada'}
-        if (!validateHelper.checkPassword(password))
-            return {result: false, message: 'Senha inválida'}
-        if (verificationCode == '')
-            return {result: false, message: 'Código de verificação em branco'}
-        return {result: true}
-    }
-
-    checkChangePassword(password) {
         if (!validateHelper.checkPassword(password))
             return {result: false, message: 'Nova senha inválida'}
         return {result: true}

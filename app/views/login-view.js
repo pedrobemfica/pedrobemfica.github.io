@@ -31,7 +31,7 @@ export class LoginView {
         })
         
         this.userLoginForgot.addEventListener('click', () => {
-            this.applicationController.loadContent('forgotpassword') 
+            this.applicationController.loadContent('forgotpass') 
         })
     }
 }

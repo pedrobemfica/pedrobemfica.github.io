@@ -7,6 +7,8 @@ import { CookiesView } from "../views/cookies-view.js"
 import { LoginView } from "../views/login-view.js"
 import { RegisterView } from "../views/register-view.js"
 import { ProfileView } from "../views/profile-view.js"
+import { ChangepassView } from "../views/changepass-view.js"
+import { ForgotpassView } from "../views/forgotpass-view.js"
 import { UserController } from "./user-controller.js"
 
 export class ApplicationController {
@@ -32,9 +34,8 @@ export class ApplicationController {
             {path: 'payment', page: './pages/payment.html', view: '', target: staticModalArea, hash: false},
             {path: 'login', page: './pages/login.html', view: LoginView, target: staticModalArea, hash: false},
             {path: 'register', page: './pages/register.html', view: RegisterView, target: staticModalArea, hash: false},
-            {path: 'newpassword', page: './pages/newpassword.html', view: '', target: staticModalArea, hash: false},
-            {path: 'forgotpassword', page: './pages/forgotpassword.html', view: '', target: staticModalArea, hash: false},
-            {path: 'deleteuser', page: './pages/deleteuser.html', view: '', target: staticModalArea, hash: false},
+            {path: 'changepass', page: './pages/changepass.html', view: ChangepassView, target: staticModalArea, hash: false},
+            {path: 'forgotpass', page: './pages/forgotpass.html', view: ForgotpassView, target: staticModalArea, hash: false},
             {path: 'cookies', page: './pages/cookies.html', view: CookiesView, target: cookieConsent, hash: false}
         ]
     }
@@ -78,8 +79,7 @@ export class ApplicationController {
     checkLoggedUser() {
         this.user = this.userController.checkUser()
         if (this.user)
-            if (this.user.logged)
-                return this.user
+            return this.user
         return false
     }
 }
