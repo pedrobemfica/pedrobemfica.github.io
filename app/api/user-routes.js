@@ -35,13 +35,12 @@ export class ApiUser {
         }
     }
     
-    static async logout(userId) {
+    static async logout() {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/logout`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ userId })
             })
             const data = await response.json()
     
@@ -80,13 +79,13 @@ export class ApiUser {
         }
     }
 
-    static async changePassword(password, newPassword, userId) {
+    static async changePassword(password, newPassword) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/change-password`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ password, newPassword, userId })
+                body: JSON.stringify({ password, newPassword })
             })
             const data = await response.json()
     
@@ -103,7 +102,7 @@ export class ApiUser {
         }
     }
 
-    static async requestVerificationCode(username) {
+    static async requestNewPassword(username) {
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/request-code`, {
                 method: 'POST',
@@ -125,35 +124,13 @@ export class ApiUser {
         }
     }
 
-    static async retrievePassword(password, confirmPassword, verificationCode, username) {
-        try {
-            const response = await fetch(`${BACKEND}${BASE_ROUTE}/retrieve-password`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ password, confirmPassword, verificationCode, username })
-            })
-            const data = await response.json()
-    
-            if (!data)
-                return {result: false, message: 'Não foi possível conectar com o servidor'}
-    
-            let message = data.message
-            if (response.ok)
-                return {result: true, message: message}
-            else
-                return {result: false, message: message}
-        } catch {
-            return {result: false, message: 'Não foi possível conectar com o servidor'}
-        }
-    }
-
-    static async updatePreferences(email, phone, name, gender, birth, userId) {
+    static async updatePreferences(email, phone, name, gender, birth) {
         const token = Cookies.getCookie('jwt')
         try {        
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/update-preferences`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ email, phone, name, gender, birth, userId })
+                body: JSON.stringify({ email, phone, name, gender, birth })
             })
             const data = await response.json()
     

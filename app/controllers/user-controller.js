@@ -7,7 +7,7 @@ import { validateHelper } from "../helpers/validate-helper.js"
 export class UserController {
     constructor() {
         this.user = ''
-        this.retrieveCookie()
+        this.retrieveCookieUser()
     }
  
     async login(username, password) {
@@ -32,8 +32,8 @@ export class UserController {
 
                 if(data.jwt) {
                     alertMessage('Login realizado', 'Usuário conectado com sucesso')
-                    this.saveCookie()
-                    this.saveJwt(data.jwt)
+                    this.saveCookieUser()
+                    this.saveCookieJwt(data.jwt)
                     return true
                 } else
                     alertMessage('Falha no login', 'Falha no token de autenticação')
@@ -48,7 +48,7 @@ export class UserController {
 
     async logout() {
         try {
-            const data = await ApiUser.logout(this.user.userId)
+            const data = await ApiUser.logout()
             if (data.result) {
                 alertMessage('Logout', data.message)
                 return true
@@ -58,7 +58,8 @@ export class UserController {
             console.log(err)
             alertMessage('Falha no logout', err)
         } finally {
-            this.deleteCookie()
+            this.deleteCookieUser()
+            this.deleteCookieJwt()
             this.user = ''
             this.checkUser()
         }
@@ -98,7 +99,7 @@ export class UserController {
 
         // Server side check
         try {
-            const data = await ApiUser.changePassword(password, newPassword, this.user.userId)
+            const data = await ApiUser.changePassword(password, newPassword)
             if (data.result) {
                 alertMessage('Senha alterada', data.message)
                 return true
@@ -111,40 +112,17 @@ export class UserController {
         return false
     }
 
-    async requestVerificationCode(username) {
+    async requestNewPassword(username) {
         try {
-            const data = await ApiUser.requestVerificationCode(username)
-            if (data.result) {
-                alertMessage('Código enviado', data.message)
-                return true
-            } else
-                alertMessage('Falha ao solicitar o código', data.message)
-        } catch(err) {
-            console.log(err)
-            alertMessage('Falha no solicitar o código', err)
-        }
-        return false
-    }
-
-    async retrievePassword(password, confirmPassword, verificationCode, username) {
-        // Client side check
-        let check = this.checkRetrievePassword(password, confirmPassword, verificationCode)
-        if (!check.result) {
-            alertMessage('Falha ao recuperar senha', check.message)
-            return false
-        }
-
-        // Server side check
-        try {
-            const data = await ApiUser.retrievePassword(password, confirmPassword, verificationCode, username)
+            const data = await ApiUser.requestNewPassword(username)
             if (data.result) {
                 alertMessage('Senha alterada', data.message)
                 return true
             } else
-                alertMessage('Falha ao recuperar a senha', data.message)
+                alertMessage('Falha ao solicitar nova senha', data.message)
         } catch(err) {
             console.log(err)
-            alertMessage('Falha no recuperar a senha', err)
+            alertMessage('Falha no solicitar nova senha', err)
         }
         return false
     }
@@ -159,7 +137,7 @@ export class UserController {
 
         // Server side check
         try {
-            const data = await ApiUser.updatePreferences(email, phone, name, gender, birth, this.user.userId)
+            const data = await ApiUser.updatePreferences(email, phone, name, gender, birth)
             
             if (data.result) {
                 this.user = new User(data.user.userId, data.user.username)
@@ -171,7 +149,7 @@ export class UserController {
                 this.user.setBirth(data.user.birth) 
 
                 alertMessage('Preferências atualizadas', 'Informações atualizadas com sucesso')
-                this.saveCookie()
+                this.saveCookieUser()
                     return true
             } else
                 alertMessage('Falha ao atualizar preferências', data.message)    
@@ -183,13 +161,13 @@ export class UserController {
     }
 
     checkUser() {
-        this.retrieveCookie()
+        this.retrieveCookieUser()
         if (Cookies.getCookie('user'))
             return this.user
         return false
     }
 
-    retrieveCookie() {
+    retrieveCookieUser() {
         if (Cookies.getCookie('user')) {
             let cookieObj = JSON.parse(Cookies.getCookie('user'))
             this.user = new User(cookieObj.userId, cookieObj.username)
@@ -203,7 +181,7 @@ export class UserController {
             return false
     }
 
-    saveCookie() {
+    saveCookieUser() {
         let cookieObj = {
             userId: this.user.userId,
             username: this.user.username,
@@ -216,15 +194,15 @@ export class UserController {
         Cookies.createCookie('user', JSON.stringify(cookieObj))    
     }
 
-    deleteCookie() {
+    deleteCookieUser() {
         Cookies.deleteCookie('user', '') 
     }
 
-    saveJwt(jwt) {
+    saveCookieJwt(jwt) {
         Cookies.createCookie('jwt', JSON.stringify(jwt))
     }
 
-    deleteJwt() {
+    deleteCookieJwt() {
         Cookies.deleteCookie('jwt', '') 
     }
 
