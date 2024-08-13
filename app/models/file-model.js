@@ -1,39 +1,29 @@
 export class File {
-    constructor(fileId, userId, {year, month, day}, label, path) {
-        this.fileId = fileId
-        this.userId = userId
-
-        this.year = year
-        this.month = month
-        this.day = day
-
-        this.label = label
-        this.path = path 
+    constructor(fileId, userId, dateString, label) {
+        this._fileId = fileId
+        this._userId = userId
+        this._dateString = dateString
+        this._label = label
     }
 
-    get getFileId() {
-        return this.fileId
+    get FileId() {
+        return this._fileId
     }
 
-    get getUserId() {
-        return this.userId
+    get UserId() {
+        return this._userId
     }
 
-    get getDateString() {
-        let dateString = `${("0" + this.day).slice(-2)}/${("0" + this.month).slice(-2)}/${("000" + this.year).slice(-4)}`
-        return dateString
+    get DateString() {
+        return this._dateString
     }
 
     set setLabel(label) {
-        this.label = label
+        this._label = label
         return true
     }
 
-    get getLabel() {
-        return this.label
-    }
-
-    get getPath() {
-        return this.path
+    get Label() {
+        return this._label
     }
 }

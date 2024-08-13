@@ -16,21 +16,20 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
             
-            if (response.ok) {
-                let userId = data.userId
-                let username = data.username
-                let name = data.name
-                let email = data.email
-                let phone = data.phone
-                let gender = data.gender
-                let birth = data.birth
-
-                let jwt = data.jwt
-                return {result: true, user: {userId: userId, username: username, name: name, email: email, phone: phone, gender: gender, birth: birth, jwt: jwt}}
-            } else {
-                let message = data.message  
-                return {result: false, message: message}
-            }
+            if (response.ok) 
+                return {result: true,
+                    user: {
+                        userId: data.userId, 
+                        username: data.username, 
+                        name: data.name, 
+                        email: data.email, 
+                        phone: data.phone, 
+                        gender: data.gender, 
+                        birth: data.birth, 
+                        jwt: data.jwt
+                    }}
+            else
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
@@ -48,11 +47,10 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     
-            let message = data.message
             if (response.ok)
-                return {result: true, message: message}
+                return {result: true, message: data.message}
             else
-                return {result: false, message: message}
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
@@ -70,11 +68,10 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     
-            let message = data.message
             if (response.ok)
-                return {result: true, message: message}
+                return {result: true, message: data.message}
             else
-                return {result: false, message: message}
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
@@ -93,11 +90,10 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     
-            let message = data.message
             if (response.ok)
-                return {result: true, message: message}
+                return {result: true, message: data.message}
             else
-                return {result: false, message: message}
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
@@ -115,11 +111,10 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     
-            let message = data.message
             if (response.ok)
-                return {result: true, message: message}
+                return {result: true, message: data.message}
             else
-                return {result: false, message: message}
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
@@ -138,19 +133,19 @@ export class ApiUser {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
     
-            if (response.ok) {
-                let userId = data.userId
-                let username = data.username
-                let name = data.name
-                let email = data.email
-                let phone = data.phone
-                let gender = data.gender
-                let birth = data.birth
-                return {result: true, user: {userId: userId, username: username, name: name, email: email, phone: phone, gender: gender, birth: birth}}
-            } else {
-                let message = data.message  
-                return {result: false, message: message}
-            }
+            if (response.ok)
+                return {result: true, 
+                    user: {
+                        userId: data.userId, 
+                        username: data.username, 
+                        name: data.name, 
+                        email: data.email, 
+                        phone: data.phone, 
+                        gender: data.gender, 
+                        birth: data.birth
+                    }}
+            else 
+                return {result: false, message: data.message}
         } catch {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }

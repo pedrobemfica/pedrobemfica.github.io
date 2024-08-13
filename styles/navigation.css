@@ -73,6 +73,27 @@
     color: var(--navigation-items-hover);
 }
 
+
+.nav--user-register {
+    background-color: var(--menu-items-collor);
+    border-color: var(--menu-items-collor);
+    color: var(--menu-background-collor);
+    font-weight: bold;
+}
+
+.nav--user-login {
+    border-color: var(--menu-items-collor);
+    color: var(--menu-items-collor);
+    font-weight: bold;
+}
+
+.nav--user-register:hover, .nav--user-login:hover {
+    background-color: var(--menu-items-hover);
+    border-color: var(--menu-items-hover);
+    color: var(--menu-background-collor);
+    font-weight: bold;
+}
+
 .navigation--menu {
     background-color: var(--menu-background-collor);
     display: flex;

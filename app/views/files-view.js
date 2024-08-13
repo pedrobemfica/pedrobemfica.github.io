@@ -1,10 +1,12 @@
 import { FilesController } from "../controllers/files-controller.js"
+import { ApplicationController } from "../controllers/application-controller.js"
 
 export class FilesView {
     constructor() {
         this.filesList = []
 
         this.filesController = new FilesController()
+        this.applicationController = new ApplicationController()
 
         this.allSections = document.getElementsByTagName('section')
         this.filesTable = document.getElementById('filesTable')
@@ -22,7 +24,7 @@ export class FilesView {
             event.preventDefault()
             this.filesController.uploadFile(
                 this.inputUploadFileSelect,
-                this.inputUploadFileLabel
+                this.inputUploadFileLabel.value
             )
             this.updateView()
         })
@@ -31,13 +33,13 @@ export class FilesView {
     }
 
     updateView() {
-        this.checkLoggedUser()
-        this.inputUploadFileLabel.value = ''
+        checkLoggedUser()
+        this.uploadFileForm.reset()
         this.showFilesList()
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.filesController.checkLoggedser()
+        this.loggedUser = this.applicationController.checkLoggedUser()
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')
@@ -57,22 +59,16 @@ export class FilesView {
             this.filesTable.classList.remove('element-hidden')
             this.filesCompleteList.innerHTML = ''
             for (let file in this.filesList) {
-                this.filesCompleteList.innerHTML += `<td>${this.filesList[file].getDateString}</td>
-                                                    <td>${this.filesList[file].getLabel}</td>
-                                                    <td><form id="fileItemForm${this.filesList[file].getFileId}">
+                this.filesCompleteList.innerHTML += `<td>${this.filesList[file].dateString}</td>
+                                                    <td>${this.filesList[file].label}</td>
+                                                    <td><form id="fileItemForm${this.filesList[file].fileId}">
                                                     <button type="button" class="btn btn-outline-primary"
                                                     name="fileItemRemoveAction"
-                                                    value="${this.filesList[file].getFileId}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-custom-class="custom-tooltip"
-                                                    data-bs-title="Remove o arquivo">
+                                                    value="${this.filesList[file].fileId}">
                                                     <i class="fa-solid fa-trash-can"></i></button>
                                                     <button type="button" class="btn btn-outline-primary"
                                                     name="fileItemDownloadAction"
-                                                    value="${this.filesList[file].getFileId}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-custom-class="custom-tooltip"
-                                                    data-bs-title="Download do arquivo">
+                                                    value="${this.filesList[file].fileId}">
                                                     <i class="fa-solid fa-download"></i></button>
                                                     </form></td>`
             }
@@ -94,8 +90,5 @@ export class FilesView {
             this.filesController.downloadFile(element.value)
             this.updateView()
         }))
-
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 }

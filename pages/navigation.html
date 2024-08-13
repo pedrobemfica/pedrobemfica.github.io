@@ -7,18 +7,18 @@
   
     <nav class="navigation--nav-user">
       <ul>
-        <li id="userRegistration">
-          <button data-nav-target="register" type="button" class="btn btn-primary nav--user-register navigation-page">
+        <li data-nav-target="register" class="navigation-page" id="userRegistration">
+          <button type="button" class="btn btn-primary nav--user-register">
             Registrar
           </button>
         </li>
-        <li id="userLogin">
-          <button data-nav-target="login" type="button" class="btn btn-outline-primary nav--user-login navigation-page">
+        <li data-nav-target="login" class="navigation-page" id="userLogin">
+          <button type="button" class="btn btn-outline-primary nav--user-login">
             Entrar
           </button>
         </li>
-        <li id="userProfile" class="element-hidden">
-          <a data-nav-target="profile" class="nav--user-logged navigation-page" href="#" >
+        <li data-nav-target="profile" id="userProfile" class="navigation-page element-hidden">
+          <a class="nav--user-logged" href="#" >
             <i class="fa-solid fa-user"></i>
             <span id="userProfileName">Nome usuário</span>
           </a>

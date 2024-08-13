@@ -2,35 +2,35 @@ import { File } from './file-model.js'
 
 export class Files {
     constructor() {
-        this.list = []
+        this._list = []
     }
 
-    get getFiles() {
-        return [].concat(this.list)
+    get list() {
+        return [].concat(this._list)
     }
 
     insertFile(fileObject) {
         if (fileObject instanceof File) {
-            this.list.push(fileObject)
+            this._list.push(fileObject)
             return true
         }
         return false
     }
 
     removeFile(fileId) {
-        let fileIndex = this.list.findIndex(e => e.fileId == fileId)
+        let fileIndex = this._list.findIndex(e => e.fileId == fileId)
         if (fileIndex != -1) {
-            this.list.splice(fileIndex, 1)
+            this._list.splice(fileIndex, 1)
             return true
         }
         return false
     }
 
     findFileById(fileId) {
-        return this.list.find(e => e.fileId == fileId)
+        return this._list.find(e => e.fileId == fileId)
     }
 
     clearFiles() {
-        this.list = []
+        this._list = []
     }
 }

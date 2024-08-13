@@ -4,46 +4,77 @@ import { UserController } from "./user-controller.js"
 
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
+import { ApiFiles } from "../api/files-routes.js"
  
 export class FilesController {
     constructor(){
         this.userController = new UserController()
-        this.user = this.userController.checkUser()
         this.files = new Files()
-        this.updateFiles()
     }
 
-    updateFiles() {
+    async updateFiles() {
         let getUserFiles = []
         this.files.clearFiles()
-        getUserFiles = routes.getFilesServer(this.user.userId, this.user.jwt)
+        getUserFiles = await ApiFiles.list().list
         getUserFiles.map(e => {
-            let newFile = new File(e.fileId, e.userId, e.date, e.label, e.path)
+            let newFile = new File(e.fileId, e.userId, e.dateString, e.label)
             this.files.insertFile(newFile)
         })
     }
 
     retrieveFiles() {
-        return this.files.getFiles
+        return this.files.list
     }
 
-    uploadFile(fileInfo, labelInput){
-        fileInfo = fileInfo // Handle upload and save file
-        let userId = this.checkLoggedser().id
-        let currentDate = new Date()
-        let currentYear = currentDate.getFullYear()
-        let currentMonth = currentDate.getMonth()
-        let currentDay = currentDate.getDate() 
-        let date = {year: currentYear, month: currentMonth, day: currentDay}
-        let label = labelInput.value
-        let path = '' // Get from handling upload
-        let fileId = routes.nextFileId(this.user.userId, this.user.jwt)
+    async downloadFile(fileId){
+        try {
+            const data = await ApiFiles.download(fileId)
+            if (data.result) {
+                // Create temporary link element
+                const link = document.createElement('a');
+                const url = window.URL.createObjectURL(data.file);
+                link.href = url;
+                link.download = data.fileName;
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(link);
 
-        let file = new File(fileId, userId, date, label, path)
-        routes.newFile(file, this.user.userId, this.user.jwt)
-        alertMessage('Arquivo enviado', 'O arquivo foi enviado para o servidor.')
-       
-        this.updateFiles()
+                alertMessage('Download de arquivo', 'Arquivo baixado com sucesso')
+                return true
+            } else
+                alertMessage('Falha no download', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha no download', err)
+        } finally {
+            this.updateFiles()
+        }
+        return false
+    }
+
+    async uploadFile(fileSelect, label){
+        const fileSelected = fileSelect.files[0];
+        const formData = new FormData();
+        formData.append('file', fileSelected);
+
+        // Client side check - TBD
+
+        // Server side check
+        try {
+            const data = await ApiFiles.upload(label, formData)
+            if (data.result) {
+                alertMessage('Upload de arquivo', data.message)
+                return true
+            } else
+                alertMessage('Falha no upload', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha no upload', err)
+        } finally {
+            this.updateFiles()
+        }
+        return false
     }
 
     deleteFile(fileId) {
@@ -56,50 +87,4 @@ export class FilesController {
         
         this.updateFiles()
     }
-
-    downloadFile(fileId) {
-        fileId = fileId // Handle download the file from the server
-    }
-
-    checkLoggedser() {
-        if (this.user)
-            if (this.user.logged)
-                return this.user
-        return false
-    }
 }
-
-// OLD
-// export function openFilesView() {
-
-//     document.getElementById('uploadForm').addEventListener('submit', async function(event) {
-//         event.preventDefault();
-    
-//         const fileInput = document.getElementById('fileInput');
-//         const file = fileInput.files[0];
-    
-//         if (!file) {
-//             alert('Please select a file.');
-//             return;
-//         }
-    
-//         const formData = new FormData();
-//         formData.append('file', file);
-    
-//         try {
-//             const response = await fetch('/upload', {
-//                 method: 'POST',
-//                 body: formData
-//             });
-    
-//             if (response.ok) {
-//                 alert('File uploaded successfully.');
-//             } else {
-//                 alert('Failed to upload file.');
-//             }
-//         } catch (error) {
-//             console.error('Error:', error);
-//             alert('Error uploading file.');
-//         }
-//     });
-// }
