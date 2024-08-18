@@ -1,3 +1,4 @@
+import { HomeView } from "../views/home-view.js"
 import { AppointmentsView } from "../views/appointments-view.js"
 import { CartView } from "../views/cart-view.js"
 import { FilesView } from "../views/files-view.js"
@@ -23,7 +24,7 @@ export class ApplicationController {
         this.routes = [
             {path: 'navigation', page: './pages/navigation.html', view: NavigationView, target: headerArea, hash: false},
             {path: 'footer', page: './pages/footer.html', view: '', target: footerArea, hash: false},
-            {path: 'home', page: './pages/home.html', view: '', target: contentArea, hash: true},
+            {path: 'home', page: './pages/home.html', view: HomeView, target: contentArea, hash: true},
             {path: 'services', page: './pages/services.html', view: ServicesView, target: contentArea, hash: true},
             {path: 'appointments', page: './pages/appointments.html', view: AppointmentsView, target: contentArea, hash: true},
             {path: 'files', page: './pages/files.html', view: FilesView, target: contentArea, hash: true},

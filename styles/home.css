@@ -4,3 +4,41 @@
     justify-content: flex-start;
     padding: 2rem;
 }
+
+.scrollspy-home {
+    position: relative;
+}
+
+.home--item-mark {
+    color: white;
+    background-color: #024950;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    height: 25px;
+    width: 25px;
+    margin: .25rem 1rem;
+}
+
+.home--item-icon {
+    display: inline-block;
+    text-align: center;
+    height: 25px;
+    width: 25px;
+    margin: .25rem 1rem;
+}
+
+.home--section {
+    margin-bottom: 3rem;
+}
+
+.home--section-title {
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: block;
+    border-bottom: .01rem solid gray;
+}
+
+.home--section-body {
+
+}

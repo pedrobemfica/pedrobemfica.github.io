@@ -62,7 +62,7 @@ export class AppointmentsView {
     }
     
     checkLoggedUser() {
-        this.loggedUser = this.appointmentsController.checkLoggedser()
+        this.loggedUser = this.appointmentsController.checkLoggedUser()
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')

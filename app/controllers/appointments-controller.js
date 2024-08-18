@@ -107,7 +107,7 @@ export class AppointmentsController  {
         return avaliabilityList.getAvailabilities
     }
 
-    checkLoggedser() {
+    checkLoggedUser() {
         if (this.user)
             if (this.user.logged)
                 return this.user

@@ -54,7 +54,7 @@ export class ApiFiles {
     static async upload(label, formData) {
         const token = Cookies.getCookie('jwt')
         try {
-            const response = await fetch(`${BACKEND}${BASE_ROUTE}/login`, {
+            const response = await fetch(`${BACKEND}${BASE_ROUTE}/upload`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
                 body: JSON.stringify({ label, formData })
