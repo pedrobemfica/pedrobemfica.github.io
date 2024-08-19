@@ -6,15 +6,15 @@ export class File {
         this._label = label
     }
 
-    get FileId() {
+    get fileId() {
         return this._fileId
     }
 
-    get UserId() {
+    get userId() {
         return this._userId
     }
 
-    get DateString() {
+    get dateString() {
         return this._dateString
     }
 
@@ -23,7 +23,7 @@ export class File {
         return true
     }
 
-    get Label() {
+    get label() {
         return this._label
     }
 }

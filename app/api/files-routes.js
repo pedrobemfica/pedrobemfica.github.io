@@ -36,28 +36,28 @@ export class ApiFiles {
             })
     
             const file = await response.blob()
-            const data = await response.json()
     
-            if (!file || !data)
+            if (!file)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
             
             if (response.ok) 
-                return {result: true, file: file, fileName: data.fileName}
+                return {result: true, file: file}
             else 
                 return {result: false, message: data.message}
             
-        } catch {
+        } catch(err) {
+            console.log(err)
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
     }
 
-    static async upload(label, formData) {
+    static async upload(formData) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/upload`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ label, formData })
+                headers: {'Authorization': `Bearer ${token}`},
+                body: formData
             })
     
             const data = await response.json()

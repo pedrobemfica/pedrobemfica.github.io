@@ -1,12 +1,12 @@
 import { FilesController } from "../controllers/files-controller.js"
-import { ApplicationController } from "../controllers/application-controller.js"
+import { UserController } from "../controllers/user-controller.js"
 
 export class FilesView {
     constructor() {
         this.filesList = []
 
         this.filesController = new FilesController()
-        this.applicationController = new ApplicationController()
+        this.userController = new UserController()
 
         this.allSections = document.getElementsByTagName('section')
         this.filesTable = document.getElementById('filesTable')
@@ -20,26 +20,27 @@ export class FilesView {
         
         this.uploadFileForm = document.getElementById('uploadFileForm')
         
-        this.uploadFileForm.addEventListener('submit', event => {
+        this.uploadFileForm.addEventListener('submit', async event => {
             event.preventDefault()
-            this.filesController.uploadFile(
+            let confirmation = await this.filesController.uploadFile(
                 this.inputUploadFileSelect,
                 this.inputUploadFileLabel.value
             )
-            this.updateView()
+            if (confirmation)
+                this.updateView()
         })
 
         this.updateView()
     }
 
     updateView() {
-        checkLoggedUser()
+        this.checkLoggedUser()
         this.uploadFileForm.reset()
         this.showFilesList()
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.applicationController.checkLoggedUser()
+        this.loggedUser = this.userController.checkUser()
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')
@@ -49,8 +50,8 @@ export class FilesView {
         }
     }
 
-    showFilesList() {
-        this.filesList = this.filesController.retrieveFiles()
+    async showFilesList() {
+        this.filesList = await this.filesController.retrieveFiles()
         if (this.filesList.length <= 0) {
             this.filesListMessage.classList.remove('element-hidden')
             this.filesTable.classList.add('element-hidden')

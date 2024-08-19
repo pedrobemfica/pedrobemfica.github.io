@@ -10,19 +10,34 @@ export class FilesController {
     constructor(){
         this.userController = new UserController()
         this.files = new Files()
+
+        this.retrieveFiles()
     }
 
     async updateFiles() {
-        let getUserFiles = []
-        this.files.clearFiles()
-        getUserFiles = await ApiFiles.list().list
-        getUserFiles.map(e => {
-            let newFile = new File(e.fileId, e.userId, e.dateString, e.label)
-            this.files.insertFile(newFile)
-        })
+        try {
+            const data = await ApiFiles.list()
+            if (data.result) {
+                if (data.list.length <= 0) {
+                    this.files.clearFiles()
+                } else {
+                    this.files.clearFiles()
+                    data.list.map(e => {
+                        let newFile = new File(e.fileId, e.userId, e.dateString, e.label)
+                        this.files.insertFile(newFile)
+                    })
+                }
+            } else
+                alertMessage('Falha ao listar arquivos', data.message)  
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao listar arquivos', err)
+        }
+        return false
     }
 
-    retrieveFiles() {
+    async retrieveFiles() {
+        await this.updateFiles()
         return this.files.list
     }
 
@@ -47,8 +62,6 @@ export class FilesController {
         } catch(err) {
             console.log(err)
             alertMessage('Falha no download', err)
-        } finally {
-            this.updateFiles()
         }
         return false
     }
@@ -57,12 +70,12 @@ export class FilesController {
         const fileSelected = fileSelect.files[0];
         const formData = new FormData();
         formData.append('file', fileSelected);
-
+        formData.append('label', label)
         // Client side check - TBD
 
         // Server side check
         try {
-            const data = await ApiFiles.upload(label, formData)
+            const data = await ApiFiles.upload(formData)
             if (data.result) {
                 alertMessage('Upload de arquivo', data.message)
                 return true
@@ -71,20 +84,16 @@ export class FilesController {
         } catch(err) {
             console.log(err)
             alertMessage('Falha no upload', err)
-        } finally {
-            this.updateFiles()
         }
         return false
     }
 
     deleteFile(fileId) {
         //let file = file // Handle remove the file in the server
-        let confirm = routes.deleteFile(fileId, this.user.userId, this.user.jwt)
+        
         if (confirm) {
             alertMessage('Arquivo removido', 'O arquivo foi removido do servidor.')
         } else
             alertMessage('Não foi possível apagar', 'Algum erro ocorreu e a ação não foi concluída.')
-        
-        this.updateFiles()
     }
 }

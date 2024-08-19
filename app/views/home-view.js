@@ -9,6 +9,5 @@ export class HomeView {
             target: '#navbar-home',
             offset: 500
           })
-          console.log(scrollSpy)
     }
 }
