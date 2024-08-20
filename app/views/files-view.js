@@ -81,15 +81,15 @@ export class FilesView {
         let fileItemRemoveAction = document.getElementsByName('fileItemRemoveAction')
         let fileItemDownloadAction = document.getElementsByName('fileItemDownloadAction')
         
-        fileItemRemoveAction.forEach(element => element.addEventListener('click', event => {
+        fileItemRemoveAction.forEach(element => element.addEventListener('click', async event => {
             event.preventDefault()           
-            this.filesController.deleteFile(element.value)
-            this.updateView()
+            const confirmation = await this.filesController.deleteFile(element.value)
+            if (confirmation)
+                this.updateView()
         }))
         fileItemDownloadAction.forEach(element => element.addEventListener('click', event => {
             event.preventDefault()           
             this.filesController.downloadFile(element.value)
-            this.updateView()
         }))
     }
 }

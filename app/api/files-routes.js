@@ -74,4 +74,28 @@ export class ApiFiles {
             return {result: false, message: 'Não foi possível conectar com o servidor'}
         }
     }
+
+    static async delete(fileId) {
+        const token = Cookies.getCookie('jwt')
+        try {
+            const response = await fetch(`${BACKEND}${BASE_ROUTE}/delete`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+                body: JSON.stringify({ fileId })
+            })
+    
+            const data = await response.json()
+    
+            if (!data)
+                return {result: false, message: 'Não foi possível conectar com o servidor'}
+            
+            if (response.ok)
+                return {result: true, message: data.message}
+            else 
+                return {result: false, message: data.message}
+            
+        } catch {
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
+        }
+    }
 }

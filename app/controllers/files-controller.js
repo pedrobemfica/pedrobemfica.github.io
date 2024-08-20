@@ -88,12 +88,19 @@ export class FilesController {
         return false
     }
 
-    deleteFile(fileId) {
-        //let file = file // Handle remove the file in the server
-        
-        if (confirm) {
-            alertMessage('Arquivo removido', 'O arquivo foi removido do servidor.')
-        } else
-            alertMessage('Não foi possível apagar', 'Algum erro ocorreu e a ação não foi concluída.')
+    async deleteFile(fileId) {
+        // Server side check
+        try {
+            const data = await ApiFiles.delete(fileId)
+            if (data.result) {
+                alertMessage('Arquivo deletado', data.message)
+                return true
+            } else
+                alertMessage('Falha ao deletar', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao deletar', err)
+        }
+        return false
     }
 }
