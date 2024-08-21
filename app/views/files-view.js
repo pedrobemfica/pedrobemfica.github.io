@@ -1,7 +1,7 @@
 import { FilesController } from "../controllers/files-controller.js"
 import { UserController } from "../controllers/user-controller.js"
 
-export class FilesView {
+export class FilesView { 
     constructor() {
         this.filesList = []
 
@@ -34,9 +34,9 @@ export class FilesView {
     }
 
     updateView() {
-        this.checkLoggedUser()
         this.uploadFileForm.reset()
-        this.showFilesList()
+        if(this.checkLoggedUser())  
+            this.showFilesList()
     }
 
     checkLoggedUser() {
@@ -44,9 +44,11 @@ export class FilesView {
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')
+            return false
         } else {
             Array.from(this.allSections).forEach(e => e.classList.remove('element-hidden'))
             this.userLoggedMessage.classList.add('element-hidden')
+            return true
         }
     }
 

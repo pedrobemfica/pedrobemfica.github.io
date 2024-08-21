@@ -1,7 +1,7 @@
-import { mockAvailability, mockAppointments, mockCredits, mockFiles, mockCart, mockUser } from "../../mockServer.js"
+import { mockAvailability, mockAppointments, mockCredits, mockCart } from "../../mockServer.js"
 
-export const BACKEND = 'https://backend-olimpo.azurewebsites.net'
-// export const BACKEND = 'http://localhost:8080'
+// export const BACKEND = 'https://backend-olimpo.azurewebsites.net'
+export const BACKEND = 'http://localhost:8080'
 
 export const routes = {
     getAppointmentsServer(userId, jwt) {
@@ -67,36 +67,6 @@ export const routes = {
         return mockAvailability.filter(e => e.date.year == year && e.date.month == month && e.date.day == day && e.serviceId == serviceId)
     },
 
-    getFilesServer(userId, jwt) {
-        return [].concat(mockFiles)
-    },
-
-    nextFileId(userId, jwt) {
-        let nextFileId = Math.max(...mockFiles.map(e => e.fileId)) + 1
-        if (nextFileId == -Infinity)
-            nextFileId = 1
-        return nextFileId
-    },
-
-    newFile(file, userId, jwt) {
-        let dateObj = { year: file.year, month: file.month, day: file.day }
-        let newObj = {
-            fileId: file.fileId,
-            userId: file.userId,
-            date: dateObj,
-            label: file.label,
-            path: file.path
-        };
-        mockFiles.push(newObj)
-        return true
-    },
-
-    deleteFile(fileId, userId, jwt) {
-        let index = mockFiles.findIndex(e => e.fileId == fileId)
-        mockFiles.splice(index, 1)
-        return true
-    },
-
     addToCart(product, userId, jwt) {
         let productIndex = mockCart.findIndex(e => e.product.name == product.name && e.product.description == product.description)
         if (productIndex == -1)
@@ -118,80 +88,5 @@ export const routes = {
     clearCart(userId, jwt) {
         mockCart.splice(0, mockCart.length)
         return true
-    },
-
-    // loginUser(userName, password) {
-    //     let data = mockUser.find(e => e.userName == userName && e.password == password)
-    //     if (data) {
-    //         let userId = data.userId
-    //         let userName = data.userName
-    //         let jwt = data.jwt
-    //         let preferences = data.preferences
-    //         return {userId: userId, userName: userName, jwt: jwt, preferences: preferences}
-    //     }
-    //     return false
-    // },
-
-    // changeUserPassword(userName, password, newPassword, userId, jwt) {
-    //     let userIndex = mockUser.findIndex(e => e.userName == userName && e.password == password && e.userId == userId && e.jwt == jwt)
-    //     if (userIndex != -1) {
-    //         mockUser[userIndex].password = newPassword
-    //         return true
-    //     }
-    //     return false
-
-    // },
-
-    // updateUserPreferences(userProfileEmail, userProfilePhone, userProfileName, userProfileGender, userProfileBirth, userId, jwt) {
-    //     let userIndex = mockUser.findIndex(e => e.userId == userId && e.jwt == jwt)
-    //     if (userIndex != -1) {
-    //         let date = new Date(userProfileBirth)
-    //         let birthYear = date.getFullYear()
-    //         let birthMonth = date.getMonth()
-    //         let birthDay = date.getDate()
-    //         let preferences = {
-    //                 name: userProfileName, 
-    //                 email: userProfileEmail, 
-    //                 cellPhone: userProfilePhone, 
-    //                 gender: userProfileGender, 
-    //                 birthYear: birthYear, 
-    //                 birthMonth: birthMonth, 
-    //                 birthDay: birthDay
-    //             }     
-    //         mockUser[userIndex].preferences = preferences
-    //         return true
-    //     }
-    //     return false
-    // }, 
-
-    // registerUser(userName, password, confirmPassword, email, cellPhone) {
-    //     if (password == confirmPassword) {
-    //         let userId = this.nextUserId()
-    //         let newObj = {
-    //             userId: userId, 
-    //             userName: userName, 
-    //             password: password,
-    //             jwt: '1',
-    //             preferences: {
-    //                 name: '', 
-    //                 email: email, 
-    //                 cellPhone: cellPhone, 
-    //                 gender: '', 
-    //                 birthYear: null, 
-    //                 birthMonth: null, 
-    //                 birthDay: null
-    //             }
-    //         }
-    //         mockUser.push(newObj)
-    //         return true
-    //     }
-    //     return false
-    // },
-
-    // nextUserId() {
-    //     let nextUserId = Math.max(...mockUser.map(e => e.userId)) + 1
-    //     if (nextUserId == -Infinity)
-    //         nextUserId = 1
-    //     return nextUserId
-    // },
+    }
 }

@@ -43,7 +43,7 @@ export class ApiFiles {
             if (response.ok) 
                 return {result: true, file: file}
             else 
-                return {result: false, message: data.message}
+                return {result: false, message: 'Não foi possível conectar com o servidor'}
             
         } catch(err) {
             console.log(err)

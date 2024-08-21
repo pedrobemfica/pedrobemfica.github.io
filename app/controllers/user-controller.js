@@ -1,7 +1,8 @@
 import { User } from "../models/user-model.js"
+import { ApiUser } from "../api/user-routes.js"
+
 import { Cookies } from "../helpers/cookie-helper.js"
 import { alertMessage } from "../helpers/alert-helper.js"
-import { ApiUser } from "../api/user-routes.js"
 import { validateHelper } from "../helpers/validate-helper.js"
 
 export class UserController {

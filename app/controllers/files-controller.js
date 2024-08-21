@@ -1,17 +1,12 @@
 import { File } from "../models/file-model.js"
 import { Files } from "../models/files-model.js"
-import { UserController } from "./user-controller.js"
-
-import { routes } from "../api/routes.js"
-import { alertMessage } from "../helpers/alert-helper.js"
 import { ApiFiles } from "../api/files-routes.js"
+
+import { alertMessage } from "../helpers/alert-helper.js"
  
 export class FilesController {
     constructor(){
-        this.userController = new UserController()
         this.files = new Files()
-
-        this.retrieveFiles()
     }
 
     async updateFiles() {
@@ -46,14 +41,15 @@ export class FilesController {
             const data = await ApiFiles.download(fileId)
             if (data.result) {
                 // Create temporary link element
-                const link = document.createElement('a');
-                const url = window.URL.createObjectURL(data.file);
-                link.href = url;
-                link.download = data.fileName;
-                document.body.appendChild(link);
-                link.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(link);
+                const link = document.createElement('a')
+                const url = window.URL.createObjectURL(data.file)
+                link.href = url
+                let fileName = Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")
+                link.download = fileName
+                document.body.appendChild(link)
+                link.click()
+                window.URL.revokeObjectURL(url)
+                document.body.removeChild(link)
 
                 alertMessage('Download de arquivo', 'Arquivo baixado com sucesso')
                 return true
@@ -67,9 +63,9 @@ export class FilesController {
     }
 
     async uploadFile(fileSelect, label){
-        const fileSelected = fileSelect.files[0];
-        const formData = new FormData();
-        formData.append('file', fileSelected);
+        const fileSelected = fileSelect.files[0]
+        const formData = new FormData()
+        formData.append('file', fileSelected)
         formData.append('label', label)
         // Client side check - TBD
 
