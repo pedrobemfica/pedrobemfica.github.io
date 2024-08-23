@@ -38,16 +38,6 @@
     width: 8rem;
 }
 
-#singleServiceCard {
-    margin-left: 2rem;
-    margin-top: 1rem;
-}
-
-#singleServiceCard img {
-    height: 100%;
-    width: 100%;
-}
-
 .services-package {
     padding: 1rem;
     width: 100%;

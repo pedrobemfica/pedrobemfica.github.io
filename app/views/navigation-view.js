@@ -1,11 +1,9 @@
-import { ApplicationController } from "../controllers/application-controller.js"
-import { UserController } from "../controllers/user-controller.js"
+import { NavigationController } from "../controllers/navigation-controller.js"
 
 export class NavigationView {
     constructor() {
 
-        this.userController = new UserController()
-        this.applicationController = new ApplicationController()
+        this.navigationController = new NavigationController()
 
         this.userRegistration = document.getElementById("userRegistration")
         this.userLogin = document.getElementById("userLogin")
@@ -36,7 +34,7 @@ export class NavigationView {
             page.removeEventListener('click', this)
             page.addEventListener('click', event => {
                 event.preventDefault()
-                this.applicationController.loadContent(path)
+                this.navigationController.loadPage(path)
                 this.checkLoggedUser()
             })
         })
@@ -74,7 +72,7 @@ export class NavigationView {
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.userController.checkUser()
+        this.loggedUser = this.navigationController.checkUser()
 
         if (this.loggedUser) {
             this.userRegistration.classList.add('element-hidden')

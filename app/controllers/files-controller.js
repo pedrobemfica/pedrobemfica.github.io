@@ -1,12 +1,18 @@
 import { File } from "../models/file-model.js"
 import { Files } from "../models/files-model.js"
 import { ApiFiles } from "../api/files-routes.js"
+import { UserController } from "../controllers/user-controller.js"
 
 import { alertMessage } from "../helpers/alert-helper.js"
  
 export class FilesController {
     constructor(){
         this.files = new Files()
+        this.userController = new UserController()
+    }
+
+    checkUser() {
+        return this.userController.checkUser()
     }
 
     async updateFiles() {

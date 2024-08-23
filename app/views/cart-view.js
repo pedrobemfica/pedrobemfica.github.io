@@ -21,7 +21,7 @@ export class CartView {
         this.emptyCartMessage = document.getElementById('emptyCartMessage')
 
         this.userCart = document.getElementById("userCart")
-        this.userCart.addEventListener('click', event => { // check
+        this.userCart.addEventListener('click', event => {
             event.preventDefault()
             this.cartController.updateCart()
             this.updateList()

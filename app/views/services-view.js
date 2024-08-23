@@ -1,5 +1,4 @@
 import { ServicesController } from "../controllers/services-controller.js"
-import { UserController } from "../controllers/user-controller.js"
 
 export class ServicesView {
     constructor() {
@@ -7,7 +6,6 @@ export class ServicesView {
         this.packageList = []
 
         this.servicesController = new ServicesController()
-        this.userController = new UserController()
 
         this.userLoggedMessage = document.getElementById('userLoggedMessage')
         
@@ -32,8 +30,8 @@ export class ServicesView {
             this.updateView()    
         })
 
-        this.inputPackageLocationFilter.addEventListener('change', () => {
-            this.updateView()
+        this.inputPackageLocationFilter.addEventListener('change', async () => {
+            let list = await this.showPackageList()
         })
     
         this.updateView()
@@ -48,7 +46,7 @@ export class ServicesView {
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.userController.checkUser()
+        this.loggedUser = this.servicesController.checkUser()
         let serviceItemAddToCart = document.getElementsByName('serviceItemAddToCart')
         if (!this.loggedUser) {
             serviceItemAddToCart.forEach(e => e.disabled = true)
@@ -108,50 +106,25 @@ export class ServicesView {
     }
 
     clearSingle() {
-        this.singleServiceForm.reset()
+        this.inputSingleServiceName.value = ''
+        this.inputSingleServiceProfessional.value = ''
+        this.inputSingleServiceLocation.value = ''
         this.enableSingleButton()
     }
 
-    async enableSingleButton() {
+    enableSingleButton() {
         if (this.inputSingleServiceName.value && this.inputSingleServiceProfessional.value && this.inputSingleServiceLocation.value)
             if (this.loggedUser) {
-                let service = await this.showSingleCard()
-                console.log(service)
-                if (service) {
-                    this.buttonSingleService.disabled = false
-                    this.singleServiceCard.classList.remove('element-hidden')
-                    return null 
-                }
+                this.buttonSingleService.disabled = false
+                return null 
             }
         this.buttonSingleService.disabled = true
-        this.singleServiceCard.classList.add('element-hidden')
-    }
-
-    async showSingleCard() {
-        let singlesList = await this.servicesController.retrieveSingles()
-        let service = singlesList.filter(e => (
-            e.serviceName == this.inputSingleServiceName.value 
-            && e.professionalName == this.inputSingleServiceProfessional.value 
-            && e.location == this.inputSingleServiceLocation.value
-        ))[0]
-        if (service) {
-            this.singleServiceCard.innerHTML = `<div class="row g-0"><div class="col-md-4">
-                                                <img src="../assets/services/${service.photo}.jpeg" class="img-fluid rounded-start" alt="${service.serviceName} ${service.professionalName}">
-                                                </div><div class="col-md-8"><div class="card-body"><h5 class="card-title">Adquirir serviço individual</h5>
-                                                <p class="card-text">${service.serviceName} ${service.professionalName}</p>
-                                                <p class="card-text"><small class="text-body-secondary">${service.location}</small></p>
-                                                </div></div></div>`
-            return true
-        } else {
-            this.buttonSingleService.disabled = true
-            this.singleServiceCard.classList.add('element-hidden')
-            return false
-        }
     }
 
     async startPackageFilterSelector() {
         this.inputPackageLocationFilter.innerHTML = ''
         let locations = await this.servicesController.uniquePackageLotcations()
+        this.inputPackageLocationFilter.innerHTML += `<option value="" selected>Todas</option>`
         for (let location in locations) 
             this.inputPackageLocationFilter.innerHTML += `<option value="${locations[location]}">
                                                             ${locations[location]}</option>`

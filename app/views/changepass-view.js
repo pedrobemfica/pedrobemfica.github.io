@@ -1,11 +1,8 @@
 import { UserController } from "../controllers/user-controller.js"
-import { ApplicationController } from "../controllers/application-controller.js"
-import { validateHelper } from "../helpers/validate-helper.js"
 
 export class ChangepassView {
     constructor() {
         this.userController = new UserController()
-        this.applicationController = new ApplicationController()
 
         this.userChangeForm = document.getElementById('userChangeForm')
         this.userChangePassword = document.getElementById('userChangePassword')
@@ -27,7 +24,7 @@ export class ChangepassView {
             if (confirmation) {
                 this.userChangeFailMessage.classList.add('element-hidden')
                 bootstrap.Modal.getInstance('#staticModal').hide()
-                this.applicationController.loadContent('home')
+                this.userController.backToHome()
             } else 
                 this.userChangeFailMessage.classList.remove('element-hidden') 
         })
@@ -47,8 +44,8 @@ export class ChangepassView {
 
     enableChange() {
         if(
-            validateHelper.checkPassword(this.userChangePassword.value)
-            && (this.userChangeConfirmPassword.value != '')
+            this.userController.checkChangePassword(this.userChangePassword.value, this.userChangeConfirmPassword.value)
+            && this.userChangePassword.value != '' && this.userChangeConfirmPassword.value != ''
         )
             this.changeSubmitButton.disabled = false
         else

@@ -1,11 +1,8 @@
 import { UserController } from "../controllers/user-controller.js"
-import { ApplicationController } from "../controllers/application-controller.js"
-import { validateHelper } from "../helpers/validate-helper.js"
 
 export class ProfileView {
     constructor() {
         this.userController = new UserController()
-        this.applicationController = new ApplicationController()
 
         let user = this.userController.checkUser()
 
@@ -60,7 +57,7 @@ export class ProfileView {
             this.userController.logout()
             .then(() => {
                 bootstrap.Modal.getInstance('#staticModal').hide()
-                this.applicationController.loadContent('home')
+                this.userController.backToHome()
             })
         })
 
@@ -85,18 +82,21 @@ export class ProfileView {
         this.userProfilePhone.addEventListener('input', () => this.enableUpdate())
 
         this.userProfilePassword.addEventListener('click', () => {
-            this.applicationController.loadContent('changepass')
+            this.userController.goToChangePass()
         })
 
         this.enableUpdate() 
     }
 
     enableUpdate() {
-        if(
-            (validateHelper.checkEmail(this.userProfileEmail.value) || validateHelper.checkPhone(this.userProfilePhone.value))
-            && (validateHelper.checkName(this.userProfileInputName.value) || this.userProfileInputName.value == '')
-            && (validateHelper.checkEmail(this.userProfileEmail.value) || this.userProfileEmail.value == '')
-            && (validateHelper.checkPhone(this.userProfilePhone.value) || this.userProfilePhone.value == '')
+        if( this.userController.checkUpdatePreferences(
+            this.userProfileEmail.value,
+            this.userProfilePhone.value,
+            this.userProfileInputName.value,
+            this.userProfileGender.value,
+            this.userProfileBirth.value
+            )
+            && (this.userProfileEmail.value || this.userProfilePhone.value)
         )
             this.profileSubmitButton.disabled = false
         else

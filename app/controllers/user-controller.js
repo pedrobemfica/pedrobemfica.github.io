@@ -1,5 +1,6 @@
 import { User } from "../models/user-model.js"
 import { ApiUser } from "../api/user-routes.js"
+import { ApplicationController } from "../controllers/application-controller.js"
 
 import { Cookies } from "../helpers/cookie-helper.js"
 import { alertMessage } from "../helpers/alert-helper.js"
@@ -7,6 +8,7 @@ import { validateHelper } from "../helpers/validate-helper.js"
 
 export class UserController {
     constructor() {
+        this.applicationController = new ApplicationController()
         this.user = ''
         this.retrieveCookieUser()
     }
@@ -253,5 +255,13 @@ export class UserController {
         if (!validateHelper.checkDate(birth) && birth != '')
             return {result: false, message: 'Data de nascimento inválida'}
         return {result: true}
+    }
+
+    backToHome() {
+        this.applicationController.loadContent('home')
+    }
+
+    goToChangePass() {
+        this.applicationController.loadContent('changepass')
     }
 }

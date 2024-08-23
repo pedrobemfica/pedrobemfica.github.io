@@ -10,7 +10,6 @@ import { RegisterView } from "../views/register-view.js"
 import { ProfileView } from "../views/profile-view.js"
 import { ChangepassView } from "../views/changepass-view.js"
 import { ForgotpassView } from "../views/forgotpass-view.js"
-import { UserController } from "./user-controller.js"
 
 export class ApplicationController {
     constructor() {
@@ -42,10 +41,6 @@ export class ApplicationController {
     }
 
     initiate() {
-        this.userController = new UserController()
-        this.user = null
-        this.checkLoggedUser()
-
         window.addEventListener('DOMContentLoaded', () => {
             let normalizedPage = window.location.pathname.replace('/client/', '')
             this.loadContent(normalizedPage)})
@@ -72,12 +67,5 @@ export class ApplicationController {
                 new route.view()
         })
         .catch(error => console.error(`Error loading ${route.path}:`, error))
-    }
-
-    checkLoggedUser() {
-        this.user = this.userController.checkUser()
-        if (this.user)
-            return this.user
-        return false
     }
 }

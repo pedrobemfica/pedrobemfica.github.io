@@ -50,4 +50,12 @@ export class CartController  {
                 return this.user
         return false
     }
+
+    addSingleToCart(singleItem) {
+        return true
+    }
+
+    addPackageToCart(packageItem) {
+        return true
+    }
 }

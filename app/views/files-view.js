@@ -1,12 +1,10 @@
 import { FilesController } from "../controllers/files-controller.js"
-import { UserController } from "../controllers/user-controller.js"
 
 export class FilesView { 
     constructor() {
         this.filesList = []
 
         this.filesController = new FilesController()
-        this.userController = new UserController()
 
         this.allSections = document.getElementsByTagName('section')
         this.filesTable = document.getElementById('filesTable')
@@ -40,7 +38,7 @@ export class FilesView {
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.userController.checkUser()
+        this.loggedUser = this.filesController.checkUser()
         if (!this.loggedUser) {
             Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
             this.userLoggedMessage.classList.remove('element-hidden')

@@ -1,11 +1,8 @@
 import { UserController } from "../controllers/user-controller.js"
-import { ApplicationController } from "../controllers/application-controller.js"
-import { validateHelper } from "../helpers/validate-helper.js"
 
 export class RegisterView {
     constructor() {
         this.userController = new UserController()
-        this.applicationController = new ApplicationController()
 
         this.userRegisterForm = document.getElementById('userRegisterForm')
         this.userRegisterName = document.getElementById('userRegisterName')
@@ -37,7 +34,7 @@ export class RegisterView {
                 if (login) {
                     this.userRegisterFailMessage.classList.add('element-hidden')
                     bootstrap.Modal.getInstance('#staticModal').hide()
-                    this.applicationController.loadContent('home')
+                    this.userController.backToHome()
                 } else
                     this.userRegisterFailMessage.classList.remove('element-hidden')
             } else 
@@ -77,10 +74,17 @@ export class RegisterView {
 
     enableRegister() {
         if(
-            validateHelper.checkUsername(this.userRegisterName.value)
-            && validateHelper.checkPassword(this.userRegisterPassword.value)
-            && (this.userRegisterConfirmPassword.value != '')
-            && (validateHelper.checkEmail(this.userRegisterEmail.value) || validateHelper.checkPhone(this.userRegisterPhone.value))
+            this.userController.checkRegister(
+                this.userRegisterName.value, 
+                this.userRegisterPassword.value, 
+                this.userRegisterConfirmPassword.value, 
+                this.userRegisterEmail.value,
+                this.userRegisterPhone.value
+            )
+            && this.userRegisterName.value != ''
+            && this.userRegisterPassword.value != ''
+            && this.userRegisterConfirmPassword.value != ''
+            && this.userRegisterEmail.value || this.userRegisterPhone.value
         )
             this.registerSubmitButton.disabled = false
         else
