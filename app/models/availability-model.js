@@ -1,5 +1,3 @@
-import { Services } from "./services-model.js"
-
 export class Availability {
     constructor({year, month, day}, {hour, minute}, serviceId) {
         this.year = year
@@ -21,7 +19,7 @@ export class Availability {
     }
 
     get getServiceString() {
-        let services = new Services()
+        let services = []
         let serviceString = services.getById(e.serviceId).name
         return serviceString
     }

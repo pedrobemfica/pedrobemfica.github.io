@@ -14,7 +14,7 @@ export class ApiServices {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
             
-            if (response.ok) 
+            if (response.ok)
                 return {result: true, list: data.list}
             else 
                 return {result: false, message: data.message}
@@ -36,7 +36,7 @@ export class ApiServices {
             if (!data)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
             
-            if (response.ok) 
+            if (response.ok)
                 return {result: true, list: data.list}
             else 
                 return {result: false, message: data.message}

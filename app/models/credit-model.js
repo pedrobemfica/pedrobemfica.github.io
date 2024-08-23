@@ -1,11 +1,9 @@
-import { Services } from "./services-model.js"
-
 export class Credit {
     constructor(creditId, userId, serviceId, status = 'active') {
         this.creditId = creditId
         this.userId = userId
         
-        let services = new Services()
+        let services = []
         if (services.getById(serviceId))
             this.serviceId = serviceId;
         else

@@ -3,6 +3,7 @@ import { ApplicationController } from "../controllers/application-controller.js"
 export class ApplicationView {
     constructor() {
         this.applicationController = new ApplicationController()
+        this.applicationController.initiate()
         this.openFirstPages()
     }
 

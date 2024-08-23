@@ -14,7 +14,7 @@
 }
 
 .services-singles {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding: 1rem;
     width: 100%;
 }
@@ -38,27 +38,37 @@
     width: 8rem;
 }
 
-.services-combos {
+#singleServiceCard {
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+#singleServiceCard img {
+    height: 100%;
+    width: 100%;
+}
+
+.services-package {
     padding: 1rem;
     width: 100%;
 }
 
-.services-combos--filter {
+.services-package--filter {
     display: flex;
     justify-content: center;
     margin-bottom: .5rem;
 }
 
-.services-combos--filter label {
+.services-package--filter label {
     width: 10rem;
 }
 
-.services-combos--filter select {
+.services-package--filter select {
     width: 20rem;
     max-height: 2.5rem;
 }
 
-#servicesComboList {
+#servicesPackageList {
     align-items: stretch;
     display: flex;
     flex-direction: row;
@@ -69,16 +79,23 @@
     padding: 0;
 }
 
-#servicesComboList li {
+#servicesPackageList li {
     align-items: stretch;
     height: auto;
     margin: 1rem;
 }
 
-#servicesComboList li div {
+#servicesPackageList li div {
     height: 100%;
 }
 
 .services-item--card {
     justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    #singleServiceCard {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
 }

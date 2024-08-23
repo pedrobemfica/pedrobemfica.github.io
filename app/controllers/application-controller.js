@@ -60,21 +60,18 @@ export class ApplicationController {
     loadContent(path) {
         if(path == '')
             path = 'home'
-        let page = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path).page : this.routes.find(e => e.path == 'home').page
-        let target = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path).target : this.routes.find(e => e.path == 'home').target
-        let hash = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path).hash : this.routes.find(e => e.path == 'home').hash
-        let view = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path).view : this.routes.find(e => e.path == 'home').view
-        if (hash)
-            history.pushState({}, '', path)
+        let route = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path) : this.routes.find(e => e.path == 'home')
+        if (route.hash)
+            history.pushState({}, '', route.path)
 
-        fetch(page)
+        fetch(route.page)
         .then(response => response.text())
-        .then(html => target.innerHTML = html)
+        .then(html => route.target.innerHTML = html)
         .then(() => {
-            if (view != '')
-                new view()
+            if (route.view != '')
+                new route.view()
         })
-        .catch(error => console.error(`Error loading ${path}:`, error))
+        .catch(error => console.error(`Error loading ${route.path}:`, error))
     }
 
     checkLoggedUser() {

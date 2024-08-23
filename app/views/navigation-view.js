@@ -1,10 +1,11 @@
 import { ApplicationController } from "../controllers/application-controller.js"
+import { UserController } from "../controllers/user-controller.js"
 
 export class NavigationView {
     constructor() {
 
+        this.userController = new UserController()
         this.applicationController = new ApplicationController()
-        this.applicationController.initiate()
 
         this.userRegistration = document.getElementById("userRegistration")
         this.userLogin = document.getElementById("userLogin")
@@ -73,7 +74,7 @@ export class NavigationView {
     }
 
     checkLoggedUser() {
-        this.loggedUser = this.applicationController.checkLoggedUser()
+        this.loggedUser = this.userController.checkUser()
 
         if (this.loggedUser) {
             this.userRegistration.classList.add('element-hidden')

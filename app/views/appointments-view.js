@@ -1,5 +1,4 @@
 import { AppointmentsController } from "../controllers/appointments-controller.js"
-import { Services } from "../models/services-model.js"
 
 export class AppointmentsView {
     constructor() {
@@ -74,7 +73,7 @@ export class AppointmentsView {
     
     showCreditsShortList() { 
         this.creditsList = this.appointmentsController.retrieveShortCredits()
-        let services = new Services()
+        let services = []
         if (this.creditsList.length <= 0) {
             this.creditsShortListMessage.classList.remove('element-hidden')
             this.creditsShortList.classList.add('element-hidden')
@@ -168,7 +167,7 @@ export class AppointmentsView {
 
     startServicesSelector() {
 
-        let services = new Services()
+        let services = []
         this.inputServicesAppointmentFilter.innerHTML = ''
         for (let credit in this.creditsList) {
             let selected = ''

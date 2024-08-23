@@ -1,44 +1,49 @@
-import { Services } from "../models/services-model.js"
 import { UserController } from "./user-controller.js"
+import { ApiServices } from "../api/services-routes.js"
 
 import { alertMessage } from "../helpers/alert-helper.js"
  
 export class ServicesController {
     constructor(){
-        this.services = new Services()
         this.userController = new UserController()
     }
 
-    retrieveSingles() {
-        return this.services.single
+    async retrieveSingles() {
+        let singleList = await ApiServices.single()
+        this.singleList = singleList.list
+        return this.singleList
     }
 
-    uniqueNames() {
-        let uniqueList = [].concat(...new Set(this.services.single.map(e => e.name)))
+    async uniqueNames() {
+        let uniqueList = await this.retrieveSingles()
+        uniqueList = [].concat(...new Set(this.singleList.map(e => e.serviceName)))
         return uniqueList
     }
 
-    uniqueProfessionals(name) {
-        let uniqueList = [].concat(...new Set(this.services.single.filter(e => name == e.name).map(o => o.professional)))
+    uniqueProfessionals(serviceName) {
+        let uniqueList = [].concat(...new Set(this.singleList.filter(e => serviceName == e.serviceName).map(o => o.professionalName)))
         return uniqueList
     }
 
-    uniqueLocations(name, professional) {
-        let uniqueList = [].concat(...new Set(this.services.single.filter(e => (name == e.name && professional == e.professional)).map(o => o.location)))
+    uniqueLocations(serviceName, professionalName) {
+        let uniqueList = [].concat(...new Set(this.singleList.filter(e => (serviceName == e.serviceName && professionalName == e.professionalName)).map(o => o.location)))
         return uniqueList
     }
 
-    retrievePackages() {
-        return this.services.package
+    async retrievePackages() {
+        let packageList = await ApiServices.package()
+        this.packageList = packageList.list
+        return this.packageList
     }
 
-    uniquePackageLotcations() {
-        let uniqueList = [].concat(...new Set(this.services.package.map(e => e.location)))
+    async uniquePackageLotcations() {
+        let uniqueList = await this.retrievePackages()
+        uniqueList = [].concat(...new Set(this.packageList.map(e => e.location)))
         return uniqueList
     }
 
     addSingleToCart(name, professional, location) {
-        const singleId = this.services.single.filter(e => (e.name == name && e.professional == professional && e.location == location))[0].serviceId
+        const singleId = this.singleList.filter(e => (e.name == name && e.professional == professional && e.location == location))[0].serviceId
         //let confirm = ApiCart...
         if (confirm)
             alertMessage('Serviço adicionado', 'O serviço foi adicionado ao seu carrinho de compras.')

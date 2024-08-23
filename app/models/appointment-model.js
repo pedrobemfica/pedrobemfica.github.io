@@ -1,5 +1,3 @@
-import { Services } from "./services-model.js"
-
 export class Appointment {
     constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
         this.appointmentId = appointmentId
@@ -11,7 +9,7 @@ export class Appointment {
         this.hour = hour
         this.minute = minute
         
-        let services = new Services()
+        let services = []
         if (services.getById(serviceId)) 
             this.serviceId = serviceId;
         else
