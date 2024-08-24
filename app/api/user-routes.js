@@ -5,6 +5,7 @@ const BASE_ROUTE = '/user'
 export class ApiUser {
     static async login(username, password) {
         try {
+            console.log(`Trying at ${BACKEND}${BASE_ROUTE}/login`)
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/login`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
