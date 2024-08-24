@@ -75,13 +75,13 @@ export class ApiCart {
         }
     }
 
-    static async deleteFromCart(itemIndex) {
+    static async deleteFromCart(itemId) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/delete`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ itemIndex })
+                body: JSON.stringify({ itemId })
             })
     
             const data = await response.json()
