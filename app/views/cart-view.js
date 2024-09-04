@@ -23,25 +23,27 @@ export class CartView {
         this.userCart = document.getElementById("userCart")
         this.userCart.addEventListener('click', event => {
             event.preventDefault()
-            this.cartController.updateCart()
             this.updateList()
             })
 
         this.cartForm.addEventListener('submit', event => {
             event.preventDefault()
-            this.purchaseCart()
+            this.cartController.purchaseCart()
+            this.updateList()
         })
 
         this.cartCleanAction.addEventListener('click', event => {
             event.preventDefault()
-            this.cleanCart()
+            this.cartController.clearCart()
+            this.updateList()
         })
-        this.updateList()
     }
 
-    updateList() {
+    async updateList() {
         this.cartList = []
-        this.cartList = this.cartList.concat(this.cartController.retrieveCart())
+        if (this.cartController.checkUser()){
+            this.cartList = this.cartList.concat(await this.cartController.retrieveCart())
+        }
         if (this.cartList.length <= 0) {
             this.emptyCartMessage.classList.remove('element-hidden')
             this.cartTotal.classList.add('element-hidden')
@@ -53,19 +55,14 @@ export class CartView {
             this.cartCompleteList.innerHTML = ''
             let total = 0
             for (let cartItem in this.cartList) {
-                let name = ''
-                total += this.cartList[cartItem].quantity * this.cartList[cartItem].product.price
-                if (this.cartList[cartItem].product.name != 'Serviço individual')
-                    name = this.cartList[cartItem].product.name
-                else
-                    name = this.cartList[cartItem].product.description
-                this.cartCompleteList.innerHTML += `<td>${name}</td>
+                total += this.cartList[cartItem].quantity * this.cartList[cartItem].price
+                this.cartCompleteList.innerHTML += `<td>${this.cartList[cartItem].name}</td>
                                                     <td>${this.cartList[cartItem].quantity}</td>
-                                                    <td>${this.cartList[cartItem].product.price}</td>
+                                                    <td>${this.cartList[cartItem].price}</td>
                                                     <td><form id="cartItemForm${cartItem}">
                                                     <button type="button" class="btn btn-outline-primary"
                                                     name="cartItemRemoveAction"
-                                                    value="${cartItem}"
+                                                    value="${this.cartList[cartItem].id}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-custom-class="custom-tooltip"
                                                     data-bs-title="Remove o item">
@@ -85,14 +82,5 @@ export class CartView {
             this.cartController.deleteItem(element.value)
             this.updateList()
         }))   
-    }
-
-    purchaseCart() {
-
-    }
-
-    cleanCart() {
-        this.cartController.clearCart()
-        this.updateList()
     }
 }

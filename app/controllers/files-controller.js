@@ -19,9 +19,9 @@ export class FilesController {
         try {
             const data = await ApiFiles.list()
             if (data.result) {
-                if (data.list.length <= 0) {
+                if (data.list.length <= 0) 
                     this.files.clearFiles()
-                } else {
+                else {
                     this.files.clearFiles()
                     data.list.map(e => {
                         let newFile = new File(e.fileId, e.userId, e.dateString, e.label)

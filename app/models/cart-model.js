@@ -1,11 +1,6 @@
 export class Cart {
-    constructor(userId) {
-        this.userId = userId
+    constructor() {
         this.cartList = []
-    }
-
-    get getUserId() {
-        return this.userId
     }
 
     get getCartList() {

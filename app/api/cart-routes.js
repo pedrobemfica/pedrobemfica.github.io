@@ -27,13 +27,13 @@ export class ApiCart {
         }
     }
 
-    static async addSingleToCart(singleItem) {
+    static async addSingleToCart(serviceId) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/add-single`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ singleItem })
+                body: JSON.stringify({ serviceId })
             })
     
             const data = await response.json()
@@ -51,13 +51,13 @@ export class ApiCart {
         }
     }
 
-    static async addPackageToCart(packageItem) {
+    static async addPackageToCart(packageId) {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/add-package`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                body: JSON.stringify({ packageItem })
+                body: JSON.stringify({ packageId })
             })
     
             const data = await response.json()
@@ -113,7 +113,30 @@ export class ApiCart {
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
             
             if (response.ok) 
-                return {result: true, list: data.list}
+                return {result: true, message: data.message}
+            else 
+                return {result: false, message: data.message}
+            
+        } catch {
+            return {result: false, message: 'Não foi possível conectar com o servidor'}
+        }
+    }
+
+    static async purchaseCart() {
+        const token = Cookies.getCookie('jwt')
+        try {
+            const response = await fetch(`${BACKEND}${BASE_ROUTE}/purchase`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+            })
+    
+            const data = await response.json()
+    
+            if (!data)
+                return {result: false, message: 'Não foi possível conectar com o servidor'}
+            
+            if (response.ok) 
+                return {result: true, message: data.message}
             else 
                 return {result: false, message: data.message}
             
