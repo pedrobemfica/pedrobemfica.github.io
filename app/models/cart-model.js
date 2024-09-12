@@ -1,17 +1,17 @@
 export class Cart {
     constructor() {
-        this.cartList = []
+        this._cartList = []
     }
 
-    get getCartList() {
-        return [].concat(this.cartList)
+    get cartList() {
+        return [].concat(this._cartList)
     }
 
     addToCart(product) {
         if (this.checkProduct(product)) {
-            let targetObj = this.cartList.find(obj => obj.product == product)
+            let targetObj = this._cartList.find(obj => obj.product == product)
             if (!targetObj) {
-                this.cartList.push(product)
+                this._cartList.push(product)
             } else
                 targetObj.quantity += 1
             return true
@@ -21,7 +21,7 @@ export class Cart {
 
     reduceFromCart(product) {
         if (this.checkProduct(product)) {
-            let targetObj = this.cartList.find(obj => obj.product === product)
+            let targetObj = this._cartList.find(obj => obj.product === product)
             if (targetObj)
                 targetObj.quantity -= 1
             else
@@ -35,10 +35,10 @@ export class Cart {
 
     removeFromCart(product) {
         if (this.checkProduct(product)) {
-            let targetObj = this.cartList.find(obj => obj.product === product)
+            let targetObj = this._cartList.find(obj => obj.product === product)
             if (targetObj) {
-                let index = this.cartList.findIndex(obj => obj.product === product)
-                this.cartList.splice(index, 1)
+                let index = this._cartList.findIndex(obj => obj.product === product)
+                this._cartList.splice(index, 1)
                 return true
             }
         }
@@ -52,6 +52,6 @@ export class Cart {
     }
 
     clearCart() {
-        this.cartList = []
+        this._cartList = []
     }
 }

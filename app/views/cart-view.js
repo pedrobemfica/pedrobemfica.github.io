@@ -26,17 +26,18 @@ export class CartView {
             this.updateList()
             })
 
-        this.cartForm.addEventListener('submit', event => {
+        this.cartForm.addEventListener('submit', async event => {
             event.preventDefault()
-            this.cartController.purchaseCart()
-            this.updateList()
+            const confirmation = await this.cartController.purchaseCart()
+            if (confirmation)
+                this.updateList()
         })
 
-        this.cartCleanAction.addEventListener('click', event => {
+        this.cartCleanAction.addEventListener('click', async event => {
             event.preventDefault()
-            this.cartController.clearCart()
-            this.updateList()
-        })
+            const confirmation = await this.cartController.clearCart()
+            if (confirmation)
+                this.updateList()        })
     }
 
     async updateList() {
@@ -77,10 +78,11 @@ export class CartView {
     setCartListActions() {
         let cartItemRemoveAction = document.getElementsByName('cartItemRemoveAction')
         
-        cartItemRemoveAction.forEach(element => element.addEventListener('click', event => {
+        cartItemRemoveAction.forEach(element => element.addEventListener('click', async event => {
             event.preventDefault()           
-            this.cartController.deleteItem(element.value)
-            this.updateList()
+            const confirmation = await this.cartController.deleteItem(element.value)
+            if (confirmation)
+                this.updateList()
         }))   
     }
 }

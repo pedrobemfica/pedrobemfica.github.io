@@ -1,41 +1,28 @@
 export class Credit {
-    constructor(creditId, userId, serviceId, status = 'active') {
-        this.creditId = creditId
-        this.userId = userId
-        
-        let services = []
-        if (services.getById(serviceId))
-            this.serviceId = serviceId;
-        else
-            throw Error('Service not provided')
-
-        this.status = status
+    constructor(creditId, serviceId, status) {
+        this._creditId = creditId
+        this._serviceId = serviceId;
+        this._status = status
     }
 
-    get getCreditId() {
-        return this.creditId
+    get creditId() {
+        return this._creditId
     }
 
-    get getUserId() {
-        return this.userId
+    get serviceId() {
+        return this._serviceId
     }
 
-    get getStatus() {
-        return this.status
+    get status() {
+        return this._status
     }
 
     set setStatus(status) {
         if (status == 'active' ||
             status == 'inactive') {
-                this.status = status
+                this._status = status
                 return true
             }
         return false;
-    }
-
-    get getServiceString() {
-        let services = new Services()
-        let serviceString = services.getById(this.serviceId).name
-        return serviceString
     }
 }

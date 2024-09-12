@@ -2,6 +2,7 @@ import { Appointment } from "../models/appointment-model.js"
 import { Appointments } from "../models/appointments-model.js"
 import { Credit } from "../models/credit-model.js"
 import { Credits } from "../models/credits-model.js"
+import { ApiCredits } from "../api/credits-routes.js";
 import { Availability } from "../models/availability-model.js"
 import { Availabilities } from "../models/availabilities-model.js"
 import { UserController } from "./user-controller.js"
@@ -20,22 +21,34 @@ export class AppointmentsController  {
         this.updateAppointments()
     }
 
-    updateCredits() {
-        let getUserCredits = []
-        this.credits.clearCredits()
-        getUserCredits = routes.getCreditsServer(this.user.userId, this.user.jwt)
-        getUserCredits.map(e => {
-            let newCredit = new Credit(e.creditId, e.userId, e.serviceId, e.status)
-            this.credits.insertCredit(newCredit)
-        })
+    async updateCredits() {    
+        try {
+            const data = await ApiCredits.listCredits()
+            if (data.result) {
+                if (data.list.length <= 0) 
+                    this.credits.clearCredits()
+                else {
+                    this.credits.clearCredits()
+                    data.list.map(e => {
+                        let newCredit = new Credit(e.creditId, e.serviceId, e.status)
+                        this.credits.insertCredit(newCredit)
+                    })
+                }
+            } else
+                alertMessage('Falha ao recuperar os créditos', data.message)  
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao recuperar os créditos', err)
+        }
+        return false
     }
 
     retrieveCredits() {
-        return this.credits.getCredits
+        return this.credits.list
     }
 
     retrieveShortCredits() {
-        return this.credits.getShortCredits
+        return this.credits.shortList
     }
 
     updateAppointments() {
