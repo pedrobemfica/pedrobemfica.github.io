@@ -2,7 +2,7 @@ import { Appointment } from "../models/appointment-model.js"
 import { Appointments } from "../models/appointments-model.js"
 import { Credit } from "../models/credit-model.js"
 import { Credits } from "../models/credits-model.js"
-import { ApiCredits } from "../api/credits-routes.js";
+import { ApiCredits } from "../api/credit-routes.js";
 import { Availability } from "../models/availability-model.js"
 import { Availabilities } from "../models/availabilities-model.js"
 import { UserController } from "./user-controller.js"

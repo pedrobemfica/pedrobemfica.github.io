@@ -25,7 +25,7 @@ export class UserController {
         try {
             const data = await ApiUser.login(username, password)
             if (data.result) {
-                this.user = new User(data.user.userId, data.user.username)
+                this.user = new User(data.user.username)
         
                 this.user.setName(data.user.name)
                 this.user.setEmail(data.user.email)
@@ -143,7 +143,7 @@ export class UserController {
             const data = await ApiUser.updatePreferences(email, phone, name, gender, birth)
             
             if (data.result) {
-                this.user = new User(data.user.userId, data.user.username)
+                this.user = new User(data.user.username)
                 
                 this.user.setName(data.user.name)
                 this.user.setEmail(data.user.email)
@@ -173,7 +173,7 @@ export class UserController {
     retrieveCookieUser() {
         if (Cookies.getCookie('user')) {
             let cookieObj = JSON.parse(Cookies.getCookie('user'))
-            this.user = new User(cookieObj.userId, cookieObj.username)
+            this.user = new User(cookieObj.username)
 
             this.user.setName(cookieObj.name)
             this.user.setEmail(cookieObj.email)

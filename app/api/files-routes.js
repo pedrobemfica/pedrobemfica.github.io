@@ -36,10 +36,10 @@ export class ApiFiles {
             })
     
             const file = await response.blob()
-    
+
             if (!file)
                 return {result: false, message: 'Não foi possível conectar com o servidor'}
-            
+
             if (response.ok) 
                 return {result: true, file: file}
             else 

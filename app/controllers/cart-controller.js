@@ -35,7 +35,7 @@ export class CartController  {
 
     async retrieveCart() {
         await this.updateCart()
-        return this.cart.getCartList
+        return this.cart.cartList
     }
 
     async deleteItem(itemId) {

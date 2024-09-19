@@ -19,14 +19,13 @@ export class ApiUser {
             if (response.ok) 
                 return {result: true,
                     user: {
-                        userId: data.userId, 
                         username: data.username, 
                         name: data.name, 
                         email: data.email, 
                         phone: data.phone, 
                         gender: data.gender, 
                         birth: data.birth, 
-                        jwt: data.jwt
+                        jwt: data.token
                     }}
             else
                 return {result: false, message: data.message}

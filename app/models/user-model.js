@@ -1,16 +1,11 @@
 export class User {
-    constructor(userId, username) {
-        this._userId = userId
+    constructor(username) {
         this._username = username
         this._name = '',
         this._email = '',
         this._phone = '',
         this._gender = '',
         this._birth = null
-    }
-
-    get userId() {
-        return this._userId
     }
 
     get username() {

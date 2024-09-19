@@ -21,10 +21,11 @@ export class CartView {
         this.emptyCartMessage = document.getElementById('emptyCartMessage')
 
         this.userCart = document.getElementById("userCart")
-        this.userCart.addEventListener('click', event => {
-            event.preventDefault()
-            this.updateList()
-            })
+        if (this.userCart)
+            this.userCart.addEventListener('click', event => {
+                event.preventDefault()
+                this.updateList()
+                })
 
         this.cartForm.addEventListener('submit', async event => {
             event.preventDefault()
@@ -42,9 +43,9 @@ export class CartView {
 
     async updateList() {
         this.cartList = []
-        if (this.cartController.checkUser()){
+        if (this.cartController.checkUser())
             this.cartList = this.cartList.concat(await this.cartController.retrieveCart())
-        }
+
         if (this.cartList.length <= 0) {
             this.emptyCartMessage.classList.remove('element-hidden')
             this.cartTotal.classList.add('element-hidden')

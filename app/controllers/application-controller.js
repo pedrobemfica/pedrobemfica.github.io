@@ -52,7 +52,7 @@ export class ApplicationController {
             this.loadContent(normalizedPage)})
     }
     
-    loadContent(path) {
+    async loadContent(path) {
         if(path == '')
             path = 'home'
         let route = (this.routes.find(e => e.path == path)) ? this.routes.find(e => e.path == path) : this.routes.find(e => e.path == 'home')
