@@ -8,6 +8,8 @@ export class ServicesController {
     constructor(){
         this.userController = new UserController()
         this.cartController = new CartController()
+        this.singleList = []
+        this.packageList = []
     }
 
     checkUser() {
@@ -15,8 +17,7 @@ export class ServicesController {
     }
 
     async retrieveSingles() {
-        let singleList = await ApiServices.single()
-        this.singleList = singleList.list
+        this.singleList = await ApiServices.single()
         return this.singleList
     }
 
@@ -37,8 +38,7 @@ export class ServicesController {
     }
 
     async retrievePackages() {
-        let packageList = await ApiServices.package()
-        this.packageList = packageList.list
+        this.packageList = await ApiServices.package()
         return this.packageList
     }
 
@@ -60,5 +60,11 @@ export class ServicesController {
     addPackageToCart(packageId) {
         const packageItem = this.packageList.find(e => (e.packageId == packageId))
         this.cartController.addPackageToCart(packageItem.packageId)
+    }
+
+    async nameService(serviceId){
+        let singleList = await ApiServices.single()
+        let service = singleList.find(e => e.serviceId == serviceId)
+        return service.name
     }
 }

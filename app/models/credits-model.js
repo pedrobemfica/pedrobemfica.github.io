@@ -30,14 +30,6 @@ export class Credits {
         return false;
     }
 
-    checkCredit(serviceId) {
-        let creditIndex = this.list.findIndex(e => e.serviceId == serviceId && e.status == 'active')
-        if (creditIndex >= 0)
-            return this._list[creditIndex].creditId
-        else
-            return false
-    }
-
     clearCredits() {
         this._list = []
     }

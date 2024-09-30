@@ -2,28 +2,31 @@ import { Appointment } from "../models/appointment-model.js"
 import { Appointments } from "../models/appointments-model.js"
 import { Credit } from "../models/credit-model.js"
 import { Credits } from "../models/credits-model.js"
-import { ApiCredits } from "../api/credit-routes.js";
 import { Availability } from "../models/availability-model.js"
 import { Availabilities } from "../models/availabilities-model.js"
+import { ApiCredits } from "../api/credit-routes.js"
+import { ApiAppointments } from "../api/appointment-routes.js"
 import { UserController } from "./user-controller.js"
+import { ServicesController } from "./services-controller.js"
 
 import { routes } from "../api/routes.js"
 import { alertMessage } from "../helpers/alert-helper.js"
 
 export class AppointmentsController  {
     constructor() {
-        this.userController = new UserController()
-        this.user = this.userController.checkUser()
         this.appointments = new Appointments()
         this.credits = new Credits()
+        this.userController = new UserController()
+        this.servicesController = new ServicesController()
+    }
 
-        this.updateCredits()
-        this.updateAppointments()
+    checkUser() {
+        return this.userController.checkUser()
     }
 
     async updateCredits() {    
         try {
-            const data = await ApiCredits.listCredits()
+            const data = await ApiCredits.list()
             if (data.result) {
                 if (data.list.length <= 0) 
                     this.credits.clearCredits()
@@ -43,69 +46,83 @@ export class AppointmentsController  {
         return false
     }
 
-    retrieveCredits() {
+    async retrieveCredits() {
+        await this.updateCredits()
         return this.credits.list
     }
 
-    retrieveShortCredits() {
-        return this.credits.shortList
-    }
-
-    updateAppointments() {
-        let getUserAppointments = []
-        this.appointments.clearAppointments()
-        getUserAppointments = routes.getAppointmentsServer(this.user.userId, this.user.jwt)
-        getUserAppointments.map(e => {
-            let newAppointment = new Appointment(e.appointmentId, e.userId, e.date, e.time, e.serviceId)
-            this.appointments.insertAppointment(newAppointment)
+    async retrieveShortCredits() {
+        await this.updateCredits()
+        let viewList = []
+        this.credits.shortList.forEach(async e => {
+            let serviceName = await this.servicesController.nameService(serviceId)
+            viewList.push({name: serviceName, quantity: e.quantity})
         })
+        return viewList
     }
 
-    retrieveAppointments() {
-        return this.appointments.getAppointments
+    async updateAppointments() {
+        try {
+            const data = await ApiAppointments.list()
+            if (data.result) {
+                if (data.list.length <= 0) 
+                    this.appointments.clearAppointments()
+                else {
+                    this.appointments.clearAppointments()
+                    data.list.map(e => {
+                        let newAppointment = new Appointment(e.appointmentId, e.creditId, e.dateString, e.timeString, e.status)
+                        this.appointments.insertAppointment(newAppointment)
+                    })
+                }
+            } else
+                alertMessage('Falha ao recuperar os agendamentos', data.message)  
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao recuperar os agendamentos', err)
+        }
+        return false
     }
 
-    newAppointment(inputDate, inputTime, inputService) { 
-        let userId = this.checkLoggedser().id
-        let date = {year: inputDate.slice(0, 4), month: inputDate.slice(5, 7), day: inputDate.slice(8, 10)}
-        let time = {hour: inputTime.slice(0, 2), minute: inputTime.slice(3, 5)}
-        let serviceId = inputService
-        let appointmentId = routes.nextAppointmentId(this.user.userId, this.user.jwt)
-        
-        let creditId = this.credits.checkCredit(serviceId)
-        if (creditId) {
-            let appointment = new Appointment(appointmentId, userId, date, time, serviceId)
-            routes.newAppointment(appointment, this.user.userId, this.user.jwt)
-            routes.changeCreditStatus(creditId, 'inactive', this.user.userId, this.user.jwt)
-            alertMessage('Agendamento confirmado', 'O crédito foi debitado da carteira e o serviço inserido na agenda.')
-        } else
-            alertMessage('Não foi possível o agendamento', 'Você não possui crédito para realizar esse agendamento. Adquira novos créditos e tente novamente.')
-        
-        this.updateCredits()
-        this.updateAppointments()
+    async retrieveAppointments() {
+        await this.updateAppointments()
+        return this.appointments.list 
     }
 
-    deleteAppointment(appointmentId) {
-        let confirm = routes.deleteAppointment(appointmentId, this.user.userId, this.user.jwt)
-        if (confirm) {
-            let userId = this.checkLoggedser().id
-            let serviceId = this.appointments.getAppointmentById(appointmentId).serviceId
-            let creditId = routes.nextCreditId(this.user.userId, this.user.jwt)
-            let credit = new Credit(creditId, userId, serviceId, 'active')
-            routes.newCredit(credit, this.user.userId, this.user.jwt)
-            alertMessage('Agendamento removido', 'O crédito foi devolvido para a carteira e o serviço removido da agenda.')
-        } else
-            alertMessage('Não foi possível apagar', 'Algum erro ocorreu e a ação não foi concluída.')
-        
-        this.updateCredits()
-        this.updateAppointments()
+    async newAppointment(inputDate, inputTime, inputService) { 
+        try {
+            const data = await ApiAppointments.create(inputDate, inputTime, inputService)
+            if (data.result) {
+                alertMessage('Agendamento criado', data.message)
+                return true
+            } else 
+                alertMessage('Falha no agendamento', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha no agendamento', err)
+        }
+        return false
+    }
+
+    async deleteAppointment(appointmentId) {
+        try {
+            const data = await ApiAppointments.delete(appointmentId)
+            if (data.result) {
+                alertMessage('Agendamento removido', data.message)
+                return true
+            } else 
+                alertMessage('Falha ao deletar agendamento', data.message)
+        } catch(err) {
+            console.log(err)
+            alertMessage('Falha ao deletar agendamento', err)
+        }
+        return false
     }
 
     generateCalendar(appointmentId) {
         
     }
 
-    retrieveAvailabilities(inputDate, inputService) {
+    async retrieveAvailabilities(inputDate, inputService) {
         let year = inputDate.slice(0, 4)
         let month = inputDate.slice(5, 7)
         let day = inputDate.slice(8, 10)
@@ -118,12 +135,5 @@ export class AppointmentsController  {
             avaliabilityList.insertAvailability(availability)
         })
         return avaliabilityList.getAvailabilities
-    }
-
-    checkLoggedUser() {
-        if (this.user)
-            if (this.user.logged)
-                return this.user
-        return false
     }
 }

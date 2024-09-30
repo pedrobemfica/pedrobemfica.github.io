@@ -4,6 +4,7 @@ export class AppointmentsView {
     constructor() {
         this.creditsList = []
         this.appointmentsList = []
+        this.availabilitiesList = []
 
         this.appointmentsController = new AppointmentsController()
 
@@ -28,52 +29,51 @@ export class AppointmentsView {
         
         this.newAppointmentFilterForm.addEventListener('submit', event => {
             event.preventDefault()
-            let getList = this.appointmentsController.retrieveAvailabilities(
-                this.inputDateAppointmentFilter.value, 
-                this.inputServicesAppointmentFilter.value
-            )
-            this.showAvailabilitiesList(getList)
+            this.showAvailabilitiesList()
         })
 
-        this.newAppointmentListForm.addEventListener('submit', event => {
+        this.newAppointmentListForm.addEventListener('submit', async event => {
             event.preventDefault()           
-            let inputTimeAppointment = this.getRadioTime()
-            this.appointmentsController.newAppointment(
+            let confirmation = await this.appointmentsController.newAppointment(
                 this.inputDateAppointmentFilter.value, 
-                inputTimeAppointment, 
+                this.getRadioTime(), 
                 this.inputServicesAppointmentFilter.value
             )
-            this.updateView()
+            if (confirmation)
+                this.updateView()
         })
+
         this.updateView()
     }
     
     updateView() {
-        this.checkLoggedUser()
-        this.showCreditsShortList()
-        this.showAppointmentsList()
-        
+        this.newAppointmentFilterForm.reset()
         this.startServicesSelector()
         this.startInitialDateInput()
+        this.newAppointmentListForm.reset()
         this.clearAvailabilitiesList()
 
-        this.initializeElements()
-    }
-    
-    checkLoggedUser() {
-        this.loggedUser = this.appointmentsController.checkLoggedUser()
-        if (!this.loggedUser) {
-            Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
-            this.userLoggedMessage.classList.remove('element-hidden')
-        } else {
-            Array.from(this.allSections).forEach(e => e.classList.remove('element-hidden'))
-            this.userLoggedMessage.classList.add('element-hidden')
+        if(this.checkLoggedUser()) {
+            this.showCreditsShortList()
+            this.showAppointmentsList()
         }
     }
     
-    showCreditsShortList() { 
-        this.creditsList = this.appointmentsController.retrieveShortCredits()
-        let services = []
+    checkLoggedUser() {
+        this.loggedUser = this.filesController.checkUser()
+        if (!this.loggedUser) {
+            Array.from(this.allSections).forEach(e => e.classList.add('element-hidden'))
+            this.userLoggedMessage.classList.remove('element-hidden')
+            return false
+        } else {
+            Array.from(this.allSections).forEach(e => e.classList.remove('element-hidden'))
+            this.userLoggedMessage.classList.add('element-hidden')
+            return true
+        }
+    }
+    
+    async showCreditsShortList() { 
+        this.creditsList = await this.appointmentsController.retrieveShortCredits()
         if (this.creditsList.length <= 0) {
             this.creditsShortListMessage.classList.remove('element-hidden')
             this.creditsShortList.classList.add('element-hidden')
@@ -82,16 +82,15 @@ export class AppointmentsView {
             this.creditsShortList.classList.remove('element-hidden')
             this.creditsShortList.innerHTML = ''
             for (let credit in this.creditsList) {
-                let serviceName = services.getStringById(this.creditsList[credit].serviceId)
                 this.creditsShortList.innerHTML += `<button type="button" class="btn btn-primary credit-appointment--badge">
-                                        ${serviceName}<span class="badge text-bg-secondary">
+                                        ${this.creditsList[credit].name}<span class="badge text-bg-secondary">
                                         ${this.creditsList[credit].quantity}</span></button>`
             }
         }
     }
 
-    showAppointmentsList() {  
-        this.appointmentsList = this.appointmentsController.retrieveAppointments()
+    async showAppointmentsList() {  
+        this.appointmentsList = await this.appointmentsController.retrieveAppointments()
         if (this.appointmentsList.length <= 0) {
             this.appointmentsListMessage.classList.remove('element-hidden')
             this.appointmentsTable.classList.add('element-hidden')
@@ -124,8 +123,9 @@ export class AppointmentsView {
         }
     }
                                 
-    showAvailabilitiesList(availabilitiesList) {
-        if (availabilitiesList.length <= 0) {
+    async showAvailabilitiesList() {
+        this.availabilitiesList = await this.appointmentsController.retrieveAvailabilities()
+        if (this.availabilitiesList.length <= 0) {
             this.availabilitiesListMessage.classList.remove('element-hidden')
             this.newAppointmentListForm.classList.add('element-hidden')
             this.availabilitiesListTitle.classList.add('element-hidden')
@@ -136,7 +136,7 @@ export class AppointmentsView {
             this.availabilitiesListTitle.classList.remove('element-hidden')
             this.availabilitiesListButton.classList.remove('element-hidden')
             this.availabilitiesList.innerHTML = ''
-            for (let availability in availabilitiesList) {
+            for (let availability in this.availabilitiesList) {
                 let timeString = ("0" + availabilitiesList[availability].hour).slice(-2) + ":" + ("0" + availabilitiesList[availability].minute).slice(-2)
                 this.availabilitiesList.innerHTML += `<div class="form-check appointments-new--item">
                                                         <input class="form-check-input" type="radio" name="inputTimeAppointmentFilter" 
@@ -203,10 +203,5 @@ export class AppointmentsView {
             this.appointmentsController.generateCalendar(element.value)
             this.updateView()
         }))
-    }
-
-    initializeElements() {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 }

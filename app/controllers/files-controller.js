@@ -73,7 +73,6 @@ export class FilesController {
         const formData = new FormData()
         formData.append('file', fileSelected)
         formData.append('label', label)
-        // Client side check - TBD
 
         // Server side check
         try {

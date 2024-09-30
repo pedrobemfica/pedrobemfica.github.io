@@ -1,7 +1,7 @@
 export class Credit {
     constructor(creditId, serviceId, status) {
         this._creditId = creditId
-        this._serviceId = serviceId;
+        this._serviceId = serviceId
         this._status = status
     }
 
@@ -18,11 +18,10 @@ export class Credit {
     }
 
     set setStatus(status) {
-        if (status == 'active' ||
-            status == 'inactive') {
+        if (status == 'active' || 'inactive') {
                 this._status = status
                 return true
             }
-        return false;
+        return false
     }
 }

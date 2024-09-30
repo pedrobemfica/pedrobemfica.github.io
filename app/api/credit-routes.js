@@ -4,7 +4,7 @@ import { Cookies } from "../helpers/cookie-helper.js"
 const BASE_ROUTE = '/credits'
 export class ApiCredits {
 
-    static async listCredits() {
+    static async list() {
         const token = Cookies.getCookie('jwt')
         try {
             const response = await fetch(`${BACKEND}${BASE_ROUTE}/list`, {

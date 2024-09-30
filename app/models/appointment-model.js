@@ -1,42 +1,37 @@
 export class Appointment {
-    constructor(appointmentId, userId, {year, month, day}, {hour, minute}, serviceId) {
-        this.appointmentId = appointmentId
-        this.userId = userId
-        
-        this.year = year
-        this.month = month
-        this.day = day
-        this.hour = hour
-        this.minute = minute
-        
-        let services = []
-        if (services.getById(serviceId)) 
-            this.serviceId = serviceId;
-        else
-            throw Error('Service not provided')
+    constructor(appointmentId, creditId, dateString, timeString, status) {
+        this._appointmentId = appointmentId
+        this._creditId = creditId
+        this._dateString = dateString
+        this._timeString = timeString
+        this._status = status   
     }
 
-    get getAppointmentId() {
-        return this.appointmentId
+    get appointmentId() {
+        return this._appointmentId
     }
 
-    get getUserId() {
-        return this.userId
+    get creditId() {
+        return this._creditId
     }
 
-    get getDateString() {
-        let dateString = `${("0" + this.day).slice(-2)}/${("0" + this.month).slice(-2)}/${("000" + this.year).slice(-4)}`
-        return dateString
+    get dateString() {
+        return this._dateString
     }
 
-    get getTimeString() {
-        let timeString = `${("0" + this.hour).slice(-2)}:${("0" + this.minute).slice(-2)}`
-        return timeString
+    get timeString() {
+        return this._timeString
     }
 
-    get getServiceString() {
-        let services = new Services()
-        let serviceString = services.getStringById(this.serviceId)
-        return serviceString
+    get status() {
+        return this._status
+    }
+
+    set setStatus(status) {
+        if (status == 'created' || 'confirmed' || 'refused' || 'used' || 'cancelled') {
+                this._status = status
+                return true
+            }
+        return false
     }
 }
